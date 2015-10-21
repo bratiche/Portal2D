@@ -49,23 +49,23 @@ public class Level implements ContactListener {
      *
      */
     public void update() {
-        Iterator<Box> boxIterator = boxes.iterator();
+        //Iterator<Box> boxIterator = boxes.iterator();
 
-        while(boxIterator.hasNext()) {
-            Box box = boxIterator.next();
-            //nada que ver la validacion, es para ver que funcione el dispatcher
-            if (player.getBody().getLinearVelocity().equals(box.getBody().getLinearVelocity()))
-                dispatcher.notifyEvent(new BoxPlayerCollision(player, box));
-        }
+        //while(boxIterator.hasNext()) {
+        //    Box box = boxIterator.next();
+        //    //nada que ver la validacion, es para ver que funcione el dispatcher
+        //    if (player.getBody().getLinearVelocity().equals(box.getBody().getLinearVelocity()))
+        //        dispatcher.notifyEvent(new BoxPlayerCollision(player, box));
+        //}
 
-        Iterator<Button> buttonIterator = buttons.iterator();
+        //Iterator<Button> buttonIterator = buttons.iterator();
 
-        while(buttonIterator.hasNext()) {
-            Button button = buttonIterator.next();
-            //lo mismo aca, gg
-            if(player.isJumping())
-                dispatcher.notifyEvent(new ButtonCollision(button, player));
-        }
+        //while(buttonIterator.hasNext()) {
+        //    Button button = buttonIterator.next();
+        //    //lo mismo aca, gg
+        //    if(player.isJumping())
+        //        dispatcher.notifyEvent(new ButtonCollision(button, player));
+        //}
     }
 
     public Player getPlayer() {

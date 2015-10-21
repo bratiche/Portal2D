@@ -75,7 +75,7 @@ public class LevelLoader {
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
 
-        level.player = new Player(body);
+        level.player = new Player(world, body);
 
         shape.dispose();
     }
@@ -110,7 +110,7 @@ public class LevelLoader {
                 bodyDef.position.set((row + 0.5f) * tileHeight / PPM, (col + 0.5f) * tileWidth / PPM);
                 body = world.createBody(bodyDef);
                 body.createFixture(fixtureDef);
-                Tile tile = new Tile(body, type);
+                Tile tile = new Tile(world, body, type);
                 level.tiles.add(tile);
             }
         }
@@ -177,7 +177,7 @@ public class LevelLoader {
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
 
-            Button button = new Button(body);
+            Button button = new Button(world, body);
             level.buttons.add(button);
         }
 
@@ -210,7 +210,7 @@ public class LevelLoader {
             fixtureDef.restitution = 0.2f;
             fixtureDef.friction = 0.6f;
             body.createFixture(fixtureDef);
-            Box box = new Box(body);
+            Box box = new Box(world, body);
             level.boxes.add(box);
         }
 

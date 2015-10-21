@@ -9,8 +9,8 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public abstract class StaticEntity extends Entity {
 
-    public StaticEntity(Body body) {
-        super(body);
+    public StaticEntity(World world, Body body) {
+        super(world, body);
         body.setType(BodyDef.BodyType.StaticBody);
     }
 

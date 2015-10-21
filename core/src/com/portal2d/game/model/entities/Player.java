@@ -9,8 +9,16 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class Player extends DynamicEntity {
 
-    public Player(Body body) {
-        super(body);
+    private Weapon weapon;
+
+    public Player(World world, Body body) {
+        super(world, body);
+
+        weapon = new PortalGun(this);
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 
 }

@@ -10,8 +10,10 @@ import com.badlogic.gdx.physics.box2d.World;
 public abstract class Entity {
 
     protected Body body;
+    protected World world;
 
-    protected Entity(Body body) {
+    protected Entity(World world, Body body) {
+        this.world = world;
         this.body = body;
     }
 

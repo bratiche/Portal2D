@@ -16,8 +16,8 @@ public class Tile extends StaticEntity {
 
     Type type;
 
-    public Tile(Body body, Type type) {
-        super(body);
+    public Tile(World world, Body body, Type type) {
+        super(world, body);
         this.type = type;
     }
 }

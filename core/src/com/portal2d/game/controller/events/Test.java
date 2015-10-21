@@ -24,8 +24,8 @@ public class Test {
         world = new World(new Vector2(0, -9.8f), true);
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(100, 100));
-        player = new Player(world.createBody(bodyDef));
-        box = new Box(world.createBody(bodyDef));
+        player = new Player(world, world.createBody(bodyDef));
+        box = new Box(world, world.createBody(bodyDef));
 
         dispatcher = new EventDispatcher();
 

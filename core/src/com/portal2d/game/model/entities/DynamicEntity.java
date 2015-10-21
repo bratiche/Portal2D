@@ -13,8 +13,8 @@ public abstract class DynamicEntity extends Entity{
     protected boolean jumping;
     protected boolean facingRight;
 
-    public DynamicEntity(Body body) {
-        super(body);
+    public DynamicEntity(World world, Body body) {
+        super(world, body);
         body.setType(BodyDef.BodyType.DynamicBody);
     }
 
