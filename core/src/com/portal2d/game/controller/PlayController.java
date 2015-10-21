@@ -18,7 +18,7 @@ public class PlayController {
     private Player player;
     private PlayState state;
 
-    //movement test
+    //movement events
     private Vector2 jumpForce = new Vector2(0, 300);
     float max_x_velocity = 3;
 
