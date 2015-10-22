@@ -2,7 +2,7 @@ package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.weapons.PortalGun;
 
 /**
@@ -32,5 +32,30 @@ public abstract class Portal extends Entity {
 
     public OrangePortal getOrangePortal() {
         return portalGun.getOrangePortal();
+    }
+
+    @Override
+    public void interact(Box box) {
+
+    }
+
+    @Override
+    public void interact(Player player) {
+
+    }
+
+    @Override
+    public void interact(Exit exit) {
+
+    }
+
+    @Override
+    public void interact(Button button) {
+
+    }
+
+    @Override
+    public void interact(Tile tile) {
+
     }
 }

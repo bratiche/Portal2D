@@ -23,4 +23,28 @@ public class Exit extends StaticEntity {
         return destinyLevel;
     }
 
+    @Override
+    public void interact(Box box) {
+
+    }
+
+    @Override
+    public void interact(Player player) {
+
+    }
+
+    @Override
+    public void interact(Exit exit) {
+
+    }
+
+    @Override
+    public void interact(Button button) {
+
+    }
+
+    @Override
+    public void interact(Tile tile) {
+
+    }
 }

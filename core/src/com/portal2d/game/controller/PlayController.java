@@ -30,7 +30,7 @@ public class PlayController extends InputAdapter {
     //player stuff
     private Body playerBody;
     private Fixture playerPhysicsFixture;
-    private Fixture playerSensorFixture;
+//    private Fixture playerSensorFixture;
 
     private final float MAX_VELOCITY = 2.0f;
     private boolean jump = false;
@@ -51,16 +51,16 @@ public class PlayController extends InputAdapter {
 
         Gdx.input.setInputProcessor(this);
 
-        CircleShape circle = new CircleShape();
-        // 30 = tilewidth / 2
-        circle.setRadius(30.0f / PPM);
-        circle.setPosition(playerBody.getPosition().scl(1.0f / PPM).sub(2.0f / PPM, 60.0f / PPM));
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        //fixtureDef.isSensor = true;
-        playerSensorFixture = playerBody.createFixture(fixtureDef);
-
-        circle.dispose();
+//        CircleShape circle = new CircleShape();
+//        // 30 = tilewidth / 2
+//        circle.setRadius(30.0f / PPM);
+//        circle.setPosition(playerBody.getPosition().scl(1.0f / PPM).sub(2.0f / PPM, 60.0f / PPM));
+//        FixtureDef fixtureDef = new FixtureDef();
+//        fixtureDef.shape = circle;
+//        //fixtureDef.isSensor = true;
+//        playerSensorFixture = playerBody.createFixture(fixtureDef);
+//
+//        circle.dispose();
     }
 
     public void handleInput() {
@@ -95,16 +95,16 @@ public class PlayController extends InputAdapter {
         //disable friction while jumping
         if(!grounded) {
             playerPhysicsFixture.setFriction(0.0f);
-            playerSensorFixture.setFriction(0.0f);
+            //playerSensorFixture.setFriction(0.0f);
         }
         else {
             if(!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && stillTime > 0.2f) {
                 playerPhysicsFixture.setFriction(1000.0f);
-                playerSensorFixture.setFriction(1000.0f);
+                //playerSensorFixture.setFriction(1000.0f);
             }
             else {
                 playerPhysicsFixture.setFriction(0.2f);
-                playerSensorFixture.setFriction(0.2f);
+                //playerSensorFixture.setFriction(0.2f);
             }
         }
 
@@ -149,7 +149,7 @@ public class PlayController extends InputAdapter {
         Array<Contact> contacts = world.getContactList();
         for(int i =0; i < contacts.size; i++) {
             Contact contact = contacts.get(i);
-            if(contact.isTouching() && (contact.getFixtureA() == playerSensorFixture || contact.getFixtureB() == playerSensorFixture)) {
+            if(contact.isTouching() && (contact.getFixtureA() == playerPhysicsFixture || contact.getFixtureB() == playerPhysicsFixture)) {
                 Vector2 position = playerBody.getPosition();
                 WorldManifold manifold = contact.getWorldManifold();
                 boolean below = true;
