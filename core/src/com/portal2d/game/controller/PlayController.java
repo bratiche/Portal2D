@@ -2,16 +2,21 @@ package com.portal2d.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.controller.level.Level;
 
+import static com.portal2d.game.controller.Box2DConstants.*;
+
 /**
  *
  */
-public class PlayController {
+public class PlayController extends InputAdapter {
 
     private World world;
     private Level level;
@@ -22,48 +27,157 @@ public class PlayController {
     private Vector2 jumpForce = new Vector2(0, 300);
     float max_x_velocity = 3;
 
+    //player stuff
+    private Body playerBody;
+    private Fixture playerPhysicsFixture;
+    private Fixture playerSensorFixture;
+
+    private final float MAX_VELOCITY = 2.0f;
+    private boolean jump = false;
+
+    private float stillTime = 0.0f;
+    private long lastGroundTime = 0;
+
     public PlayController(PlayState state, Level level) {
         this.state = state;
         player = level.getPlayer();
+        world = level.getWorld();
 
         player.getBody().setAwake(true);
         player.getBody().setActive(true);
+
+        playerBody = player.getBody();
+        playerPhysicsFixture = playerBody.getFixtureList().get(0);
+
+        Gdx.input.setInputProcessor(this);
+
+        CircleShape circle = new CircleShape();
+        // 30 = tilewidth / 2
+        circle.setRadius(30.0f / PPM);
+        circle.setPosition(playerBody.getPosition().scl(1.0f / PPM).sub(2.0f / PPM, 60.0f / PPM));
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = circle;
+        //fixtureDef.isSensor = true;
+        playerSensorFixture = playerBody.createFixture(fixtureDef);
+
+        circle.dispose();
     }
 
-    //TODO: fix spider-man like climbing walls
     public void handleInput() {
 
-        if(player.getBody().getLinearVelocity().y != 0)
-            player.setJumping(true);
-        else
-            player.setJumping(false);
+        Vector2 position = playerBody.getPosition();
+        Vector2 velocity = playerBody.getLinearVelocity();
 
-        if(player.getBody().getLinearVelocity().x >= 0)
+        boolean grounded = isPlayerGrounded();
+
+        if(grounded) {
+            lastGroundTime = TimeUtils.nanoTime();
+        }
+        else {
+            if(TimeUtils.nanoTime() - lastGroundTime < 100000000)
+                grounded = true;
+        }
+
+        //cap max velocity
+        if(Math.abs(velocity.x) > MAX_VELOCITY) {
+            velocity.x = Math.signum(velocity.x) * MAX_VELOCITY;
+            playerBody.setLinearVelocity(velocity.x, velocity.y);
+        }
+
+        //calculate stillTime and damp
+        if (!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+            stillTime += Gdx.graphics.getDeltaTime();
+            playerBody.setLinearVelocity(velocity.x * 0.9f, velocity.y);
+        } else {
+            stillTime = 0;
+        }
+
+        //disable friction while jumping
+        if(!grounded) {
+            playerPhysicsFixture.setFriction(0.0f);
+            playerSensorFixture.setFriction(0.0f);
+        }
+        else {
+            if(!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && stillTime > 0.2f) {
+                playerPhysicsFixture.setFriction(1000.0f);
+                playerSensorFixture.setFriction(1000.0f);
+            }
+            else {
+                playerPhysicsFixture.setFriction(0.2f);
+                playerSensorFixture.setFriction(0.2f);
+            }
+        }
+
+        Array<Contact> contacts = world.getContactList();
+        for(int i = 0; i < world.getContactCount(); i++) {
+            Contact contact = contacts.get(i);
+            contact.resetFriction();
+        }
+
+        // apply left impulse if max velocity is not reached yet
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && velocity.x > -MAX_VELOCITY) {
+            playerBody.applyLinearImpulse(-2f, 0, position.x, position.y, true);
+        }
+
+        // apply right impulse if max velocity is not reached yet
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && velocity.x < MAX_VELOCITY) {
+            playerBody.applyLinearImpulse(2f, 0, position.x, position.y, true);
+        }
+
+        // jump, but only when grounded
+        if (jump) {
+            jump = false;
+            if (grounded) {
+                playerBody.setLinearVelocity(velocity.x, 0);
+                System.out.println("Velocity before jump: " + playerBody.getLinearVelocity());
+                playerBody.setTransform(position.x, position.y + 0.01f, 0);
+                playerBody.applyLinearImpulse(0, 4, position.x, position.y, true);
+                System.out.println("jump velocity, " + playerBody.getLinearVelocity());
+            }
+        }
+
+        playerBody.setAwake(true);
+
+        if(playerBody.getLinearVelocity().x >= 0)
             player.setFacingRight(true);
         else
             player.setFacingRight(false);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.W) && !player.isJumping())
-            player.getBody().applyForceToCenter(jumpForce, true);
+    }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A))
-            player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().add(-1, 0));
-        else if(Gdx.input.isKeyPressed(Input.Keys.D))
-            player.getBody().setLinearVelocity(player.getBody().getLinearVelocity().add(1, 0));
-        else if(!player.isJumping())
-            player.getBody().setLinearVelocity(0, 0);
+    private boolean isPlayerGrounded() {
+        Array<Contact> contacts = world.getContactList();
+        for(int i =0; i < contacts.size; i++) {
+            Contact contact = contacts.get(i);
+            if(contact.isTouching() && (contact.getFixtureA() == playerSensorFixture || contact.getFixtureB() == playerSensorFixture)) {
+                Vector2 position = playerBody.getPosition();
+                WorldManifold manifold = contact.getWorldManifold();
+                boolean below = true;
+                for (int j = 0; j < manifold.getNumberOfContactPoints(); j++) {
+                    below &= (manifold.getPoints()[j].y < position.y - 1.5f / Box2DConstants.PPM);
+                }
+                if(below) {
+                    return true;
+                }
 
-        if(player.isJumping() && player.getBody().getLinearVelocity().x != 0) {
-            Vector2 airFriction = new Vector2(7, 0);
-            airFriction.scl(player.isFacingRight() ? -1 : 1);
-            player.getBody().applyForceToCenter(airFriction, true);
+                return false;
+            }
         }
+        return false;
+    }
 
-        if(player.getBody().getLinearVelocity().x >= max_x_velocity)
-            player.getBody().setLinearVelocity(max_x_velocity, player.getBody().getLinearVelocity().y);
-        else if(player.getBody().getLinearVelocity().x <= -max_x_velocity)
-            player.getBody().setLinearVelocity(-max_x_velocity, player.getBody().getLinearVelocity().y);
+    @Override
+    public boolean keyDown (int keycode) {
+        if(keycode == Input.Keys.W)
+            jump = true;
+        return false;
+    }
 
+    @Override
+    public boolean keyUp (int keycode) {
+        if(keycode == Input.Keys.W)
+            jump = false;
+        return false;
     }
 
     public void setLevel(Level level) {

@@ -1,12 +1,15 @@
-package com.portal2d.game.model.entities;
+package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.weapons.PortalGun;
 
 /**
  *
  */
 public class BluePortal extends Portal {
+
     public BluePortal(World world, Body body, PortalGun portalGun) {
         super(world, body, portalGun);
     }
@@ -14,4 +17,5 @@ public class BluePortal extends Portal {
     public void send(Entity entity) {
         super.send(entity, getOrangePortal());
     }
+
 }

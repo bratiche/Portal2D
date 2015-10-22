@@ -26,7 +26,7 @@ public class LevelLoader {
     public Level loadNextLevel(World world) {
         this.world = world;
         TiledMap tiledMap = Portal2D.assets.getTiledMap(Level.levelNumber);
-        Level level = new Level(tiledMap);
+        Level level = new Level(world, tiledMap);
         createLevel(tiledMap, level);
         return level;
     }
@@ -34,7 +34,7 @@ public class LevelLoader {
     public Level loadLevel(World world, LevelName levelName) {
         this.world = world;
         TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
-        Level level = new Level(tiledMap);
+        Level level = new Level(world, tiledMap);
         createLevel(tiledMap, level);
         return level;
     }
@@ -73,7 +73,8 @@ public class LevelLoader {
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        body.createFixture(fixtureDef);
+        Fixture fixture = body.createFixture(fixtureDef);
+        body.setFixedRotation(true);
 
         level.player = new Player(world, body);
 
@@ -106,12 +107,12 @@ public class LevelLoader {
                 if(cell == null || cell.getTile() == null)
                     continue;
 
-                BodyDef bodyDef = new BodyDef();
-                bodyDef.position.set((row + 0.5f) * tileHeight / PPM, (col + 0.5f) * tileWidth / PPM);
-                body = world.createBody(bodyDef);
-                body.createFixture(fixtureDef);
-                Tile tile = new Tile(world, body, type);
-                level.tiles.add(tile);
+//                BodyDef bodyDef = new BodyDef();
+//                bodyDef.position.set((row + 0.5f) * tileHeight / PPM, (col + 0.5f) * tileWidth / PPM);
+//                body = world.createBody(bodyDef);
+//                body.createFixture(fixtureDef);
+//                Tile tile = new Tile(world, body, type);
+//                level.tiles.add(tile);
             }
         }
 
@@ -208,7 +209,8 @@ public class LevelLoader {
             shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
             fixtureDef.shape = shape;
             fixtureDef.restitution = 0.2f;
-            fixtureDef.friction = 0.6f;
+            fixtureDef.friction = 0.5f;
+            fixtureDef.density = 1;
             body.createFixture(fixtureDef);
             Box box = new Box(world, body);
             level.boxes.add(box);

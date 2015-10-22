@@ -1,7 +1,9 @@
-package com.portal2d.game.model.entities;
+package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.weapons.PortalGun;
 
 /**
  *

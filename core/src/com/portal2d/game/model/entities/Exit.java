@@ -12,11 +12,11 @@ public class Exit extends StaticEntity {
 
     /**
      * @param body
-     * @param destinyLevel Es el nivel a que lleva la exit
+     * @param destinyLevel Es el nivel al que lleva la exit
      */
     public Exit(World world, Body body, int destinyLevel) {
         super(world, body);
-        this.destinyLevel = this.destinyLevel;
+        this.destinyLevel = destinyLevel;
     }
 
     public int getDestinyLevel() {

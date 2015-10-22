@@ -1,17 +1,19 @@
-package com.portal2d.game.model.entities;
+package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.entities.Projectile;
+import com.portal2d.game.model.weapons.PortalGun;
 
 /**
  *
  */
 public class PortalProjectile extends Projectile {
+
     private PortalGun portalGun;
     private PortalColor color;
 
-    // tengo que tener el world para crear projectiles, todas las entidades tienen que tener una referencia al world
     public PortalProjectile(World world, Body body, PortalColor color, PortalGun portalGun) {
         super(world, body);
         this.color = color;
@@ -23,8 +25,14 @@ public class PortalProjectile extends Projectile {
         ORANGE
     }
 
-    public void crash() {
+    /**
+     * Este metodo se llama solo cuando el proyectil colisiona con una superfice portable (TODO: rename)
+     */
+    public void crash(PortableSurface surface) {
 
+        //
+        // Uso la surface que me pasan para saber donde crear el portal y cual es su direccion de entrada/salida
+        //
 
         //si se puede crear, etc
 
@@ -46,4 +54,9 @@ public class PortalProjectile extends Projectile {
                 break;
         }
     }
+
+    public PortalColor getColor() {
+        return color;
+    }
+
 }

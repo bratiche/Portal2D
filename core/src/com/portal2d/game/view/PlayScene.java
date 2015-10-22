@@ -35,15 +35,20 @@ public class PlayScene {
     }
 
     public void render(SpriteBatch batch) {
-        batch.setProjectionMatrix(camera.combined);
         tmr.setView(camera);
         tmr.render();
+
+        batch.setProjectionMatrix(camera.combined);
         debugRenderer.render(world, camera.combined);
     }
 
     public void setLevel(Level level) {
         this.level = level;
         tmr.setMap(level.getTiledMap());
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 
 }

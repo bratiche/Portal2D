@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 /**
- * Created by Belén on 21/10/2015.
+ *
  */
 public class Projectile extends DynamicEntity {
 
