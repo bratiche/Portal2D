@@ -3,7 +3,7 @@ package com.portal2d.game.controller;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Disposable;
-import com.portal2d.game.controller.level.LevelName;
+import com.portal2d.game.model.level.LevelName;
 
 import java.util.HashMap;
 import java.util.Map;

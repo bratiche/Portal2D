@@ -10,31 +10,31 @@ public enum EntityType {
     BOX {
         @Override
         public void interact(Entity e1, Entity e2) {
-            e1.interact((Box)e2);
+            e1.beginInteraction((Box) e2);
         }
     },
     PLAYER {
         @Override
         public void interact(Entity e1, Entity e2) {
-            e1.interact((Player)e2);
+            e1.beginInteraction((Player) e2);
         }
     },
     BUTTON {
         @Override
         public void interact(Entity e1, Entity e2) {
-            e1.interact((Button)e2);
+            e1.beginInteraction((Button) e2);
         }
     },
     EXIT{
         @Override
         public void interact(Entity e1, Entity e2) {
-            e1.interact((Exit)e2);
+            e1.beginInteraction((Exit) e2);
         }
     },
     TILE{
         @Override
         public void interact(Entity e1, Entity e2) {
-            e1.interact((Tile)e2);
+            e1.beginInteraction((Tile) e2);
         }
     };
 

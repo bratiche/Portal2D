@@ -2,7 +2,7 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.level.Level;
 
 /**
  * An entity that moves and is affected by all forces applied to it.
@@ -14,8 +14,8 @@ public abstract class DynamicEntity extends Entity{
     protected boolean jumping;
     protected boolean facingRight;
 
-    public DynamicEntity(World world, Body body) {
-        super(world, body);
+    public DynamicEntity(Level level, Body body) {
+        super(level, body);
         body.setType(BodyDef.BodyType.DynamicBody);
     }
 

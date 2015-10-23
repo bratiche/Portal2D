@@ -3,6 +3,7 @@ package com.portal2d.game.controller.states;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.portal2d.game.controller.GameStateManager;
+import com.portal2d.game.controller.StateController;
 
 /**
  *
@@ -10,6 +11,9 @@ import com.portal2d.game.controller.GameStateManager;
 public abstract class GameState {
 
     protected GameStateManager gsm;
+    protected StateController controller;
+
+    //view
     protected Stage stage;
 
     public GameState(GameStateManager gsm) {

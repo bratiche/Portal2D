@@ -1,7 +1,7 @@
 package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.*;
 
 /**
@@ -9,33 +9,19 @@ import com.portal2d.game.model.entities.*;
  */
 public class PortableSurface extends Surface {
 
-    public PortableSurface(World world, Body body) {
-        super(world, body);
+    public PortableSurface(Level level, Body body) {
+        super(level, body);
+        body.setUserData(this);
     }
 
     @Override
-    public void interact(Box box) {
-
+    public void beginInteraction(Entity entity) {
+        entity.beginInteraction(this);
     }
 
     @Override
-    public void interact(Player player) {
-
-    }
-
-    @Override
-    public void interact(Exit exit) {
-
-    }
-
-    @Override
-    public void interact(Button button) {
-
-    }
-
-    @Override
-    public void interact(Tile tile) {
-
+    public void endInteraction(Entity entity) {
+        entity.endInteraction(this);
     }
 
 }

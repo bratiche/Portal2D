@@ -1,4 +1,4 @@
-package com.portal2d.game.controller.level;
+package com.portal2d.game.model.level;
 
 import java.util.NoSuchElementException;
 

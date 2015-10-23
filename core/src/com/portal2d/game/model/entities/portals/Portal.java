@@ -1,7 +1,7 @@
 package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.weapons.PortalGun;
 
@@ -11,19 +11,24 @@ import com.portal2d.game.model.weapons.PortalGun;
 public abstract class Portal extends Entity {
 
     private PortalGun portalGun;
+    protected Timer timer;
 
-     public Portal(World world, Body body, PortalGun portalGun) {
-        super(world, body);
-        this.portalGun = portalGun;
+
+     public Portal(Level level, Body body, PortalGun portalGun) {
+         super(level, body);
+         this.portalGun = portalGun;
+         timer = new Timer(0,0);
     }
 
-    /**
-     *
-     * @param entity
-     * @param destination
-     */
-    public void send(Entity entity, Portal destination) {
-        entity.getBody().setTransform(destination.getBody().getPosition(), 0); //varia segun donde apunte el portal el 0
+    public void recieve(Entity entity){
+        if(!canBeUsed())
+            return;
+        setTimer(entity);
+        entity.getBody().setTransform(body.getPosition(), 0);
+    }
+
+    public void update(){
+        timer.tick();
     }
 
     public BluePortal getBluePortal() {
@@ -34,28 +39,16 @@ public abstract class Portal extends Entity {
         return portalGun.getOrangePortal();
     }
 
-    @Override
-    public void interact(Box box) {
-
+    public boolean canBeUsed(){
+        if(timer.getTime() < timer.cooldownTime)
+            return false;
+        return true;
     }
 
-    @Override
-    public void interact(Player player) {
-
+    //TODO: Overload setTimer/use the same timer for all entities.
+    protected void setTimer(Entity entity){
+        timer = new Timer(1/60.0f, 5);
     }
 
-    @Override
-    public void interact(Exit exit) {
 
-    }
-
-    @Override
-    public void interact(Button button) {
-
-    }
-
-    @Override
-    public void interact(Tile tile) {
-
-    }
 }

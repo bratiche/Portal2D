@@ -1,4 +1,4 @@
-package com.portal2d.game.controller.level;
+package com.portal2d.game.controller;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.model.level.Level;
+import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.model.entities.*;
 
 import static com.portal2d.game.controller.Box2DConstants.*;
@@ -82,7 +84,7 @@ public class LevelLoader {
         Fixture fixture = body.createFixture(fixtureDef);
         body.setFixedRotation(true);
 
-        level.player = new Player(world, body);
+        level.setPlayer(new Player(level, body));
 
         shape.dispose();
     }
@@ -184,8 +186,8 @@ public class LevelLoader {
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
 
-            Button button = new Button(world, body);
-            level.buttons.add(button);
+            Button button = new Button(level, body);
+            level.add(button);
         }
 
         shape.dispose();
@@ -216,10 +218,10 @@ public class LevelLoader {
             fixtureDef.shape = shape;
             fixtureDef.restitution = 0.2f;
             fixtureDef.friction = 0.5f;
-            fixtureDef.density = 1;
+            fixtureDef.density = 4f;
             body.createFixture(fixtureDef);
-            Box box = new Box(world, body);
-            level.boxes.add(box);
+            Box box = new Box(level, body);
+            level.add(box);
         }
 
         shape.dispose();
@@ -256,8 +258,8 @@ public class LevelLoader {
 
             System.out.println(nextLevel);
 
-            Exit exit = new Exit(world, body, LevelName.getLevelName(nextLevel));
-            level.exits.add(exit);
+            Exit exit = new Exit(level, body, LevelName.getLevelName(nextLevel));
+            level.add(exit);
 
         }
 

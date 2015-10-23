@@ -1,8 +1,8 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.level.LevelName;
+import com.portal2d.game.model.level.Level;
+import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.model.interactions.EntityType;
 
 /**
@@ -15,8 +15,8 @@ public class Exit extends StaticEntity {
     /**
      * @param destinyLevel Es el nivel al que lleva la exit
      */
-    public Exit(World world, Body body, LevelName destinyLevel) {
-        super(world, body);
+    public Exit(Level level, Body body, LevelName destinyLevel) {
+        super(level, body);
         this.destinyLevel = destinyLevel;
         type = EntityType.EXIT;
         body.setUserData(this);
@@ -27,27 +27,18 @@ public class Exit extends StaticEntity {
     }
 
     @Override
-    public void interact(Box box) {
-
+    public void beginInteraction(Entity entity) {
+        entity.beginInteraction(this);
     }
 
     @Override
-    public void interact(Player player) {
-
+    public void endInteraction(Entity entity) {
+        entity.endInteraction(this);
     }
 
     @Override
-    public void interact(Exit exit) {
+    public void beginInteraction(Player player) {
 
     }
 
-    @Override
-    public void interact(Button button) {
-
-    }
-
-    @Override
-    public void interact(Tile tile) {
-
-    }
 }

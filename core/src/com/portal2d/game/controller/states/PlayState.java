@@ -4,10 +4,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.controller.GameStateManager;
-import com.portal2d.game.controller.PlayController;
-import com.portal2d.game.controller.level.Level;
-import com.portal2d.game.controller.level.LevelLoader;
-import com.portal2d.game.controller.level.LevelName;
+import com.portal2d.game.controller.PlayStateController;
+import com.portal2d.game.controller.PlayerController;
+import com.portal2d.game.model.level.Level;
+import com.portal2d.game.controller.LevelLoader;
+import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.PlayScene;
 
 import static com.portal2d.game.controller.Box2DConstants.*;
@@ -22,7 +23,7 @@ public class PlayState extends GameState {
     private LevelLoader levelLoader;
 
     private PlayScene playScene;
-    private PlayController playController;
+    private PlayerController playerController;
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -35,7 +36,8 @@ public class PlayState extends GameState {
         level = levelLoader.loadNextLevel();
 
         playScene = new PlayScene(world, level);
-        playController = new PlayController(this, level);
+        controller = new PlayStateController(this);
+        playerController = new PlayerController(this, level);
 
         //test
         System.out.println(LevelName.getLevelName(0));
@@ -43,8 +45,15 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float dt) {
-        playController.handleInput();
+        //this state controller
+        controller.handleInput();
+        //controller for the player
+        playerController.handleInput();
+
+        //Physics update
         world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+        //States/interactions update
         level.update();
 
     }
@@ -65,7 +74,7 @@ public class PlayState extends GameState {
         world = new World(DEFAULT_GRAVITY, true);
         level = levelLoader.loadNextLevel();
         playScene.setLevel(level);
-        playController.setLevel(level);
+        playerController.setLevel(level);
     }
 
     public OrthographicCamera getCamera() {

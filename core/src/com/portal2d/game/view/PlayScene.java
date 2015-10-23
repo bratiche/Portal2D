@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.level.Level;
+import com.portal2d.game.model.level.Level;
 
 import static com.portal2d.game.view.ViewConstants.*;
 import static com.portal2d.game.controller.Box2DConstants.*;

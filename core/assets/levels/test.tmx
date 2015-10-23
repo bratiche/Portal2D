@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="110">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="184">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
@@ -14,12 +14,16 @@
   </data>
  </layer>
  <objectgroup name="boxes">
-  <object id="24" x="794.333" y="434.667" width="60" height="60"/>
-  <object id="39" x="689.333" y="408" width="60" height="60"/>
-  <object id="40" x="716.333" y="134.667" width="60" height="60"/>
+  <object id="159" x="728" y="149" width="60" height="60"/>
+  <object id="160" x="540" y="154" width="60" height="60"/>
+  <object id="162" x="401" y="208" width="115" height="14"/>
+  <object id="179" x="268" y="171" width="160" height="12"/>
+  <object id="180" x="278" y="142" width="206" height="17"/>
+  <object id="181" x="336" y="226" width="19" height="85"/>
+  <object id="183" x="578" y="243" width="43" height="53"/>
  </objectgroup>
  <objectgroup name="player">
-  <object id="46" name="player" x="211" y="320" width="60" height="120"/>
+  <object id="46" name="player" x="242" y="304" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
   <object id="41" x="478.667" y="580" width="120" height="20"/>

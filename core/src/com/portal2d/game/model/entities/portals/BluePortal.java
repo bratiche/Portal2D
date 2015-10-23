@@ -1,7 +1,7 @@
 package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.weapons.PortalGun;
 
@@ -10,12 +10,26 @@ import com.portal2d.game.model.weapons.PortalGun;
  */
 public class BluePortal extends Portal {
 
-    public BluePortal(World world, Body body, PortalGun portalGun) {
-        super(world, body, portalGun);
+    public BluePortal(Level level, Body body, PortalGun portalGun) {
+        super(level, body, portalGun);
+        body.setUserData(this);
     }
 
-    public void send(Entity entity) {
-        super.send(entity, getOrangePortal());
+    @Override
+    public void beginInteraction(Entity entity) {
+        entity.beginInteraction(this);
+        if(getOrangePortal() != null && getOrangePortal().canBeUsed()){
+            level.addTeleportQueue(entity, getOrangePortal());
+            setTimer(entity);
+        }
     }
+
+    @Override
+    public void endInteraction(Entity entity) {
+        entity.endInteraction(this);
+
+    }
+
+
 
 }

@@ -10,7 +10,22 @@ public class GameContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
 
+        if(bodyA.getUserData() == null || bodyB.getUserData() == null){
+            return;
+        }
+
+        Entity e1 = (Entity)bodyA.getUserData();
+        Entity e2 = (Entity)bodyB.getUserData();
+
+        e1.beginInteraction(e2);
+        e2.beginInteraction(e1);
+    }
+
+    @Override
+    public void endContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();
         Body bodyB = contact.getFixtureB().getBody();
 
@@ -21,13 +36,8 @@ public class GameContactListener implements ContactListener {
         Entity e1 = (Entity)bodyA.getUserData();
         Entity e2 = (Entity)bodyB.getUserData();
 
-        e1.interact(e2);
-        e2.interact(e1);
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-
+        e1.endInteraction(e2);
+        e2.endInteraction(e1);
     }
 
     @Override

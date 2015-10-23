@@ -1,42 +1,26 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
-import com.sun.corba.se.impl.orbutil.closure.Constant;
+import com.portal2d.game.model.level.Level;
 
 /**
  * Base entity for all projectiles in the game.
  */
-public class Projectile extends DynamicEntity {
+public abstract class Projectile extends KinematicEntity {
 
-    public Projectile(World world, Body body) {
-        super(world, body);
-        body.setType(BodyDef.BodyType.KinematicBody);
+    public Projectile(Level level, Body body) {
+        super(level, body);
     }
 
     @Override
-    public void interact(Box box) {
-
+    public void beginInteraction(Entity entity) {
+        entity.beginInteraction(this);
+        //remove this projectile
     }
 
     @Override
-    public void interact(Player player) {
-
+    public void endInteraction(Entity entity) {
+        entity.endInteraction(this);
     }
 
-    @Override
-    public void interact(Exit exit) {
-
-    }
-
-    @Override
-    public void interact(Button button) {
-
-    }
-
-    @Override
-    public void interact(Tile tile) {
-
-    }
 }

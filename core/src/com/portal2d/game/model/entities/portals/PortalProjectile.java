@@ -2,7 +2,7 @@ package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.Projectile;
 import com.portal2d.game.model.weapons.PortalGun;
 
@@ -14,8 +14,8 @@ public class PortalProjectile extends Projectile {
     private PortalGun portalGun;
     private PortalColor color;
 
-    public PortalProjectile(World world, Body body, PortalColor color, PortalGun portalGun) {
-        super(world, body);
+    public PortalProjectile(Level level, Body body, PortalColor color, PortalGun portalGun) {
+        super(level, body);
         this.color = color;
         this.portalGun = portalGun;
     }
@@ -40,7 +40,7 @@ public class PortalProjectile extends Projectile {
         switch (color) {
             case BLUE:
                 if(this.portalGun.getBluePortal() == null){
-                    new BluePortal(world, world.createBody(bodyDef), portalGun);
+                    new BluePortal(level, world.createBody(bodyDef), portalGun);
                 }
                 else {
                     portalGun.getBluePortal().getBody().setTransform(0,0,0);
@@ -48,7 +48,7 @@ public class PortalProjectile extends Projectile {
                 break;
             case ORANGE:
                 if(portalGun.getOrangePortal() == null) {
-                    new OrangePortal(world, world.createBody(bodyDef), portalGun);
+                    new OrangePortal(level, world.createBody(bodyDef), portalGun);
                 }
                 portalGun.getOrangePortal().getBody().setTransform(0,0,0);
                 break;

@@ -4,46 +4,54 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.portal2d.game.controller.level.Level;
+import com.portal2d.game.model.level.Level;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
+
+import static com.portal2d.game.controller.Box2DConstants.PPM;
+import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
+import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
  *
  */
-public class PlayController extends InputAdapter {
+public class PlayerController extends InputAdapter {
+
+    private PlayState playState;
 
     private World world;
-    private Level level;
     private Player player;
-    private PlayState state;
+
+    private Vector3 mouse;
 
     //player stuff
     private Body playerBody;
     private Fixture playerPhysicsFixture;
 
+
+    //TODO: Implement global terminal velocity.
     private final float MAX_VELOCITY = 2.0f;
+    private final float TERMINAL_VELOCITY = 25.0f;
     private boolean jump = false;
 
     private float stillTime = 0.0f;
     private long lastGroundTime = 0;
 
-    public PlayController(PlayState state, Level level) {
-        this.state = state;
+    public PlayerController(PlayState playState, Level level) {
+        this.playState = playState;
         player = level.getPlayer();
         world = level.getWorld();
-
-        player.getBody().setAwake(true);
-        player.getBody().setActive(true);
 
         playerBody = player.getBody();
         playerPhysicsFixture = playerBody.getFixtureList().get(0);
 
-        Gdx.input.setInputProcessor(this);
+        mouse = new Vector3();
 
+        Gdx.input.setInputProcessor(this);
     }
 
     public void handleInput() {
@@ -64,6 +72,12 @@ public class PlayController extends InputAdapter {
         //cap max velocity
         if(Math.abs(velocity.x) > MAX_VELOCITY) {
             velocity.x = Math.signum(velocity.x) * MAX_VELOCITY;
+            playerBody.setLinearVelocity(velocity.x, velocity.y);
+        }
+
+        //cap terminal velocity
+        if(Math.abs(velocity.y) > TERMINAL_VELOCITY) {
+            velocity.y = Math.signum(velocity.y) * TERMINAL_VELOCITY;
             playerBody.setLinearVelocity(velocity.x, velocity.y);
         }
 
@@ -124,6 +138,22 @@ public class PlayController extends InputAdapter {
         else
             player.setFacingRight(false);
 
+        if(Gdx.input.justTouched()) {
+
+            mouse.x = Gdx.input.getX();
+            mouse.y = Gdx.input.getY();
+
+            playState.getCamera().unproject(mouse, 0, 0, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
+
+            if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                player.getWeapon().actionLeftClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
+            }
+            if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                player.getWeapon().actionRightClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
+            }
+
+        }
+
     }
 
     private boolean isPlayerGrounded() {
@@ -161,7 +191,8 @@ public class PlayController extends InputAdapter {
     }
 
     public void setLevel(Level level) {
-        this.level = level;
+        player = level.getPlayer();
+        world = level.getWorld();
     }
 
 }

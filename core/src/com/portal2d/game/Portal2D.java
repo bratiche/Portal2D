@@ -27,9 +27,13 @@ public class Portal2D extends ApplicationAdapter {
 	@Override
 	public void render () {
 
+		//updating
 		gsm.update(Gdx.graphics.getDeltaTime());
+
+		//rendering
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		batch.begin();
 		gsm.render(batch);
 		batch.end();

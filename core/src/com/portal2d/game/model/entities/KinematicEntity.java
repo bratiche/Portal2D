@@ -5,13 +5,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.portal2d.game.model.level.Level;
 
 /**
- * An entity that doesn't move or is affected by any forces.
+ * An entity that has a constant velocity.
  */
-public abstract class StaticEntity extends Entity {
+public abstract class KinematicEntity extends Entity {
 
-    public StaticEntity(Level level, Body body) {
+    protected KinematicEntity(Level level, Body body) {
         super(level, body);
-        body.setType(BodyDef.BodyType.StaticBody);
+        body.setType(BodyDef.BodyType.KinematicBody);
     }
-
 }
