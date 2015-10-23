@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Clase que maneja los recursos del juego (imagenes, archivos tmx).
+ * Class that manages game resources (images, tmx files, etc)
  */
 public class Assets implements Disposable {
 
@@ -24,14 +24,15 @@ public class Assets implements Disposable {
     public void loadTiledMaps() {
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         TiledMap tiledMap;
+        int levelNumber = 0;
 
         tiledMap = tmxMapLoader.load("core/assets/levels/test.tmx");
-        tiledMaps.put(1, tiledMap);
+        tiledMaps.put(levelNumber++, tiledMap);
         tiledMapsByName.put(LevelName.TEST_LEVEL, tiledMap);
     }
 
     public TiledMap getTiledMap(Integer key) {
-        return tiledMaps.get(key + 1);
+        return tiledMaps.get(key);
     }
 
     public TiledMap getTiledMap(LevelName key) {

@@ -2,30 +2,29 @@ package com.portal2d.game.controller.level;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.interactions.GameContactListener;
-import com.portal2d.game.model.entities.Box;
-import com.portal2d.game.model.entities.Button;
-import com.portal2d.game.model.entities.Player;
-import com.portal2d.game.model.entities.Tile;
+import com.portal2d.game.model.interactions.GameContactListener;
+import com.portal2d.game.model.entities.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Level seria un controller de interacciones entre las entidadades, les mandaria mensajes cuando sus cuerpos
- * collisionan para que interactuen (update: ahora manda eventos a traves del dispatcher).
+ * Container for all game objects.
  */
 public class Level {
 
     public static int levelNumber;
 
+    World world;
+
     TiledMap tiledMap;
     Set<Button> buttons;
+    Set<Exit> exits;
     Set<Box> boxes;
-    Set<Tile> tiles;
-    Player player;
 
-    World world;
+    Set<Tile> tiles;
+
+    Player player;
 
     public Level(World world, TiledMap tiledMap) {
         this.world = world;
@@ -34,31 +33,13 @@ public class Level {
         tiles = new HashSet<Tile>();
         buttons = new HashSet<Button>();
         boxes = new HashSet<Box>();
+        exits = new HashSet<Exit>();
 
         world.setContactListener(new GameContactListener());
     }
 
-    /**
-     *
-     */
     public void update() {
-        //Iterator<Box> boxIterator = boxes.iterator();
 
-        //while(boxIterator.hasNext()) {
-        //    Box box = boxIterator.next();
-        //    //nada que ver la validacion, es para ver que funcione el dispatcher
-        //    if (player.getBody().getLinearVelocity().equals(box.getBody().getLinearVelocity()))
-        //        dispatcher.notifyEvent(new BoxPlayerCollision(player, box));
-        //}
-
-        //Iterator<Button> buttonIterator = buttons.iterator();
-
-        //while(buttonIterator.hasNext()) {
-        //    Button button = buttonIterator.next();
-        //    //lo mismo aca, gg
-        //    if(player.isJumping())
-        //        dispatcher.notifyEvent(new ButtonCollision(button, player));
-        //}
     }
 
     public Player getPlayer() {
@@ -68,7 +49,6 @@ public class Level {
     public TiledMap getTiledMap() {
         return tiledMap;
     }
-
 
     public World getWorld() {
         return world;

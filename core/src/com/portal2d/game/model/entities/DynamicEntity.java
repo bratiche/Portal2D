@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
+ * An entity that moves and is affected by all forces applied to it.
  * TODO: create Mob class for movable entities, box is dynamic, but can't walk or jump
  */
 public abstract class DynamicEntity extends Entity{

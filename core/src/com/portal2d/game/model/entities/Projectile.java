@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 /**
- *
+ * Base entity for all projectiles in the game.
  */
 public class Projectile extends DynamicEntity {
 

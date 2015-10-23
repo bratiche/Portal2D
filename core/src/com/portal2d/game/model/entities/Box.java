@@ -2,10 +2,10 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.interactions.EntityType;
+import com.portal2d.game.model.interactions.EntityType;
 
 /**
- *
+ * An entity that doesn't do anything. Basically dead weight to solve puzzles.
  */
 public class Box extends DynamicEntity {
 

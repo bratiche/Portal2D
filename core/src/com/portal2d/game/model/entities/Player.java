@@ -2,14 +2,12 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.interactions.EntityType;
+import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.weapons.PortalGun;
 import com.portal2d.game.model.weapons.Weapon;
 
-import java.sql.SQLOutput;
-
 /**
- *
+ * The main entity in the game, the user controls this entity.
  */
 public class Player extends DynamicEntity {
 

@@ -7,11 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.portal2d.game.controller.level.Level;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
-import com.portal2d.game.controller.level.Level;
-
-import static com.portal2d.game.controller.Box2DConstants.*;
 
 /**
  *
@@ -23,14 +21,9 @@ public class PlayController extends InputAdapter {
     private Player player;
     private PlayState state;
 
-    //movement events
-    private Vector2 jumpForce = new Vector2(0, 300);
-    float max_x_velocity = 3;
-
     //player stuff
     private Body playerBody;
     private Fixture playerPhysicsFixture;
-//    private Fixture playerSensorFixture;
 
     private final float MAX_VELOCITY = 2.0f;
     private boolean jump = false;
@@ -51,16 +44,6 @@ public class PlayController extends InputAdapter {
 
         Gdx.input.setInputProcessor(this);
 
-//        CircleShape circle = new CircleShape();
-//        // 30 = tilewidth / 2
-//        circle.setRadius(30.0f / PPM);
-//        circle.setPosition(playerBody.getPosition().scl(1.0f / PPM).sub(2.0f / PPM, 60.0f / PPM));
-//        FixtureDef fixtureDef = new FixtureDef();
-//        fixtureDef.shape = circle;
-//        //fixtureDef.isSensor = true;
-//        playerSensorFixture = playerBody.createFixture(fixtureDef);
-//
-//        circle.dispose();
     }
 
     public void handleInput() {
@@ -100,11 +83,9 @@ public class PlayController extends InputAdapter {
         else {
             if(!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && stillTime > 0.2f) {
                 playerPhysicsFixture.setFriction(1000.0f);
-                //playerSensorFixture.setFriction(1000.0f);
             }
             else {
                 playerPhysicsFixture.setFriction(0.2f);
-                //playerSensorFixture.setFriction(0.2f);
             }
         }
 
@@ -129,10 +110,10 @@ public class PlayController extends InputAdapter {
             jump = false;
             if (grounded) {
                 playerBody.setLinearVelocity(velocity.x, 0);
-                System.out.println("Velocity before jump: " + playerBody.getLinearVelocity());
+                //System.out.println("Velocity before jump: " + playerBody.getLinearVelocity());
                 playerBody.setTransform(position.x, position.y + 0.01f, 0);
                 playerBody.applyLinearImpulse(0, 4, position.x, position.y, true);
-                System.out.println("jump velocity, " + playerBody.getLinearVelocity());
+                //System.out.println("jump velocity, " + playerBody.getLinearVelocity());
             }
         }
 
@@ -159,7 +140,6 @@ public class PlayController extends InputAdapter {
                 if(below) {
                     return true;
                 }
-
                 return false;
             }
         }

@@ -1,4 +1,4 @@
-package com.portal2d.game.controller.interactions;
+package com.portal2d.game.model.interactions;
 
 import com.portal2d.game.model.entities.*;
 
@@ -26,16 +26,17 @@ public enum EntityType {
         }
     },
     EXIT{
+        @Override
         public void interact(Entity e1, Entity e2) {
             e1.interact((Exit)e2);
         }
     },
     TILE{
+        @Override
         public void interact(Entity e1, Entity e2) {
             e1.interact((Tile)e2);
         }
     };
-
 
     public abstract void interact(Entity e1, Entity e2);
 }

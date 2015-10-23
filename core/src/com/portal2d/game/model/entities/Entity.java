@@ -1,12 +1,11 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.interactions.EntityType;
+import com.portal2d.game.model.interactions.EntityType;
 
 /**
- *
+ * Base class for all game entities.
  */
 public abstract class Entity {
 
@@ -31,9 +30,24 @@ public abstract class Entity {
         entity.type.interact(this, entity);
     }
 
-    public abstract void interact (Box box);
-    public abstract void interact (Player player);
-    public abstract void interact (Exit exit);
-    public abstract void interact (Button button);
-    public abstract void interact (Tile tile);
+    public void interact (Box box) {
+
+    }
+
+    public void interact (Player player) {
+
+    }
+    
+    public void interact (Exit exit) {
+
+    }
+
+    public void interact (Button button) {
+
+    }
+
+    public void interact (Tile tile) {
+
+    }
+
 }

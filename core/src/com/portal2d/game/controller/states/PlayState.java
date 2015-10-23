@@ -7,6 +7,7 @@ import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.PlayController;
 import com.portal2d.game.controller.level.Level;
 import com.portal2d.game.controller.level.LevelLoader;
+import com.portal2d.game.controller.level.LevelName;
 import com.portal2d.game.view.PlayScene;
 
 import static com.portal2d.game.controller.Box2DConstants.*;
@@ -30,11 +31,14 @@ public class PlayState extends GameState {
     @Override
     public void entered() {
         world = new World(DEFAULT_GRAVITY, true);
-        levelLoader = new LevelLoader();
-        level = levelLoader.loadNextLevel(world);
+        levelLoader = new LevelLoader(world);
+        level = levelLoader.loadNextLevel();
 
         playScene = new PlayScene(world, level);
         playController = new PlayController(this, level);
+
+        //test
+        System.out.println(LevelName.getLevelName(0));
     }
 
     @Override
@@ -42,6 +46,7 @@ public class PlayState extends GameState {
         playController.handleInput();
         world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
         level.update();
+
     }
 
     @Override
@@ -58,7 +63,7 @@ public class PlayState extends GameState {
     public void changeLevel() {
         world.dispose();
         world = new World(DEFAULT_GRAVITY, true);
-        level = levelLoader.loadNextLevel(world);
+        level = levelLoader.loadNextLevel();
         playScene.setLevel(level);
         playController.setLevel(level);
     }

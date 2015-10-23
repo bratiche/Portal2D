@@ -7,33 +7,36 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
-import com.portal2d.game.model.entities.Box;
-import com.portal2d.game.model.entities.Button;
-import com.portal2d.game.model.entities.Player;
-import com.portal2d.game.model.entities.Tile;
+import com.portal2d.game.model.entities.*;
+
 import static com.portal2d.game.controller.Box2DConstants.*;
+
 /**
- * Clase que carga niveles a partir de archivos tmx (TiledMap's)
+ * Class for loading levels from tmx files (TiledMaps).
  */
 public class LevelLoader {
 
     private World world;
 
-    public LevelLoader() {
-
+    public LevelLoader(World world) {
+        this.world = world;
     }
 
-    public Level loadNextLevel(World world) {
-        this.world = world;
-        TiledMap tiledMap = Portal2D.assets.getTiledMap(Level.levelNumber);
-        Level level = new Level(world, tiledMap);
-        createLevel(tiledMap, level);
-        return level;
+    /**
+     *
+     * @param levelName the name of the level to load
+     * @return the specified level
+     */
+    public Level loadLevel(LevelName levelName) {
+        return loadLevel(levelName.ordinal());
     }
 
-    public Level loadLevel(World world, LevelName levelName) {
-        this.world = world;
-        TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
+    public Level loadNextLevel() {
+        return loadLevel(Level.levelNumber);
+    }
+
+    private Level loadLevel(int levelNumber) {
+        TiledMap tiledMap = Portal2D.assets.getTiledMap(levelNumber);
         Level level = new Level(world, tiledMap);
         createLevel(tiledMap, level);
         return level;
@@ -57,6 +60,9 @@ public class LevelLoader {
 
         layer = tiledMap.getLayers().get("boxes");
         createBoxes(level, layer);
+
+        layer = tiledMap.getLayers().get("exits");
+        createExits(level, layer);
     }
 
     private void createPlayer(Level level, MapLayer layer) {
@@ -214,6 +220,45 @@ public class LevelLoader {
             body.createFixture(fixtureDef);
             Box box = new Box(world, body);
             level.boxes.add(box);
+        }
+
+        shape.dispose();
+    }
+
+    private void createExits(Level level, MapLayer layer) {
+        BodyDef bodyDef = new BodyDef();
+        RectangleMapObject rectangleMapObject;
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        float x;
+        float y;
+        float width;
+        float height;
+
+        for(MapObject mapObject : layer.getObjects()) {
+
+            rectangleMapObject = (RectangleMapObject)mapObject;
+            x = rectangleMapObject.getRectangle().getX();
+            y = rectangleMapObject.getRectangle().getY();
+            width = rectangleMapObject.getRectangle().getWidth();
+            height = rectangleMapObject.getRectangle().getHeight();
+
+            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+            Body body = world.createBody(bodyDef);
+            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+            fixtureDef.shape = shape;
+            fixtureDef.isSensor = true;
+            body.createFixture(fixtureDef);
+
+            String nextLevelString = (String)mapObject.getProperties().get("NextLevel");
+
+            int nextLevel = Integer.parseInt(nextLevelString);
+
+            System.out.println(nextLevel);
+
+            Exit exit = new Exit(world, body, LevelName.getLevelName(nextLevel));
+            level.exits.add(exit);
+
         }
 
         shape.dispose();
