@@ -24,6 +24,7 @@ public class PlayerController extends InputAdapter {
     private PlayState playState;
 
     private World world;
+    private Level level;
     private Player player;
 
     private Vector3 mouse;
@@ -43,6 +44,7 @@ public class PlayerController extends InputAdapter {
 
     public PlayerController(PlayState playState, Level level) {
         this.playState = playState;
+        this.level = level;
         player = level.getPlayer();
         world = level.getWorld();
 
@@ -140,11 +142,17 @@ public class PlayerController extends InputAdapter {
 
         if(Gdx.input.justTouched()) {
 
+            //screen coordinates
             mouse.x = Gdx.input.getX();
             mouse.y = Gdx.input.getY();
 
             playState.getCamera().unproject(mouse, 0, 0, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
 
+            //translate to world coordinates
+            float dx = playState.getCamera().position.x * PPM - VIEWPORT_WIDTH / 2;
+            float dy = playState.getCamera().position.y * PPM - VIEWPORT_HEIGHT / 2;
+
+            mouse.add(dx, dy, 0);
             if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 player.getWeapon().actionLeftClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
             }

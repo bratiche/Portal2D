@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.Assets;
 import com.portal2d.game.controller.GameStateManager;
+import com.portal2d.game.controller.states.MenuState;
 import com.portal2d.game.controller.states.PlayState;
 
 public class Portal2D extends ApplicationAdapter {
@@ -18,6 +19,7 @@ public class Portal2D extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		assets = new Assets();
 
+		assets.loadTextures();
 		assets.loadTiledMaps();
 
 		gsm = new GameStateManager();
@@ -28,6 +30,7 @@ public class Portal2D extends ApplicationAdapter {
 	public void render () {
 
 		//updating
+		gsm.handleInput();
 		gsm.update(Gdx.graphics.getDeltaTime());
 
 		//rendering

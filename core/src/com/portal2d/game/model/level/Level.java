@@ -23,6 +23,7 @@ public class Level {
     private TiledMap tiledMap;
 
     //Entities
+    private Set<Gate> gates;
     private Set<Button> buttons;
     private Set<Exit> exits;
     private Set<Box> boxes;
@@ -40,10 +41,11 @@ public class Level {
         this.tiledMap = tiledMap;
         levelNumber++;
 
-        tiles = new HashSet<Tile>();
+        gates = new HashSet<Gate>();
         buttons = new HashSet<Button>();
-        boxes = new HashSet<Box>();
         exits = new HashSet<Exit>();
+        boxes = new HashSet<Box>();
+        tiles = new HashSet<Tile>();
 
         teleportQueue = new HashMap<Entity, Portal>();
         removalQueue = new HashSet<Entity>();
@@ -99,6 +101,22 @@ public class Level {
 
     public void add(Exit exit) {
         exits.add(exit);
+    }
+
+    public void add(Gate gate) {
+        gates.add(gate);
+    }
+
+    public int getWidth() {
+        int tilewidth = (int) tiledMap.getProperties().get("tilewidth");
+        int mapwidth = (int) tiledMap.getProperties().get("width");
+        return tilewidth * mapwidth;
+    }
+
+    public int getHeight() {
+        int tileheight = (int) tiledMap.getProperties().get("tileheight");
+        int mapheight = (int) tiledMap.getProperties().get("height");
+        return tileheight * mapheight;
     }
 
 }

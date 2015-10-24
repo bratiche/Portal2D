@@ -32,6 +32,10 @@ public class GameStateManager {
         push(state);
     }
 
+    public void handleInput() {
+        states.peek().handleInput();
+    }
+
     public void update(float dt) {
         states.peek().update(dt);
     }

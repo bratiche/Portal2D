@@ -58,6 +58,9 @@ public abstract class Entity {
     public void beginInteraction(OrangePortal portal) {
     }
 
+    public void beginInteraction(Gate gate) {
+    }
+
 
     // end interactions
     public void endInteraction(Box box) {
@@ -79,6 +82,9 @@ public abstract class Entity {
     }
 
     public void endInteraction(OrangePortal portal) {
+    }
+
+    public void endInteraction(Gate gate) {
     }
 
     public void update() {

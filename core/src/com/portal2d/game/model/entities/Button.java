@@ -6,16 +6,17 @@ import com.portal2d.game.model.interactions.EntityType;
 
 /**
  * An entity that sends an order to it's linked Entity whenever it's pressed.
- * TODO: linked Entity
  */
 public class Button extends StaticEntity {
 
     //switch
     private boolean pressed;
     private int interactions;
+    private Linkable linkedEntity;
 
-    public Button(Level level, Body body) {
+    public Button(Level level, Body body, Linkable linkedEntity) {
         super(level, body);
+        this.linkedEntity = linkedEntity;
         type = EntityType.BUTTON;
         body.setUserData(this);
     }
@@ -24,10 +25,12 @@ public class Button extends StaticEntity {
         if(interactions > 0 && !pressed) {
             pressed = true;
             switchLinkedEntityState();
+            linkedEntity.link();
         }
         else if(interactions == 0 && pressed) {
             pressed = false;
             switchLinkedEntityState();
+            linkedEntity.unlink();
         }
     }
 
@@ -43,21 +46,12 @@ public class Button extends StaticEntity {
         interactions--;
     }
 
-    @Override
-    public void beginInteraction(Box box) {
-        //System.out.println("Boton-Caja");
-    }
-
-    @Override
-    public void beginInteraction(Player player) {
-        //System.out.println("Boton-Player");
-    }
-
     public boolean isPressed() {
         return pressed;
     }
 
     private void switchLinkedEntityState() {
+
         System.out.println(pressed);
     }
 

@@ -1,15 +1,16 @@
 package com.portal2d.game.controller.states;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.controller.GameStateManager;
-import com.portal2d.game.controller.PlayStateController;
+import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.controller.PlayerController;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.model.level.LevelName;
-import com.portal2d.game.view.PlayScene;
+import com.portal2d.game.view.scenes.PlayScene;
 
 import static com.portal2d.game.controller.Box2DConstants.*;
 
@@ -22,7 +23,7 @@ public class PlayState extends GameState {
     private Level level;
     private LevelLoader levelLoader;
 
-    private PlayScene playScene;
+    private PlayScene scene;
     private PlayerController playerController;
 
     public PlayState(GameStateManager gsm) {
@@ -35,8 +36,7 @@ public class PlayState extends GameState {
         levelLoader = new LevelLoader(world);
         level = levelLoader.loadNextLevel();
 
-        playScene = new PlayScene(world, level);
-        controller = new PlayStateController(this);
+        scene = new PlayScene(world, level);
         playerController = new PlayerController(this, level);
 
         //test
@@ -44,9 +44,21 @@ public class PlayState extends GameState {
     }
 
     @Override
+    public void handleInput() {
+
+        //pause the game
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+//            gsm.push(new PauseState());
+//        }
+
+        //back to menu
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            gsm.set(new MenuState(gsm));
+        }
+    }
+
+    @Override
     public void update(float dt) {
-        //this state controller
-        controller.handleInput();
         //controller for the player
         playerController.handleInput();
 
@@ -60,8 +72,7 @@ public class PlayState extends GameState {
 
     @Override
     public void render(SpriteBatch batch) {
-
-        playScene.render(batch);
+        scene.render(batch);
     }
 
     @Override
@@ -73,11 +84,11 @@ public class PlayState extends GameState {
         world.dispose();
         world = new World(DEFAULT_GRAVITY, true);
         level = levelLoader.loadNextLevel();
-        playScene.setLevel(level);
+        scene.setLevel(level);
         playerController.setLevel(level);
     }
 
     public OrthographicCamera getCamera() {
-        return playScene.getCamera();
+        return scene.getCamera();
     }
 }

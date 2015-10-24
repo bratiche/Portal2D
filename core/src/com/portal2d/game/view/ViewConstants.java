@@ -9,4 +9,8 @@ public interface ViewConstants {
     int VIEWPORT_WIDTH = 1200;
     int VIEWPORT_HEIGHT = 720;
 
+    public enum TextureName {
+        MENU_BG
+    }
+
 }

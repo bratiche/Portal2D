@@ -11,6 +11,9 @@ import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.model.entities.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.portal2d.game.controller.Box2DConstants.*;
 
 /**
@@ -20,8 +23,12 @@ public class LevelLoader {
 
     private World world;
 
+    //map for linking Gates with Buttons
+    private Map<Integer, Gate> gatesID;
+
     public LevelLoader(World world) {
         this.world = world;
+        gatesID = new HashMap<Integer, Gate>();
     }
 
     /**
@@ -56,6 +63,9 @@ public class LevelLoader {
 
         layer = tiledMap.getLayers().get("collision");
         createWalls(level, layer);
+
+        layer = tiledMap.getLayers().get("gates");
+        createGates(level, layer);
 
         layer = tiledMap.getLayers().get("buttons");
         createButtons(level, layer);
@@ -159,6 +169,46 @@ public class LevelLoader {
         shape.dispose();
     }
 
+    private void createGates(Level level, MapLayer layer) {
+        BodyDef bodyDef = new BodyDef();
+        RectangleMapObject rectangleMapObject;
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        float x;
+        float y;
+        float width;
+        float height;
+
+        for(MapObject mapObject : layer.getObjects()) {
+            rectangleMapObject = (RectangleMapObject) mapObject;
+            x = rectangleMapObject.getRectangle().getX();
+            y = rectangleMapObject.getRectangle().getY();
+            width = rectangleMapObject.getRectangle().getWidth();
+            height = rectangleMapObject.getRectangle().getHeight();
+
+            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+
+            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+
+            fixtureDef.shape = shape;
+            Body body = world.createBody(bodyDef);
+            body.createFixture(fixtureDef);
+
+
+            /**
+             * Put all the gates in a map with their respective ids
+             */
+            String string = (String) mapObject.getProperties().get("ID");
+            int gateID = Integer.parseInt(string);
+            Gate gate = new Gate(level, body);
+            gatesID.put(gateID, gate);
+
+            level.add(gate);
+        }
+
+        shape.dispose();
+    }
+
     private void createButtons(Level level, MapLayer layer) {
         BodyDef bodyDef = new BodyDef();
         RectangleMapObject rectangleMapObject;
@@ -186,8 +236,17 @@ public class LevelLoader {
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
 
-            Button button = new Button(level, body);
-            level.add(button);
+            /**
+             * Retrieve the corresponding gate linked to this button
+             */
+            String linkedEntity = (String) mapObject.getProperties().get("LinkedEntityID");
+            Integer gateID = Integer.parseInt(linkedEntity);
+            for(Integer ID : gatesID.keySet()) {
+                if(ID.equals(gateID)) {
+                    Button button = new Button(level, body, gatesID.get(ID));
+                    level.add(button);
+                }
+            }
         }
 
         shape.dispose();
