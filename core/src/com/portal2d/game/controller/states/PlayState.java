@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.controller.PlayerController;
@@ -34,13 +36,10 @@ public class PlayState extends GameState {
     public void entered() {
         world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader(world);
-        level = levelLoader.loadNextLevel();
+        level = levelLoader.loadLevel(LevelName.TEST_LEVEL);
 
         scene = new PlayScene(world, level);
         playerController = new PlayerController(this, level);
-
-        //test
-        System.out.println(LevelName.getLevelName(0));
     }
 
     @Override
@@ -55,6 +54,12 @@ public class PlayState extends GameState {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             gsm.set(new MenuState(gsm));
         }
+
+        //restart the level
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            //change level to the same level, which makes sense
+            changeLevel(level.getLevelName());
+        }
     }
 
     @Override
@@ -68,6 +73,10 @@ public class PlayState extends GameState {
         //States/interactions update
         level.update();
 
+        if(level.isFinished()) {
+            changeLevel(level.getNextLevel());
+        }
+
     }
 
     @Override
@@ -80,10 +89,19 @@ public class PlayState extends GameState {
         world.dispose();
     }
 
-    public void changeLevel() {
-        world.dispose();
-        world = new World(DEFAULT_GRAVITY, true);
-        level = levelLoader.loadNextLevel();
+    public void changeLevel(LevelName nextLevel) {
+
+        //remove all bodies
+        Array<Body> bodies = new Array<>();
+        world.getBodies(bodies);
+
+        for(int i = 0; i < bodies.size; i++) {
+            Body body = bodies.get(i);
+            world.destroyBody(body);
+        }
+
+        //set new level
+        level = levelLoader.loadLevel(nextLevel);
         scene.setLevel(level);
         playerController.setLevel(level);
     }

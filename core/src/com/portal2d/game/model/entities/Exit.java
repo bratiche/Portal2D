@@ -12,18 +12,10 @@ public class Exit extends StaticEntity {
 
     private LevelName destinyLevel;
 
-    /**
-     * @param destinyLevel Es el nivel al que lleva la exit
-     */
     public Exit(Level level, Body body, LevelName destinyLevel) {
         super(level, body);
         this.destinyLevel = destinyLevel;
         type = EntityType.EXIT;
-        body.setUserData(this);
-    }
-
-    public LevelName getDestinyLevel() {
-        return destinyLevel;
     }
 
     @Override
@@ -38,7 +30,8 @@ public class Exit extends StaticEntity {
 
     @Override
     public void beginInteraction(Player player) {
-
+        level.setFinished(true);
+        level.setNextLevel(destinyLevel);
     }
 
 }

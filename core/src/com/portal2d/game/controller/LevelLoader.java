@@ -37,16 +37,8 @@ public class LevelLoader {
      * @return the specified level
      */
     public Level loadLevel(LevelName levelName) {
-        return loadLevel(levelName.ordinal());
-    }
-
-    public Level loadNextLevel() {
-        return loadLevel(Level.levelNumber);
-    }
-
-    private Level loadLevel(int levelNumber) {
-        TiledMap tiledMap = Portal2D.assets.getTiledMap(levelNumber);
-        Level level = new Level(world, tiledMap);
+        TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
+        Level level = new Level(world, tiledMap, levelName);
         createLevel(tiledMap, level);
         return level;
     }
@@ -137,7 +129,7 @@ public class LevelLoader {
         shape.dispose();
     }
 
-    //TODO: remove, it's a test
+    //TODO: remove, it's a test (these are just used for collision, maybe don't remove them).
     private void createWalls(Level level, MapLayer layer) {
 
         BodyDef bodyDef = new BodyDef();
@@ -296,6 +288,9 @@ public class LevelLoader {
         float width;
         float height;
 
+        //remove, test variable
+        int i = 0;
+
         for(MapObject mapObject : layer.getObjects()) {
 
             rectangleMapObject = (RectangleMapObject)mapObject;
@@ -315,10 +310,11 @@ public class LevelLoader {
 
             int nextLevel = Integer.parseInt(nextLevelString);
 
-            System.out.println(nextLevel);
+            //System.out.println("Exit " + (i + 1)  + ": takes to level " + nextLevel);
 
             Exit exit = new Exit(level, body, LevelName.getLevelName(nextLevel));
             level.add(exit);
+            i++;
 
         }
 

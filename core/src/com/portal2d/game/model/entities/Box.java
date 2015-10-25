@@ -12,12 +12,8 @@ public class Box extends DynamicEntity {
     public Box(Level level, Body body) {
         super(level, body);
         type = EntityType.BOX;
-        body.setUserData(this);
     }
 
-    /**
-     * If we don't override these two methods for every entity we get StackOverflowError.
-     */
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
@@ -29,21 +25,13 @@ public class Box extends DynamicEntity {
     }
 
     @Override
-    public void beginInteraction(Box box) {
-
-    }
-
-    @Override
     public void beginInteraction(Player player) {
-    }
-
-    @Override
-    public void beginInteraction(Exit exit) {
 
     }
 
     @Override
-    public void beginInteraction(Button button) {
+    public void endInteraction(Player player) {
+
     }
 
 }

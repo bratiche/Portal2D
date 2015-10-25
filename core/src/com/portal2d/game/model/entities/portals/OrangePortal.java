@@ -12,11 +12,8 @@ public class OrangePortal extends Portal {
 
     public OrangePortal(Level level, Body body, PortalGun portalGun) {
         super(level, body, portalGun);
-        body.setUserData(this);
     }
 
-
-    //TODO: Tal vez overridear interacciones con entidades especificas para settear timers separados;
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
@@ -24,11 +21,11 @@ public class OrangePortal extends Portal {
             level.addTeleportQueue(entity, getBluePortal());
             setTimer(entity);
         }
-
     }
 
     @Override
     public void endInteraction(Entity entity) {
         entity.endInteraction(this);
     }
+
 }

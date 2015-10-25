@@ -13,6 +13,7 @@ import com.portal2d.game.view.ui.Button;
 public class MenuState extends GameState {
 
     private MenuScene scene;
+
     public MenuState(GameStateManager gsm) {
         super(gsm);
     }

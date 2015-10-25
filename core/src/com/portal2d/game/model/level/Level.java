@@ -16,10 +16,12 @@ import java.util.Set;
  */
 public class Level {
 
-    public static int levelNumber;
+    //Level properties
     private LevelName levelName;
-    private World world;
+    private LevelName nextLevel;
+    private boolean finished;
 
+    private World world;
     private TiledMap tiledMap;
 
     //Entities
@@ -36,10 +38,10 @@ public class Level {
 
     private Player player;
 
-    public Level(World world, TiledMap tiledMap) {
+    public Level(World world, TiledMap tiledMap, LevelName levelName) {
         this.world = world;
         this.tiledMap = tiledMap;
-        levelNumber++;
+        this.levelName = levelName;
 
         gates = new HashSet<Gate>();
         buttons = new HashSet<Button>();
@@ -63,7 +65,7 @@ public class Level {
 
         //Queue processing
         for(Map.Entry<Entity,Portal> e : teleportQueue.entrySet()) {
-            e.getValue().recieve(e.getKey());
+            e.getValue().receive(e.getKey());
         }
 
         //Queue cleaning
@@ -73,6 +75,10 @@ public class Level {
 
     public void addTeleportQueue(Entity e, Portal portal){
         teleportQueue.put(e, portal);
+    }
+
+    public void addToRemove(Entity entity) {
+        removalQueue.add(entity);
     }
 
     public Player getPlayer() {
@@ -117,6 +123,26 @@ public class Level {
         int tileheight = (int) tiledMap.getProperties().get("tileheight");
         int mapheight = (int) tiledMap.getProperties().get("height");
         return tileheight * mapheight;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public LevelName getNextLevel() {
+        return nextLevel;
+    }
+
+    public void setNextLevel(LevelName nextLevel) {
+        this.nextLevel = nextLevel;
+    }
+
+    public LevelName getLevelName() {
+        return levelName;
     }
 
 }

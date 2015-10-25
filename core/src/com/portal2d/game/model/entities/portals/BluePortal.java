@@ -12,7 +12,6 @@ public class BluePortal extends Portal {
 
     public BluePortal(Level level, Body body, PortalGun portalGun) {
         super(level, body, portalGun);
-        body.setUserData(this);
     }
 
     @Override
@@ -27,9 +26,6 @@ public class BluePortal extends Portal {
     @Override
     public void endInteraction(Entity entity) {
         entity.endInteraction(this);
-
     }
-
-
 
 }

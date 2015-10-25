@@ -8,19 +8,18 @@ import com.portal2d.game.model.weapons.PortalGun;
 /**
  *
  */
-public abstract class Portal extends Entity {
+public abstract class Portal extends StaticEntity {
 
     private PortalGun portalGun;
     protected Timer timer;
 
-
-     public Portal(Level level, Body body, PortalGun portalGun) {
-         super(level, body);
-         this.portalGun = portalGun;
-         timer = new Timer(0,0);
+    public Portal(Level level, Body body, PortalGun portalGun) {
+        super(level, body);
+        this.portalGun = portalGun;
+        timer = new Timer(0,0);
     }
 
-    public void recieve(Entity entity){
+    public void receive(Entity entity){
         if(!canBeUsed())
             return;
         setTimer(entity);
@@ -40,15 +39,14 @@ public abstract class Portal extends Entity {
     }
 
     public boolean canBeUsed(){
-        if(timer.getTime() < timer.cooldownTime)
+        if(timer.getTime() < timer.getCooldown())
             return false;
         return true;
     }
 
-    //TODO: Overload setTimer/use the same timer for all entities.
+    //TODO: Overload setTimer / use the same timer for all entities.
     protected void setTimer(Entity entity){
         timer = new Timer(1/60.0f, 5);
     }
-
 
 }

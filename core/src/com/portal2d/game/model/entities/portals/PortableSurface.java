@@ -11,7 +11,6 @@ public class PortableSurface extends Surface {
 
     public PortableSurface(Level level, Body body) {
         super(level, body);
-        body.setUserData(this);
     }
 
     @Override

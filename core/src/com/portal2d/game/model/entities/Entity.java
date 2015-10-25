@@ -2,6 +2,7 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.model.entities.portals.PortableSurface;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.portals.BluePortal;
 import com.portal2d.game.model.entities.portals.OrangePortal;
@@ -23,6 +24,7 @@ public abstract class Entity {
         this.level = level;
         this.world = level.getWorld();
         this.body = body;
+        body.setUserData(this);
     }
 
     public Body getBody() {
@@ -33,6 +35,14 @@ public abstract class Entity {
         return type;
     }
 
+    //TODO: make abstract?
+    public void update() {
+
+    }
+
+    /**
+     * If we don't make these two methods abstract we get StackOverflowError. (infinite recursion)
+     */
     public abstract void beginInteraction(Entity entity);
     public abstract void endInteraction(Entity entity);
 
@@ -61,6 +71,8 @@ public abstract class Entity {
     public void beginInteraction(Gate gate) {
     }
 
+    public void beginInteraction(PortableSurface surface) {
+    }
 
     // end interactions
     public void endInteraction(Box box) {
@@ -87,7 +99,7 @@ public abstract class Entity {
     public void endInteraction(Gate gate) {
     }
 
-    public void update() {
-
+    public void endInteraction(PortableSurface surface) {
     }
+
 }

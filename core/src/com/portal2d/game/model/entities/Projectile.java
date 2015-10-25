@@ -15,7 +15,7 @@ public abstract class Projectile extends KinematicEntity {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        //remove this projectile
+        level.addToRemove(this);
     }
 
     @Override

@@ -24,7 +24,6 @@ public class PlayerController extends InputAdapter {
     private PlayState playState;
 
     private World world;
-    private Level level;
     private Player player;
 
     private Vector3 mouse;
@@ -32,7 +31,6 @@ public class PlayerController extends InputAdapter {
     //player stuff
     private Body playerBody;
     private Fixture playerPhysicsFixture;
-
 
     //TODO: Implement global terminal velocity.
     private final float MAX_VELOCITY = 2.0f;
@@ -44,15 +42,9 @@ public class PlayerController extends InputAdapter {
 
     public PlayerController(PlayState playState, Level level) {
         this.playState = playState;
-        this.level = level;
-        player = level.getPlayer();
-        world = level.getWorld();
-
-        playerBody = player.getBody();
-        playerPhysicsFixture = playerBody.getFixtureList().get(0);
+        setLevel(level);
 
         mouse = new Vector3();
-
         Gdx.input.setInputProcessor(this);
     }
 
@@ -133,13 +125,16 @@ public class PlayerController extends InputAdapter {
             }
         }
 
+        if(playerBody.getLinearVelocity().x >= 0) {
+            player.setFacingRight(true);
+        }
+        else {
+            player.setFacingRight(false);
+        }
+
         playerBody.setAwake(true);
 
-        if(playerBody.getLinearVelocity().x >= 0)
-            player.setFacingRight(true);
-        else
-            player.setFacingRight(false);
-
+        //check mouse input
         if(Gdx.input.justTouched()) {
 
             //screen coordinates
@@ -201,6 +196,9 @@ public class PlayerController extends InputAdapter {
     public void setLevel(Level level) {
         player = level.getPlayer();
         world = level.getWorld();
+
+        playerBody = player.getBody();
+        playerPhysicsFixture = playerBody.getFixtureList().get(0);
     }
 
 }

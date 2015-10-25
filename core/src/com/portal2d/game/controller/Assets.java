@@ -18,26 +18,26 @@ import java.util.Map;
 public class Assets implements Disposable {
 
     //tiled maps
-    private Map<Integer, TiledMap> tiledMaps;
-    private Map<LevelName, TiledMap> tiledMapsByName;
+    private Map<LevelName, TiledMap> tiledMaps;
 
     //textures
     private Map<TextureName, Texture> textures;
 
     public Assets() {
-        tiledMaps = new HashMap<Integer, TiledMap>();
-        tiledMapsByName = new HashMap<LevelName, TiledMap>();
+        tiledMaps = new HashMap<LevelName, TiledMap>();
         textures = new HashMap<TextureName, Texture>();
     }
 
     public void loadTiledMaps() {
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
         TiledMap tiledMap;
-        int levelNumber = 0;
 
-        tiledMap = tmxMapLoader.load("core/assets/levels/test.tmx");
-        tiledMaps.put(levelNumber++, tiledMap);
-        tiledMapsByName.put(LevelName.TEST_LEVEL, tiledMap);
+        tiledMap = tmxMapLoader.load("core/assets/levels/test0.tmx");
+        tiledMaps.put(LevelName.TEST_LEVEL, tiledMap);
+
+        tiledMap = tmxMapLoader.load("core/assets/levels/test1.tmx");
+        tiledMaps.put(LevelName.LEVEL_1, tiledMap);
+
     }
 
     public void loadTextures() {
@@ -46,12 +46,15 @@ public class Assets implements Disposable {
         textures.put(TextureName.MENU_BG, texture);
     }
 
-    public TiledMap getTiledMap(Integer key) {
-        return tiledMaps.get(key);
-    }
-
     public TiledMap getTiledMap(LevelName key) {
-        return tiledMapsByName.get(key);
+
+        TiledMap tiledMap = tiledMaps.get(key);
+
+        if(tiledMap == null) {
+            throw new NoSuchLevelException(key + " does not exist yet.");
+        }
+
+        return tiledMap;
     }
 
     public Texture getTexture(TextureName key) {

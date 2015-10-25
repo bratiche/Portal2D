@@ -14,21 +14,19 @@ public class PortalProjectile extends Projectile {
     private PortalGun portalGun;
     private PortalColor color;
 
+    public enum PortalColor {
+        BLUE,
+        ORANGE
+    }
+
     public PortalProjectile(Level level, Body body, PortalColor color, PortalGun portalGun) {
         super(level, body);
         this.color = color;
         this.portalGun = portalGun;
     }
 
-    public enum PortalColor {
-        BLUE,
-        ORANGE
-    }
-
-    /**
-     * Este metodo se llama solo cuando el proyectil colisiona con una superfice portable (TODO: rename)
-     */
-    public void crash(PortableSurface surface) {
+    @Override
+    public void beginInteraction(PortableSurface surface) {
 
         //
         // Uso la surface que me pasan para saber donde crear el portal y cual es su direccion de entrada/salida

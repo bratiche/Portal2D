@@ -16,7 +16,6 @@ public class Player extends DynamicEntity {
     public Player(Level level, Body body) {
         super(level, body);
         type = EntityType.PLAYER;
-        body.setUserData(this);
         weapon = new PortalGun(level, this);
     }
 
@@ -32,20 +31,7 @@ public class Player extends DynamicEntity {
 
     @Override
     public void beginInteraction(Box box) {
-    }
 
-    @Override
-    public void beginInteraction(Player player) {
-
-    }
-
-    @Override
-    public void beginInteraction(Exit exit) {
-
-    }
-
-    @Override
-    public void beginInteraction(Button button) {
     }
 
     public Weapon getWeapon() {
@@ -54,7 +40,6 @@ public class Player extends DynamicEntity {
 
     public void update(){
         ((PortalGun) weapon).update();
-        //System.out.println("Player velocity: " + body.getLinearVelocity());
     }
 
 }

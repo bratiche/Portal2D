@@ -16,6 +16,9 @@ public enum LevelName {
     LEVEL_4,
     LEVEL_5;
 
+    /**
+     * This method is used by the {@link com.portal2d.game.controller.LevelLoader} to create Exits.
+     */
     public static LevelName getLevelName(int levelNumber) {
         for(LevelName levelName : values()) {
             if(levelName.ordinal() == levelNumber)

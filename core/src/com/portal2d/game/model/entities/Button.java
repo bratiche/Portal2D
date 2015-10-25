@@ -9,7 +9,6 @@ import com.portal2d.game.model.interactions.EntityType;
  */
 public class Button extends StaticEntity {
 
-    //switch
     private boolean pressed;
     private int interactions;
     private Linkable linkedEntity;
@@ -18,18 +17,15 @@ public class Button extends StaticEntity {
         super(level, body);
         this.linkedEntity = linkedEntity;
         type = EntityType.BUTTON;
-        body.setUserData(this);
     }
 
     public void update() {
         if(interactions > 0 && !pressed) {
             pressed = true;
-            switchLinkedEntityState();
             linkedEntity.link();
         }
         else if(interactions == 0 && pressed) {
             pressed = false;
-            switchLinkedEntityState();
             linkedEntity.unlink();
         }
     }
@@ -48,11 +44,6 @@ public class Button extends StaticEntity {
 
     public boolean isPressed() {
         return pressed;
-    }
-
-    private void switchLinkedEntityState() {
-
-        System.out.println(pressed);
     }
 
 }

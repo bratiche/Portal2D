@@ -16,7 +16,4 @@ public abstract class Scene {
 
     public abstract void render(SpriteBatch batch);
 
-    public UI getUI() {
-        return ui;
-    }
 }

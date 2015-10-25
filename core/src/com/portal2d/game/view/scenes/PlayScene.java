@@ -7,13 +7,14 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
+import com.portal2d.game.controller.states.PlayState;
 
 import static com.portal2d.game.controller.Box2DConstants.PPM;
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
- * Representacion visual de PlayState
+ * Visual representation of the {@link PlayState}.
  */
 public class PlayScene extends Scene {
 
@@ -21,23 +22,13 @@ public class PlayScene extends Scene {
     private BoundedCamera camera;
     private Box2DDebugRenderer debugRenderer;
 
-    private OrthogonalTiledMapRenderer tmr;
-    private TiledMap tiledMap;
-
     private Level level;
+    private OrthogonalTiledMapRenderer tmr;
 
     public PlayScene(World world, Level level) {
         this.world = world;
-        this.level = level;
-        this.tiledMap = level.getTiledMap();
-        int tilewidth = (int) tiledMap.getProperties().get("tilewidth");
-        int mapWidth = (int) tiledMap.getProperties().get("width");
-
-        camera = new BoundedCamera(0, 0, VIEWPORT_WIDTH / PPM * tilewidth * mapWidth , VIEWPORT_HEIGHT / PPM);
-        camera.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
-        tmr = new OrthogonalTiledMapRenderer(tiledMap);
-
         debugRenderer = new Box2DDebugRenderer();
+        setLevel(level);
     }
 
     @Override
@@ -62,7 +53,15 @@ public class PlayScene extends Scene {
 
     public void setLevel(Level level) {
         this.level = level;
-        tmr.setMap(level.getTiledMap());
+        this.world = level.getWorld();
+
+        TiledMap tiledMap = level.getTiledMap();
+        tmr = new OrthogonalTiledMapRenderer(tiledMap);
+
+        int width = level.getWidth();
+        int height = level.getHeight();
+        camera = new BoundedCamera(0, 0, width / PPM, height / PPM);
+        camera.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
     }
 
     public BoundedCamera getCamera() {

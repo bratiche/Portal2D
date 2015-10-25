@@ -28,14 +28,14 @@
   </object>
  </objectgroup>
  <objectgroup name="exits">
-  <object id="74" name="exit 1" x="1320" y="120" width="30" height="180">
+  <object id="74" name="exit 1" x="1170" y="120" width="30" height="180">
    <properties>
-    <property name="NextLevel" value="2"/>
+    <property name="NextLevel" value="0"/>
    </properties>
   </object>
-  <object id="109" name="exit 2" x="1170" y="120" width="30" height="180">
+  <object id="109" name="exit 2" x="1320" y="120" width="30" height="180">
    <properties>
-    <property name="NextLevel" value="5"/>
+    <property name="NextLevel" value="2"/>
    </properties>
   </object>
  </objectgroup>
