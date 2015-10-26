@@ -34,12 +34,14 @@ public class Player extends DynamicEntity {
 
     }
 
-    public Weapon getWeapon() {
-        return weapon;
+    @Override
+    public void update(){
+        super.update();
+        ((PortalGun) weapon).update();
     }
 
-    public void update(){
-        ((PortalGun) weapon).update();
+    public Weapon getWeapon() {
+        return weapon;
     }
 
 }

@@ -19,6 +19,7 @@ public class Button extends StaticEntity {
         type = EntityType.BUTTON;
     }
 
+    @Override
     public void update() {
         if(interactions > 0 && !pressed) {
             pressed = true;
@@ -40,10 +41,6 @@ public class Button extends StaticEntity {
     public void endInteraction(Entity entity) {
         entity.endInteraction(this);
         interactions--;
-    }
-
-    public boolean isPressed() {
-        return pressed;
     }
 
 }

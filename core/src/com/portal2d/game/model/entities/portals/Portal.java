@@ -26,6 +26,7 @@ public abstract class Portal extends StaticEntity {
         entity.getBody().setTransform(body.getPosition(), 0);
     }
 
+    @Override
     public void update(){
         timer.tick();
     }

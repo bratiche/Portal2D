@@ -92,7 +92,7 @@ public class PlayState extends GameState {
     public void changeLevel(LevelName nextLevel) {
 
         //remove all bodies
-        Array<Body> bodies = new Array<>();
+        Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
         for(int i = 0; i < bodies.size; i++) {

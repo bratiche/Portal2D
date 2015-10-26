@@ -32,9 +32,7 @@ public class PlayerController extends InputAdapter {
     private Body playerBody;
     private Fixture playerPhysicsFixture;
 
-    //TODO: Implement global terminal velocity.
     private final float MAX_VELOCITY = 2.0f;
-    private final float TERMINAL_VELOCITY = 25.0f;
     private boolean jump = false;
 
     private float stillTime = 0.0f;
@@ -66,12 +64,6 @@ public class PlayerController extends InputAdapter {
         //cap max velocity
         if(Math.abs(velocity.x) > MAX_VELOCITY) {
             velocity.x = Math.signum(velocity.x) * MAX_VELOCITY;
-            playerBody.setLinearVelocity(velocity.x, velocity.y);
-        }
-
-        //cap terminal velocity
-        if(Math.abs(velocity.y) > TERMINAL_VELOCITY) {
-            velocity.y = Math.signum(velocity.y) * TERMINAL_VELOCITY;
             playerBody.setLinearVelocity(velocity.x, velocity.y);
         }
 

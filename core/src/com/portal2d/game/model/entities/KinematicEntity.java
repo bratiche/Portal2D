@@ -13,4 +13,9 @@ public abstract class KinematicEntity extends Entity {
         super(level, body);
         body.setType(BodyDef.BodyType.KinematicBody);
     }
+
+    @Override
+    public void update() {
+
+    }
 }

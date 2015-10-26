@@ -1,8 +1,11 @@
 package com.portal2d.game.model.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.portal2d.game.model.level.Level;
+
+import static com.portal2d.game.model.ModelConstants.*;
 
 /**
  * An entity that moves and is affected by all forces applied to it.
@@ -33,6 +36,17 @@ public abstract class DynamicEntity extends Entity{
 
     public void setFacingRight(boolean facingRight) {
         this.facingRight = facingRight;
+    }
+
+    @Override
+    public void update() {
+        //cap terminal velocity
+        Vector2 velocity = body.getLinearVelocity();
+
+        if(Math.abs(velocity.y) > TERMINAL_VELOCITY) {
+            velocity.y = Math.signum(velocity.y) * TERMINAL_VELOCITY;
+            body.setLinearVelocity(velocity.x, velocity.y);
+        }
     }
 
 }

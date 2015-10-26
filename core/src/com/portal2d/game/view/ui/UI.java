@@ -14,7 +14,7 @@ public class UI {
     private List<Button> buttons;
 
     public UI() {
-        buttons = new ArrayList<>();
+        buttons = new ArrayList<Button>();
     }
 
     public void render(SpriteBatch batch) {

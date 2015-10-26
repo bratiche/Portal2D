@@ -14,4 +14,9 @@ public abstract class StaticEntity extends Entity {
         body.setType(BodyDef.BodyType.StaticBody);
     }
 
+    @Override
+    public void update() {
+
+    }
+
 }

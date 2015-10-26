@@ -35,10 +35,10 @@ public abstract class Entity {
         return type;
     }
 
-    //TODO: make abstract?
-    public void update() {
-
-    }
+    /**
+     * Called by the level each frame.
+     */
+    public abstract void update();
 
     /**
      * If we don't make these two methods abstract we get StackOverflowError. (infinite recursion)

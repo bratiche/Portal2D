@@ -1,11 +1,11 @@
 package com.portal2d.game.model;
 
-import com.badlogic.gdx.math.Vector2;
-
 /**
  *
  */
 public interface ModelConstants {
 
+    float TERMINAL_VELOCITY = 25.0f;
 
+    //TODO: add physical properties of each entity
 }

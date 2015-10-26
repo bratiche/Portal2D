@@ -1,6 +1,7 @@
 package com.portal2d.game.model.level;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.interactions.GameContactListener;
@@ -25,17 +26,13 @@ public class Level {
     private TiledMap tiledMap;
 
     //Entities
-    private Set<Gate> gates;
-    private Set<Button> buttons;
-    private Set<Exit> exits;
-    private Set<Box> boxes;
-    private Set<Tile> tiles;
+    private Set<Entity> entities;
 
     //Queues
     private Map<Entity,Portal> teleportQueue;
-    //TODO: entity removal system
     private Set<Entity> removalQueue;
 
+    //Player
     private Player player;
 
     public Level(World world, TiledMap tiledMap, LevelName levelName) {
@@ -43,11 +40,7 @@ public class Level {
         this.tiledMap = tiledMap;
         this.levelName = levelName;
 
-        gates = new HashSet<Gate>();
-        buttons = new HashSet<Button>();
-        exits = new HashSet<Exit>();
-        boxes = new HashSet<Box>();
-        tiles = new HashSet<Tile>();
+        entities = new HashSet<Entity>();
 
         teleportQueue = new HashMap<Entity, Portal>();
         removalQueue = new HashSet<Entity>();
@@ -57,10 +50,12 @@ public class Level {
 
     public void update() {
 
+        //Update player
         player.update();
 
-        for(Button button : buttons) {
-            button.update();
+        //Update all other entities
+        for(Entity entity : entities) {
+            entity.update();
         }
 
         //Queue processing
@@ -70,6 +65,10 @@ public class Level {
 
         //Queue cleaning
         teleportQueue.clear();
+
+        //Remove entities
+        if(!removalQueue.isEmpty())
+            removeEntities();
 
     }
 
@@ -97,20 +96,21 @@ public class Level {
         this.player = player;
     }
 
-    public void add(Box box) {
-        boxes.add(box);
+    public void add(Entity entity) {
+        entities.add(entity);
     }
 
-    public void add(Button button) {
-        buttons.add(button);
-    }
+    private void removeEntities() {
 
-    public void add(Exit exit) {
-        exits.add(exit);
-    }
+        System.out.println(entities.size());
+        for(Entity entity : removalQueue) {
+            Body body = entity.getBody();
+            world.destroyBody(body);
+            entities.remove(entity);
+        }
+        System.out.println(entities.size());
 
-    public void add(Gate gate) {
-        gates.add(gate);
+        removalQueue.clear();
     }
 
     public int getWidth() {
