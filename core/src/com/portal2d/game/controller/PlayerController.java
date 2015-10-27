@@ -17,7 +17,7 @@ import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
- *
+ * Controls the {@link Player} according to user input.
  */
 public class PlayerController extends InputAdapter {
 
@@ -77,10 +77,20 @@ public class PlayerController extends InputAdapter {
 
         //disable friction while jumping
         if(!grounded) {
+            if(playerBody.getLinearVelocity().y < 0) {
+                player.setFalling(true);
+                player.setJumping(false);
+            }
+            else {
+                player.setFalling(false);
+                player.setJumping(true);
+            }
+
             playerPhysicsFixture.setFriction(0.0f);
-            //playerSensorFixture.setFriction(0.0f);
         }
         else {
+            player.setJumping(false);
+            player.setFalling(false);
             if(!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && stillTime > 0.2f) {
                 playerPhysicsFixture.setFriction(1000.0f);
             }
@@ -110,21 +120,26 @@ public class PlayerController extends InputAdapter {
             jump = false;
             if (grounded) {
                 playerBody.setLinearVelocity(velocity.x, 0);
-                //System.out.println("Velocity before jump: " + playerBody.getLinearVelocity());
                 playerBody.setTransform(position.x, position.y + 0.01f, 0);
                 playerBody.applyLinearImpulse(0, 4, position.x, position.y, true);
-                //System.out.println("jump velocity, " + playerBody.getLinearVelocity());
             }
+
         }
 
-        if(playerBody.getLinearVelocity().x >= 0) {
-            player.setFacingRight(true);
+        // Set if player is moving or not
+        if (playerBody.getLinearVelocity().x != 0 && !player.isJumping()) {
+            player.setWalking(true);
         }
         else {
-            player.setFacingRight(false);
+            player.setWalking(false);
         }
 
-        playerBody.setAwake(true);
+        // Set if the player is facing right or left (regardless of whether it is moving or jumping)
+        if(playerBody.getLinearVelocity().x >= 0) {
+            player.setFacingRight(true);
+        } else {
+            player.setFacingRight(false);
+        }
 
         //check mouse input
         if(Gdx.input.justTouched()) {
@@ -143,7 +158,7 @@ public class PlayerController extends InputAdapter {
             if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 player.getWeapon().actionLeftClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
             }
-            if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+            if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
                 player.getWeapon().actionRightClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
             }
 

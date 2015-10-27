@@ -5,12 +5,15 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Box;
 import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.Gate;
+import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.entities.BoxView;
+import com.portal2d.game.view.entities.EntityView;
+import com.portal2d.game.view.entities.GateView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,19 +23,20 @@ import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
- * Visual representation of the {@link PlayState}.
+ * Visual representation of the {@link Level}.
  */
 public class PlayScene extends Scene {
 
     private Level level;
-    private World world;
-    private BoundedCamera camera;
 
+    private BoundedCamera camera;
     private OrthogonalTiledMapRenderer tmr;
-    private Set<BoxView> boxViews;
+
+    private Set<EntityView> entityViews;
 
     //debugging stuff
     private boolean debug = true;
+    private World world;
     private Box2DDebugRenderer debugRenderer;
     private BoundedCamera b2dcam;
 
@@ -41,7 +45,7 @@ public class PlayScene extends Scene {
 
         debugRenderer = new Box2DDebugRenderer();
 
-        boxViews = new HashSet<BoxView>();
+        entityViews = new HashSet<EntityView>();
 
         setLevel(level);
     }
@@ -62,14 +66,13 @@ public class PlayScene extends Scene {
 
         //draw entities
         batch.setProjectionMatrix(camera.combined);
-        for(BoxView boxView : boxViews) {
-            boxView.render(batch);
+        for(EntityView entityView : entityViews) {
+            entityView.render(batch);
         }
 
         //draw box2d world (debug)
-        if(debug) {
+        if (debug) {
             b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT) / PPM);
-            //b2dcam.setPosition(x / PPM, y / PPM);
             b2dcam.update();
             debugRenderer.render(world, b2dcam.combined);
         }
@@ -94,11 +97,15 @@ public class PlayScene extends Scene {
         b2dcam.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
 
         //create entity views
-        boxViews.clear();
+        entityViews.clear();
         for(Entity entity : level.getEntities()) {
-            if(entity instanceof Box) {
-                boxViews.add(new BoxView((Box)entity));
+            if(entity.getType().equals(EntityType.BOX)) {
+                entityViews.add(new BoxView((Box) entity));
             }
+            else if(entity.getType().equals(EntityType.GATE)) {
+                entityViews.add(new GateView((Gate)entity));
+            }
+            //TODO: add other types
         }
     }
 

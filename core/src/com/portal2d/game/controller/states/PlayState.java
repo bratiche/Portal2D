@@ -17,7 +17,7 @@ import com.portal2d.game.view.scenes.PlayScene;
 import static com.portal2d.game.controller.Box2DConstants.*;
 
 /**
- *
+ * Main state of the game.
  */
 public class PlayState extends GameState {
 
@@ -34,11 +34,15 @@ public class PlayState extends GameState {
 
     @Override
     public void entered() {
+        // Create world and load first level
         world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader(world);
         level = levelLoader.loadLevel(LevelName.TEST_LEVEL);
 
+        // Setup view
         scene = new PlayScene(world, level);
+
+        // Setup controller
         playerController = new PlayerController(this, level);
     }
 
@@ -50,18 +54,18 @@ public class PlayState extends GameState {
 //            gsm.push(new PauseState());
 //        }
 
-        //back to menu
+        // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             gsm.set(new MenuState(gsm));
         }
 
-        //restart the level
+        // Restart the level
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             //change level to the same level, which makes sense
             changeLevel(level.getLevelName());
         }
 
-        //controller for the player
+        //Update player input events
         playerController.handleInput();
     }
 
@@ -92,7 +96,7 @@ public class PlayState extends GameState {
 
     public void changeLevel(LevelName nextLevel) {
 
-        //remove all bodies
+        // Remove all bodies
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
@@ -101,7 +105,7 @@ public class PlayState extends GameState {
             world.destroyBody(body);
         }
 
-        //set new level
+        // Set new level
         level = levelLoader.loadLevel(nextLevel);
         scene.setLevel(level);
         playerController.setLevel(level);

@@ -1,6 +1,7 @@
 package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.weapons.PortalGun;
@@ -16,6 +17,7 @@ public abstract class Portal extends StaticEntity {
     public Portal(Level level, Body body, PortalGun portalGun) {
         super(level, body);
         this.portalGun = portalGun;
+        type = EntityType.PORTAL;
         timer = new Timer(0,0);
     }
 

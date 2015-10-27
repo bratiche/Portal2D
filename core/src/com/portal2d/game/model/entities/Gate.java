@@ -1,6 +1,7 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**
@@ -8,10 +9,11 @@ import com.portal2d.game.model.level.Level;
  */
 public class Gate extends StaticEntity implements Linkable {
 
-    private boolean opened;
+    private boolean open;
 
     public Gate(Level level, Body body) {
         super(level, body);
+        type = EntityType.GATE;
     }
 
     @Override
@@ -26,13 +28,17 @@ public class Gate extends StaticEntity implements Linkable {
 
     @Override
     public void link() {
-        opened = true;
+        open = true;
         body.getFixtureList().get(0).setSensor(true);
     }
 
     @Override
     public void unlink() {
-        opened = false;
+        open = false;
         body.getFixtureList().get(0).setSensor(false);
+    }
+
+    public boolean isOpen() {
+        return open;
     }
 }

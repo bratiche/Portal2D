@@ -13,6 +13,11 @@ public class Player extends DynamicEntity {
 
     private Weapon weapon;
 
+    private boolean walking;
+    private boolean falling;
+    private boolean jumping;
+    private boolean facingRight;
+
     public Player(Level level, Body body) {
         super(level, body);
         type = EntityType.PLAYER;
@@ -42,6 +47,38 @@ public class Player extends DynamicEntity {
 
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public boolean isWalking() {
+        return walking;
+    }
+
+    public void setWalking(boolean walking) {
+        this.walking = walking;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
+    public boolean isFacingRight() {
+        return facingRight;
+    }
+
+    public void setFacingRight(boolean facingRight) {
+        this.facingRight = facingRight;
+    }
+
+    public boolean isFalling() {
+        return falling;
+    }
+
+    public void setFalling(boolean falling) {
+        this.falling = falling;
     }
 
 }

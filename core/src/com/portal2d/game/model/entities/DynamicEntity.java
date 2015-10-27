@@ -13,33 +13,15 @@ import static com.portal2d.game.model.ModelConstants.*;
  */
 public abstract class DynamicEntity extends Entity{
 
-    protected boolean walking;
-    protected boolean jumping;
-    protected boolean facingRight;
-
     public DynamicEntity(Level level, Body body) {
         super(level, body);
         body.setType(BodyDef.BodyType.DynamicBody);
     }
 
-    public boolean isJumping() {
-        return jumping;
-    }
-
-    public void setJumping(boolean jumping) {
-        this.jumping = jumping;
-    }
-
-    public boolean isFacingRight() {
-        return facingRight;
-    }
-
-    public void setFacingRight(boolean facingRight) {
-        this.facingRight = facingRight;
-    }
-
     @Override
     public void update() {
+        body.setAwake(true);
+
         //cap terminal velocity
         Vector2 velocity = body.getLinearVelocity();
 

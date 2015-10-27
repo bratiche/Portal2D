@@ -10,8 +10,13 @@ public interface ViewConstants {
     int VIEWPORT_HEIGHT = 720;
 
     enum TextureName {
+        ANIM_GATE,
         MENU_BG,
-        CUBE
+        SPRITE_BOX,
     }
+
+    //sizes in pixels
+    int GATE_WIDTH = 40;
+    int GATE_HEIGHT = 180;
 
 }

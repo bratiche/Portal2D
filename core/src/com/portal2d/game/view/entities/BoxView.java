@@ -15,13 +15,10 @@ public class BoxView extends EntityView<Box> {
 
     private Sprite sprite;
 
-    private float width;
-    private float height;
-
     public BoxView(Box box) {
         super(box);
-        this.body = box.getBody();
-        sprite = new Sprite(Portal2D.assets.getTexture(ViewConstants.TextureName.CUBE));
+
+        sprite = new Sprite(Portal2D.assets.getTexture(ViewConstants.TextureName.SPRITE_BOX));
 
         width = sprite.getWidth();
         height = sprite.getHeight();
