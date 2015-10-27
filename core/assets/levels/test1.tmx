@@ -5,12 +5,12 @@
  </tileset>
  <layer name="non-portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYB3mGBcgRy+17CbkJmoBaps3UPYOpD+obd5w9wct/Ucrf1Caf6lZLg0koHYZO1BgpPuD2vUgpWFHTX/QGlPTHwApuASY
+   eJxjZWBgYB3mGBcgRy+17CbkJmoBaps3UPYOpD+obd5Q8gc56ZuW/qNVfFCaf6lZLg0koHYZO1BgpPuD2vUgpWFHTX/QGlPTHwDGDAS2
   </data>
  </layer>
  <layer name="portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYBj+gAsHJkcvteymxE2jgL5guMQLNdMvPnlag5EcH6NgFJALRusc+gMAWh4Brw==
+   eJxjYBj+gAsHJkcvteymxE2jgL5guMQLLfwxEGl4ND5GwSggHYzWOfQHACFnAXM=
   </data>
  </layer>
  <objectgroup name="boxes">

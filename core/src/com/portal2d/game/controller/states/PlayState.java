@@ -60,12 +60,13 @@ public class PlayState extends GameState {
             //change level to the same level, which makes sense
             changeLevel(level.getLevelName());
         }
+
+        //controller for the player
+        playerController.handleInput();
     }
 
     @Override
     public void update(float dt) {
-        //controller for the player
-        playerController.handleInput();
 
         //Physics update
         world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
@@ -106,7 +107,7 @@ public class PlayState extends GameState {
         playerController.setLevel(level);
     }
 
-    public OrthographicCamera getCamera() {
-        return scene.getCamera();
+    public OrthographicCamera getBox2DCamera() {
+        return scene.getBox2DCamera();
     }
 }

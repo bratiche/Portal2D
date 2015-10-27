@@ -26,12 +26,12 @@ public abstract class GameState {
 
     /**
      * Updates the state's logic, if there is any.
-     * @param dt time passed since last frame (delta time)
+     * @param dt time passed since last frame (delta time).
      */
     public abstract void update(float dt);
 
     /**
-     * Draws the state scene into the screen.
+     * Draws the state into the screen.
      * @param batch the SpriteBatch used to draw.
      */
     public abstract void render(SpriteBatch batch);

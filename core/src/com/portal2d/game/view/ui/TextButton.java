@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- *
+ * TODO
  */
-public class Button extends UIComponent {
+public class TextButton extends UIComponent {
 
     private String text;
     private BitmapFont font;

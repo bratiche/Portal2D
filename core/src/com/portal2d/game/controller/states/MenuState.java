@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.view.scenes.MenuScene;
-import com.portal2d.game.view.ui.Button;
 
 /**
  *

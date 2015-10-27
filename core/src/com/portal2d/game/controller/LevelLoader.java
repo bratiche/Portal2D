@@ -86,7 +86,7 @@ public class LevelLoader {
         Fixture fixture = body.createFixture(fixtureDef);
         body.setFixedRotation(true);
 
-        level.setPlayer(new Player(level, body));
+        level.addPlayer(new Player(level, body));
 
         shape.dispose();
     }

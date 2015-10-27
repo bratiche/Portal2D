@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.Assets;
 import com.portal2d.game.controller.GameStateManager;
-import com.portal2d.game.controller.states.MenuState;
 import com.portal2d.game.controller.states.PlayState;
 
 public class Portal2D extends ApplicationAdapter {
+
 	private SpriteBatch batch;
 	private GameStateManager gsm;
 	public static Assets assets;
@@ -37,9 +37,7 @@ public class Portal2D extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		batch.begin();
 		gsm.render(batch);
-		batch.end();
 
 	}
 

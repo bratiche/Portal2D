@@ -26,8 +26,7 @@ public class Box extends DynamicEntity {
 
     @Override
     public void beginInteraction(Player player) {
-        //TODO: remove, it's a test of the removal queue
-        level.addToRemove(this);
+
     }
 
     @Override

@@ -133,11 +133,11 @@ public class PlayerController extends InputAdapter {
             mouse.x = Gdx.input.getX();
             mouse.y = Gdx.input.getY();
 
-            playState.getCamera().unproject(mouse, 0, 0, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
+            playState.getBox2DCamera().unproject(mouse, 0, 0, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
 
             //translate to world coordinates
-            float dx = playState.getCamera().position.x * PPM - VIEWPORT_WIDTH / 2;
-            float dy = playState.getCamera().position.y * PPM - VIEWPORT_HEIGHT / 2;
+            float dx = playState.getBox2DCamera().position.x * PPM - VIEWPORT_WIDTH / 2;
+            float dy = playState.getBox2DCamera().position.y * PPM - VIEWPORT_HEIGHT / 2;
 
             mouse.add(dx, dy, 0);
             if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {

@@ -3,7 +3,7 @@ package com.portal2d.game.view.ui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
- *
+ * Base class for user interface components, such as {@link TextButton}.
  */
 public abstract class UIComponent {
 

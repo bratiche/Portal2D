@@ -44,6 +44,9 @@ public class Assets implements Disposable {
         Texture texture;
         texture = new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png"));
         textures.put(TextureName.MENU_BG, texture);
+
+        texture = new Texture(Gdx.files.internal("core/assets/images/cube.png"));
+        textures.put(TextureName.CUBE, texture);
     }
 
     public TiledMap getTiledMap(LevelName key) {

@@ -92,7 +92,7 @@ public class Level {
         return world;
     }
 
-    public void setPlayer(Player player) {
+    public void addPlayer(Player player) {
         this.player = player;
     }
 
@@ -114,14 +114,14 @@ public class Level {
     }
 
     public int getWidth() {
-        int tilewidth = (int) tiledMap.getProperties().get("tilewidth");
-        int mapwidth = (int) tiledMap.getProperties().get("width");
+        int tilewidth = (Integer) tiledMap.getProperties().get("tilewidth");
+        int mapwidth = (Integer) tiledMap.getProperties().get("width");
         return tilewidth * mapwidth;
     }
 
     public int getHeight() {
-        int tileheight = (int) tiledMap.getProperties().get("tileheight");
-        int mapheight = (int) tiledMap.getProperties().get("height");
+        int tileheight = (Integer) tiledMap.getProperties().get("tileheight");
+        int mapheight = (Integer) tiledMap.getProperties().get("height");
         return tileheight * mapheight;
     }
 
@@ -143,6 +143,10 @@ public class Level {
 
     public LevelName getLevelName() {
         return levelName;
+    }
+
+    public Set<Entity> getEntities() {
+        return entities;
     }
 
 }
