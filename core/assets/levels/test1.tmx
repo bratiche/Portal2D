@@ -18,7 +18,7 @@
   <object id="160" x="540" y="154" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
-  <object id="46" name="player" x="242" y="304" width="60" height="120"/>
+  <object id="46" name="player" x="242" y="304" width="30" height="60"/>
  </objectgroup>
  <objectgroup name="buttons">
   <object id="192" x="480" y="600" width="120" height="10">

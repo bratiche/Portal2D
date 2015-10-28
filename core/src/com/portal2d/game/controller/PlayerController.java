@@ -77,20 +77,10 @@ public class PlayerController extends InputAdapter {
 
         //disable friction while jumping
         if(!grounded) {
-            if(playerBody.getLinearVelocity().y < 0) {
-                player.setFalling(true);
-                player.setJumping(false);
-            }
-            else {
-                player.setFalling(false);
-                player.setJumping(true);
-            }
-
             playerPhysicsFixture.setFriction(0.0f);
         }
         else {
-            player.setJumping(false);
-            player.setFalling(false);
+
             if(!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && stillTime > 0.2f) {
                 playerPhysicsFixture.setFriction(1000.0f);
             }
@@ -122,22 +112,42 @@ public class PlayerController extends InputAdapter {
                 playerBody.setLinearVelocity(velocity.x, 0);
                 playerBody.setTransform(position.x, position.y + 0.01f, 0);
                 playerBody.applyLinearImpulse(0, 4, position.x, position.y, true);
+                player.setJumping(true);
             }
 
         }
 
-        // Set if player is moving or not
-        if (playerBody.getLinearVelocity().x != 0 && !player.isJumping()) {
+        // Set player state
+        System.out.println(grounded);
+        System.out.println(playerBody.getLinearVelocity().y);
+        if(!player.isJumping() && Math.abs(playerBody.getLinearVelocity().x) < 0.01f || playerBody.getLinearVelocity().x == 0 && grounded &&  Math.abs(playerBody.getLinearVelocity().y)< 0.01) {
+            player.setJumping(false);
+            player.setStanding(true);
+            player.setWalking(false);
+            player.setFalling(false);
+        }
+
+        else if( (playerBody.getLinearVelocity().x)!=0 && grounded  ) {
+            player.setJumping(false);
             player.setWalking(true);
+            player.setStanding(false);
+            player.setFalling(false);
+        }
+
+        else if ( !grounded && playerBody.getLinearVelocity().y > 0.01f) {
+            player.setWalking(false);
+            player.setJumping(true);
+            player.setStanding(false);
+            player.setFalling(false);
         }
         else {
-            player.setWalking(false);
+
         }
 
         // Set if the player is facing right or left (regardless of whether it is moving or jumping)
-        if(playerBody.getLinearVelocity().x >= 0) {
+        if(playerBody.getLinearVelocity().x > 1f) {
             player.setFacingRight(true);
-        } else {
+        } else if(playerBody.getLinearVelocity().x < -1f) {
             player.setFacingRight(false);
         }
 
@@ -206,6 +216,7 @@ public class PlayerController extends InputAdapter {
 
         playerBody = player.getBody();
         playerPhysicsFixture = playerBody.getFixtureList().get(0);
+        player.setFacingRight(true);
     }
 
 }

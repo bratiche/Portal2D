@@ -14,10 +14,7 @@ import com.portal2d.game.model.entities.Gate;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
-import com.portal2d.game.view.entities.BoxView;
-import com.portal2d.game.view.entities.ButtonView;
-import com.portal2d.game.view.entities.EntityView;
-import com.portal2d.game.view.entities.GateView;
+import com.portal2d.game.view.entities.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -118,6 +115,9 @@ public class PlayScene extends Scene {
         //create entity views
         entityViews.clear();
         buttons.clear();
+
+        //add player view
+        entityViews.add(new PlayerView(level.getPlayer()));
 
         for(Entity entity : level.getEntities()) {
             if(entity.getType().equals(EntityType.BOX)) {

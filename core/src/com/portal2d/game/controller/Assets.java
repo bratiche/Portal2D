@@ -52,6 +52,9 @@ public class Assets implements Disposable {
 
         texture = new Texture(Gdx.files.internal("core/assets/sprites/button.png"));
         textures.put(TextureName.SPRITE_BUTTON, texture);
+
+        texture = new Texture(Gdx.files.internal("core/assets/sprites/player.png"));
+        textures.put(TextureName.ANIM_PLAYER, texture);
     }
 
     public TiledMap getTiledMap(LevelName key) {
