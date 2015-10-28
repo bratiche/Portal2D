@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="190">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="193">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
@@ -21,10 +21,11 @@
   <object id="46" name="player" x="242" y="304" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
-  <object id="41" x="478.667" y="580" width="120" height="20">
+  <object id="192" x="480" y="600" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>
+   <polygon points="0,0 29.8182,-14.3187 91.0909,-14.5 120,0"/>
   </object>
  </objectgroup>
  <objectgroup name="exits">

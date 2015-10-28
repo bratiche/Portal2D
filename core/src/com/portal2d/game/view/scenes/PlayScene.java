@@ -1,6 +1,7 @@
 package com.portal2d.game.view.scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -37,8 +38,11 @@ public class PlayScene extends Scene {
 
     private Set<EntityView> entityViews;
 
+    // Separate for for drawing Buttons, this is to make sure the buttons are drawn on top of the other entities
+    private Set<ButtonView> buttons;
+
     //debugging stuff
-    private boolean debug = false;
+    private boolean debug = true;
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private BoundedCamera b2dcam;
@@ -49,6 +53,8 @@ public class PlayScene extends Scene {
         debugRenderer = new Box2DDebugRenderer();
 
         entityViews = new HashSet<EntityView>();
+
+        buttons = new HashSet<ButtonView>();
 
         setLevel(level);
     }
@@ -70,12 +76,20 @@ public class PlayScene extends Scene {
         //draw entities
         float deltaTime = Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camera.combined);
+
         for(EntityView entityView : entityViews) {
             entityView.render(batch, deltaTime);
+        }
+        for(ButtonView button : buttons) {
+            button.render(batch, deltaTime);
         }
 
         b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT) / PPM);
         b2dcam.update();
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            debug = !debug;
+        }
 
         //draw box2d world (debug)
         if (debug) {
@@ -103,6 +117,8 @@ public class PlayScene extends Scene {
 
         //create entity views
         entityViews.clear();
+        buttons.clear();
+
         for(Entity entity : level.getEntities()) {
             if(entity.getType().equals(EntityType.BOX)) {
                 entityViews.add(new BoxView((Box) entity));
@@ -111,7 +127,7 @@ public class PlayScene extends Scene {
                 entityViews.add(new GateView((Gate)entity));
             }
             else if(entity.getType().equals(EntityType.BUTTON)) {
-                entityViews.add(new ButtonView((Button)entity));
+                buttons.add(new ButtonView((Button)entity));
             }
             //TODO: add other types
         }

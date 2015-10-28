@@ -1,6 +1,5 @@
 package com.portal2d.game.view.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +15,6 @@ import static com.portal2d.game.view.ViewConstants.*;
  */
 public class GateView extends EntityView<Gate> {
 
-    //we need to have one stateTime for each animation
     private float stateTime;
 
     public GateView(Gate model) {
@@ -29,10 +27,8 @@ public class GateView extends EntityView<Gate> {
 
         TextureRegion[][] sprites = TextureRegion.split(texture, GATE_WIDTH, GATE_HEIGHT);
 
-        //in this case the map is not necessary since we only have one animation
         Animation open = new Animation(ANIM_GATE_DELAY, sprites[0]);
         animations.put(Action.GATE_OPEN, open);
-
     }
 
     @Override
@@ -46,13 +42,13 @@ public class GateView extends EntityView<Gate> {
                 stateTime = animations.get(Action.GATE_OPEN).getAnimationDuration();
         }
         else {
+            //to play in reverse mode:
 //            stateTime -= deltaTime;
 //            if(stateTime < 0)
                 stateTime = 0;
         }
 
         keyFrame = animations.get(Action.GATE_OPEN).getKeyFrame(stateTime);
-
         batch.begin();
         batch.draw(keyFrame, body.getPosition().x * PPM - width / 2, body.getPosition().y * PPM - height / 2);
         batch.end();

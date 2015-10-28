@@ -2,9 +2,11 @@ package com.portal2d.game.controller;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.level.Level;
@@ -203,27 +205,31 @@ public class LevelLoader {
 
     private void createButtons(Level level, MapLayer layer) {
         BodyDef bodyDef = new BodyDef();
-        RectangleMapObject rectangleMapObject;
         PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
         float x;
         float y;
-        float width;
-        float height;
+
+        PolygonMapObject polygonMapObject;
 
         for(MapObject mapObject : layer.getObjects()) {
-            rectangleMapObject = (RectangleMapObject) mapObject;
-            x = rectangleMapObject.getRectangle().getX();
-            y = rectangleMapObject.getRectangle().getY();
-            width = rectangleMapObject.getRectangle().getWidth();
-            height = rectangleMapObject.getRectangle().getHeight();
+            polygonMapObject = (PolygonMapObject) mapObject;
+            x = polygonMapObject.getPolygon().getX();
+            y = polygonMapObject.getPolygon().getY();
 
-            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+            bodyDef.position.set(x / PPM, y / PPM);
 
-            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+            int vertexAmount = polygonMapObject.getPolygon().getVertices().length;
+            float[] vertices = new float[vertexAmount];
+
+            for(int i = 0; i < vertexAmount; i ++) {
+                vertices[i] = polygonMapObject.getPolygon().getVertices()[i] / PPM;
+            }
+
+            shape.set(vertices);
 
             fixtureDef.shape = shape;
-            fixtureDef.isSensor = true;
+            //fixtureDef.isSensor = true;
 
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
@@ -268,8 +274,8 @@ public class LevelLoader {
             shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
             fixtureDef.shape = shape;
             fixtureDef.restitution = 0.2f;
-            fixtureDef.friction = 0.5f;
-            fixtureDef.density = 4f;
+            fixtureDef.friction = 1f;
+            //fixtureDef.density = 4f; // uncomment this to make the boxes rotate
             body.createFixture(fixtureDef);
             Box box = new Box(level, body);
             level.add(box);

@@ -1,6 +1,8 @@
 package com.portal2d.game.model.level;
 
 import java.util.NoSuchElementException;
+import com.portal2d.game.controller.LevelLoader;
+import com.portal2d.game.model.entities.Exit;
 
 /**
  *
@@ -17,7 +19,7 @@ public enum LevelName {
     LEVEL_5;
 
     /**
-     * This method is used by the {@link com.portal2d.game.controller.LevelLoader} to create Exits.
+     * This method is used by the {@link LevelLoader} to create {@link Exit}s.
      */
     public static LevelName getLevelName(int levelNumber) {
         for(LevelName levelName : values()) {

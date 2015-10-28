@@ -43,6 +43,13 @@ public class Player extends DynamicEntity {
     public void update(){
         super.update();
         ((PortalGun) weapon).update();
+
+//        if (walking) {
+//            System.out.println(facingRight ? "moving right" : "moving left");
+//        } else {
+//            System.out.println(jumping ? "jumping" : falling ? "falling" : "standing still");
+//        }
+
     }
 
     public Weapon getWeapon() {

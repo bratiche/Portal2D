@@ -20,8 +20,11 @@ public interface ViewConstants {
     int GATE_WIDTH = 40;
     int GATE_HEIGHT = 180;
 
-    int BUTTON_WIDTH = 130;
-    int BUTTON_HEIGHT = 20;
+    int BUTTON_WIDTH = 120;
+    int BUTTON_HEIGHT = 15;
+
+    int BOX_WIDTH = 60;
+    int BOX_HEIGHT = 60;
 
     //animations
     float ANIM_GATE_DELAY =  1 / 12f;
