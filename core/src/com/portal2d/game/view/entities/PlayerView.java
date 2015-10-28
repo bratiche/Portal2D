@@ -64,16 +64,13 @@ public class PlayerView extends EntityView<Player> {
         }
 
         else if(model.isJumping()) {
-
             if(stateTime > animations.get(Action.PLAYER_JUMP).getAnimationDuration()) {
                 stateTime=0;
             }
             keyFrame = animations.get(Action.PLAYER_JUMP).getKeyFrame(stateTime);
         }
 
-        //TODO: is falling
         else if( model.isFalling()) {
-            System.out.println("falling");
             if(stateTime > animations.get(Action.PLAYER_FALL).getAnimationDuration()) {
                 stateTime = 0;
             }
@@ -98,5 +95,6 @@ public class PlayerView extends EntityView<Player> {
             batch.draw(keyFrame, body.getPosition().x * PPM - width / 2, body.getPosition().y * PPM - height / 2);
         }
         batch.end();
+
     }
 }

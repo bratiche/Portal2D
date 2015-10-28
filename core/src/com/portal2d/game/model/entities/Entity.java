@@ -74,6 +74,13 @@ public abstract class Entity {
     public void beginInteraction(PortableSurface surface) {
     }
 
+    /**
+     * Implemented this way so that the projectile is removed when touching any entity by default.
+     */
+    public void beginInteraction(Projectile projectile) {
+        level.addToRemove(projectile);
+    }
+
     // end interactions
     public void endInteraction(Box box) {
     }
@@ -100,6 +107,9 @@ public abstract class Entity {
     }
 
     public void endInteraction(PortableSurface surface) {
+    }
+
+    public void endInteraction(Projectile projectile) {
     }
 
 }

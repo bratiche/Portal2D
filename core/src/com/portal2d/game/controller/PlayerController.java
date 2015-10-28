@@ -18,6 +18,7 @@ import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
  * Controls the {@link Player} according to user input.
+ * TODO: fix jumping on sensors
  */
 public class PlayerController extends InputAdapter {
 
@@ -112,37 +113,75 @@ public class PlayerController extends InputAdapter {
                 playerBody.setLinearVelocity(velocity.x, 0);
                 playerBody.setTransform(position.x, position.y + 0.01f, 0);
                 playerBody.applyLinearImpulse(0, 4, position.x, position.y, true);
-                player.setJumping(true);
+                //player.setJumping(true);
             }
 
         }
 
-        // Set player state
-        System.out.println(grounded);
-        System.out.println(playerBody.getLinearVelocity().y);
-        if(!player.isJumping() && Math.abs(playerBody.getLinearVelocity().x) < 0.01f || playerBody.getLinearVelocity().x == 0 && grounded &&  Math.abs(playerBody.getLinearVelocity().y)< 0.01) {
-            player.setJumping(false);
-            player.setStanding(true);
-            player.setWalking(false);
-            player.setFalling(false);
-        }
-
-        else if( (playerBody.getLinearVelocity().x)!=0 && grounded  ) {
-            player.setJumping(false);
-            player.setWalking(true);
-            player.setStanding(false);
-            player.setFalling(false);
-        }
-
-        else if ( !grounded && playerBody.getLinearVelocity().y > 0.01f) {
-            player.setWalking(false);
-            player.setJumping(true);
-            player.setStanding(false);
-            player.setFalling(false);
+        if(grounded) {
+            //walking
+            if(Math.abs(playerBody.getLinearVelocity().x) > 0.01f) {
+                player.setWalking(true);
+                player.setStanding(false);
+                player.setJumping(false);
+                player.setFalling(false);
+            }
+            //standing
+            else {
+                player.setWalking(false);
+                player.setStanding(true);
+                player.setJumping(false);
+                player.setFalling(false);
+            }
         }
         else {
+            if(playerBody.getLinearVelocity().y > 0.01f) {
+                player.setWalking(false);
+                player.setStanding(false);
+                player.setJumping(true);
+                player.setFalling(false);
+            }
+            else if (playerBody.getLinearVelocity().y < -0.01f) {
+                player.setWalking(false);
+                player.setStanding(false);
+                player.setJumping(false);
+                player.setFalling(true);
+            }
 
+            else {
+                player.setWalking(false);
+                player.setStanding(true);
+                player.setJumping(false);
+                player.setFalling(false);
+            }
         }
+
+        // Set player state
+
+//        if(!player.isJumping() && (Math.abs(playerBody.getLinearVelocity().x) < 0.01f || playerBody.getLinearVelocity().x == 0)
+//                && grounded &&  Math.abs(playerBody.getLinearVelocity().y)< 0.01) {
+//            player.setJumping(false);
+//            player.setStanding(true);
+//            player.setWalking(false);
+//            player.setFalling(false);
+//        }
+//
+//        else if( (playerBody.getLinearVelocity().x)!=0 && grounded  ) {
+//            player.setJumping(false);
+//            player.setWalking(true);
+//            player.setStanding(false);
+//            player.setFalling(false);
+//        }
+//
+//        else if ( !grounded && playerBody.getLinearVelocity().y > 0.01f) {
+//            player.setWalking(false);
+//            player.setJumping(true);
+//            player.setStanding(false);
+//            player.setFalling(false);
+//        }
+//        else {
+//
+//        }
 
         // Set if the player is facing right or left (regardless of whether it is moving or jumping)
         if(playerBody.getLinearVelocity().x > 1f) {

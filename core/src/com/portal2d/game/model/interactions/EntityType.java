@@ -3,6 +3,8 @@ package com.portal2d.game.model.interactions;
 /**
  *
  */
+
+//TODO: Move to some other module.
 public enum EntityType {
 
     BOX,
@@ -11,5 +13,6 @@ public enum EntityType {
     PORTAL,
     PLAYER,
     BUTTON,
+    PROJECTILE
 
 }

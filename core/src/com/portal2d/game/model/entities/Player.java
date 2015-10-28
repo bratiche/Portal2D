@@ -40,6 +40,15 @@ public class Player extends DynamicEntity {
 
     }
 
+    /**
+     * Overridden so the Projectile is not destroyed upon touching the player.
+     * TODO: implement different types of projectiles.
+     */
+    @Override
+    public void beginInteraction(Projectile projectile) {
+
+    }
+
     @Override
     public void update(){
         super.update();
