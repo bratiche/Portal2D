@@ -14,8 +14,8 @@
   </data>
  </layer>
  <objectgroup name="boxes">
-  <object id="159" x="728" y="149" width="60" height="60"/>
-  <object id="160" x="540" y="154" width="60" height="60"/>
+  <object id="159" x="728" y="149" width="55" height="55"/>
+  <object id="160" x="540" y="154" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
   <object id="46" name="player" x="242" y="304" width="60" height="120"/>

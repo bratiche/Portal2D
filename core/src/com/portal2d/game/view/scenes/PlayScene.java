@@ -1,17 +1,20 @@
 package com.portal2d.game.view.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Box;
+import com.portal2d.game.model.entities.Button;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Gate;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.entities.BoxView;
+import com.portal2d.game.view.entities.ButtonView;
 import com.portal2d.game.view.entities.EntityView;
 import com.portal2d.game.view.entities.GateView;
 
@@ -35,7 +38,7 @@ public class PlayScene extends Scene {
     private Set<EntityView> entityViews;
 
     //debugging stuff
-    private boolean debug = true;
+    private boolean debug = false;
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private BoundedCamera b2dcam;
@@ -57,7 +60,7 @@ public class PlayScene extends Scene {
         float x = level.getPlayer().getBody().getPosition().x;
         float y = level.getPlayer().getBody().getPosition().y;
 
-        camera.setPosition(x * PPM + VIEWPORT_WIDTH / 8 , y * PPM + VIEWPORT_HEIGHT);
+        camera.setPosition(x * PPM + VIEWPORT_WIDTH / 8, y * PPM + VIEWPORT_HEIGHT);
         camera.update();
 
         //draw tiled map
@@ -65,15 +68,17 @@ public class PlayScene extends Scene {
         tmr.render();
 
         //draw entities
+        float deltaTime = Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camera.combined);
         for(EntityView entityView : entityViews) {
-            entityView.render(batch);
+            entityView.render(batch, deltaTime);
         }
+
+        b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT) / PPM);
+        b2dcam.update();
 
         //draw box2d world (debug)
         if (debug) {
-            b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT) / PPM);
-            b2dcam.update();
             debugRenderer.render(world, b2dcam.combined);
         }
     }
@@ -104,6 +109,9 @@ public class PlayScene extends Scene {
             }
             else if(entity.getType().equals(EntityType.GATE)) {
                 entityViews.add(new GateView((Gate)entity));
+            }
+            else if(entity.getType().equals(EntityType.BUTTON)) {
+                entityViews.add(new ButtonView((Button)entity));
             }
             //TODO: add other types
         }

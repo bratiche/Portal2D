@@ -16,6 +16,7 @@ import static com.portal2d.game.view.ViewConstants.*;
  */
 public class GateView extends EntityView<Gate> {
 
+    //we need to have one stateTime for each animation
     private float stateTime;
 
     public GateView(Gate model) {
@@ -28,31 +29,30 @@ public class GateView extends EntityView<Gate> {
 
         TextureRegion[][] sprites = TextureRegion.split(texture, GATE_WIDTH, GATE_HEIGHT);
 
-        Animation open = new Animation(1 / 2f, sprites[0]);
+        //in this case the map is not necessary since we only have one animation
+        Animation open = new Animation(ANIM_GATE_DELAY, sprites[0]);
         animations.put(Action.GATE_OPEN, open);
 
-        //close not used
-        Animation close = new Animation(1 / 2f, sprites[0]);
-        close.setPlayMode(Animation.PlayMode.REVERSED);
-
-        animations.put(Action.GATE_CLOSE, close);
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float deltaTime) {
 
         TextureRegion keyFrame;
 
-        //TODO: pass delta time as parameter
-
         if(model.isOpen()) {
-            stateTime += Gdx.graphics.getDeltaTime();
+            stateTime += deltaTime;
+            if(stateTime > animations.get(Action.GATE_OPEN).getAnimationDuration())
+                stateTime = animations.get(Action.GATE_OPEN).getAnimationDuration();
         }
         else {
-            stateTime = 0;
+//            stateTime -= deltaTime;
+//            if(stateTime < 0)
+                stateTime = 0;
         }
 
         keyFrame = animations.get(Action.GATE_OPEN).getKeyFrame(stateTime);
+
         batch.begin();
         batch.draw(keyFrame, body.getPosition().x * PPM - width / 2, body.getPosition().y * PPM - height / 2);
         batch.end();

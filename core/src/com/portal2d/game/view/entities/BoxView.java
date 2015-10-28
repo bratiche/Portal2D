@@ -24,7 +24,8 @@ public class BoxView extends EntityView<Box> {
         height = sprite.getHeight();
     }
 
-    public void render(SpriteBatch batch) {
+    @Override
+    public void render(SpriteBatch batch, float deltaTime) {
 
         batch.begin();
 
@@ -34,7 +35,8 @@ public class BoxView extends EntityView<Box> {
         //batch.draw(texture, x, y);
 
         sprite.setPosition(x, y);
-        //sprite.rotate((float) Math.toDegrees(body.getAngle()));
+        //TODO: sprite rotation
+        //sprite.rotate((float) (body.getAngle() * 180 / StrictMath.PI));
         sprite.draw(batch);
 
         batch.end();

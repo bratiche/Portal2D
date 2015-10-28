@@ -32,6 +32,6 @@ public abstract class EntityView<T extends Entity> {
     /**
      * Updates this EntityView, called by {@link PlayScene} each frame.
      */
-    public abstract void render(SpriteBatch batch);
+    public abstract void render(SpriteBatch batch, float deltaTime);
 
 }

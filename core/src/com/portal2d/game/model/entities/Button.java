@@ -43,4 +43,8 @@ public class Button extends StaticEntity {
         interactions--;
     }
 
+    public boolean isPressed() {
+        return pressed;
+    }
+
 }
