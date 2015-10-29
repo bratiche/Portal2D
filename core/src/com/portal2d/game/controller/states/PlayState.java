@@ -2,8 +2,10 @@ package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -34,9 +36,11 @@ public class PlayState extends GameState {
 
     @Override
     public void entered() {
-        // Create world and load first level
+        // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader(world);
+
+        // Load first level
         level = levelLoader.loadLevel(LevelName.TEST_LEVEL);
 
         // Setup view
@@ -50,9 +54,9 @@ public class PlayState extends GameState {
     public void handleInput() {
 
         //pause the game
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-//            gsm.push(new PauseState());
-//        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            gsm.push(new PauseState(gsm, this));
+        }
 
         // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -67,6 +71,7 @@ public class PlayState extends GameState {
 
         //Update player input events
         playerController.handleInput();
+
     }
 
     @Override
@@ -91,7 +96,7 @@ public class PlayState extends GameState {
 
     @Override
     public void leaving() {
-        world.dispose();
+        //world.dispose(); // -> this crashes the game
     }
 
     public void changeLevel(LevelName nextLevel) {
@@ -109,6 +114,7 @@ public class PlayState extends GameState {
         level = levelLoader.loadLevel(nextLevel);
         scene.setLevel(level);
         playerController.setLevel(level);
+        world.setGravity(DEFAULT_GRAVITY);
     }
 
     public OrthographicCamera getBox2DCamera() {

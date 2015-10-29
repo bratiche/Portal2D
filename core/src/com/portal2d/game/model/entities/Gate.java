@@ -26,6 +26,16 @@ public class Gate extends StaticEntity implements Linkable {
         entity.endInteraction(this);
     }
 
+    /**
+     * The projectile is destroyed only if this gate is closed.
+     */
+    @Override
+    public void beginInteraction(Projectile projectile) {
+        if(!open)
+            level.addToRemove(projectile);
+    }
+
+
     @Override
     public void link() {
         open = true;
@@ -41,4 +51,5 @@ public class Gate extends StaticEntity implements Linkable {
     public boolean isOpen() {
         return open;
     }
+
 }

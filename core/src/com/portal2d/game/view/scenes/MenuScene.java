@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
 
 import static com.portal2d.game.view.ViewConstants.*;
+
 /**
  *
  */
@@ -18,7 +19,9 @@ public class MenuScene extends Scene {
 
     @Override
     public void render(SpriteBatch batch) {
+        batch.begin();
         batch.draw(background, 0, 0);
+        batch.end();
     }
 
 }

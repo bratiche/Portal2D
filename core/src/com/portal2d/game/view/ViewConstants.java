@@ -9,6 +9,9 @@ public interface ViewConstants {
     int VIEWPORT_WIDTH = 1200;
     int VIEWPORT_HEIGHT = 720;
 
+    // scale for box2d world, pixels per meter
+    float PPM = 100;
+
     enum TextureName {
         ANIM_GATE,
         MENU_BG,
@@ -32,7 +35,6 @@ public interface ViewConstants {
 
     //animations
     float ANIM_GATE_DELAY =  1 / 12f;
-
     float ANIM_PLAYER_DELAY = 1 / 12f;
 
 }

@@ -1,7 +1,7 @@
 package com.portal2d.game.view.entities;
 
 /**
- *
+ * Enum used by the {@link EntityView}s for drawing animations.
  */
 public enum  Action {
 

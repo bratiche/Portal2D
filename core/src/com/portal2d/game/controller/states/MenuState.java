@@ -2,6 +2,7 @@ package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.view.scenes.MenuScene;
@@ -32,7 +33,6 @@ public class MenuState extends GameState {
 
     @Override
     public void update(float dt) {
-        handleInput();
     }
 
     @Override

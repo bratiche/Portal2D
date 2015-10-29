@@ -9,7 +9,6 @@ import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.view.ViewConstants;
 
-import static com.portal2d.game.controller.Box2DConstants.PPM;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
@@ -18,7 +17,6 @@ import static com.portal2d.game.view.ViewConstants.*;
 public class PlayerView extends EntityView<Player> {
 
     private float stateTime;
-    private boolean lastFrameFacingRight = true;
 
     public PlayerView(Player model) {
         super(model);

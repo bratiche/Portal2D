@@ -11,7 +11,9 @@ import com.portal2d.game.model.weapons.PortalGun;
  */
 public class PortalProjectile extends Projectile {
 
+    //TODO: remove portal gun from this and form Portal, the only one who should have access to the PortalGun is the Player.
     private PortalGun portalGun;
+
     private PortalColor color;
 
     public enum PortalColor {
@@ -20,7 +22,7 @@ public class PortalProjectile extends Projectile {
     }
 
     public PortalProjectile(Level level, Body body, PortalColor color, PortalGun portalGun) {
-        super(level, body);
+        super(level, body, null);
         this.color = color;
         this.portalGun = portalGun;
     }
@@ -28,11 +30,7 @@ public class PortalProjectile extends Projectile {
     @Override
     public void beginInteraction(PortableSurface surface) {
 
-        //
-        // Uso la surface que me pasan para saber donde crear el portal y cual es su direccion de entrada/salida
-        //
-
-        //si se puede crear, etc
+        //TODO create portal from surface
 
         BodyDef bodyDef = new BodyDef();
         switch (color) {

@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
 
 /**
- * A game state is a controller for the flow of the game.
+ * A game state is a controller for the flow of the game. It handles input events and derives the logic and drawing
+ * to the model and view respectively.
  */
 public abstract class GameState {
 

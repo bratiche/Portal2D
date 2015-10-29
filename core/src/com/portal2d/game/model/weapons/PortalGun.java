@@ -2,13 +2,13 @@ package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.portal2d.game.model.entities.Projectile;
-import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.entities.portals.BluePortal;
 import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.Projectile;
+import com.portal2d.game.model.entities.portals.BluePortal;
 import com.portal2d.game.model.entities.portals.OrangePortal;
+import com.portal2d.game.model.level.Level;
 
-import static com.portal2d.game.controller.Box2DConstants.PPM;
+import static com.portal2d.game.model.ModelConstants.*;
 
 /**
  *
@@ -80,27 +80,29 @@ public class PortalGun implements Weapon {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(own_pos);
 
-        Vector2 direction = new Vector2(position.sub(own_pos));
-        direction = direction.nor();
-        direction = direction.scl(5f);
-
+        //calculate constant velocity
+        Vector2 velocity = new Vector2(position.sub(own_pos));
+        velocity.nor();
+        velocity.scl(PROJECTILE_SPEED);
 
         Body body = world.createBody(bodyDef);
         CircleShape shape = new CircleShape();
-        shape.setRadius(0.1f);
+        shape.setRadius(PROJECTILE_RADIUS);
+
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
+
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setSensor(true);
-        body.setType(BodyDef.BodyType.KinematicBody);
-        body.setLinearVelocity(direction);
 
-        level.add(new Projectile(level, body));
+        //not affected by gravity
+        body.setGravityScale(0);
 
+        level.add(new Projectile(level, body, velocity));
     }
 
     public void actionLeftClick(Vector2 position) {
-        shootProjectile(position);
+        shootBluePortal(position);
     }
 
     public void actionRightClick(Vector2 position) {

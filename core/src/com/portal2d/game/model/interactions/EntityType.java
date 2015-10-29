@@ -1,10 +1,11 @@
 package com.portal2d.game.model.interactions;
 
+import com.portal2d.game.model.entities.Entity;
+
 /**
  *
  */
 
-//TODO: Move to some other module.
 public enum EntityType {
 
     BOX,
@@ -13,6 +14,14 @@ public enum EntityType {
     PORTAL,
     PLAYER,
     BUTTON,
-    PROJECTILE
+    PROJECTILE,
+    SURFACE,
+    PORTABLE_SURFACE
+
+
+    //TODO: discuss whether to use this or have all methods in Entity
+//    public abstract void beginInteraction(Entity e1, Entity e2);
+//
+//    public abstract void endInteraction(Entity e1, Entity e2);
 
 }

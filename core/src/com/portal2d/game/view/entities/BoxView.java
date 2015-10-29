@@ -6,7 +6,7 @@ import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.Box;
 import com.portal2d.game.view.ViewConstants;
 
-import static com.portal2d.game.controller.Box2DConstants.PPM;
+import static com.portal2d.game.view.ViewConstants.PPM;
 
 /**
  *

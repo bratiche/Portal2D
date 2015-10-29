@@ -8,17 +8,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.portal2d.game.model.level.Level;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
+import com.portal2d.game.model.level.Level;
 
-import static com.portal2d.game.controller.Box2DConstants.PPM;
-import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
-import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
+import static com.portal2d.game.view.ViewConstants.*;
 
 /**
  * Controls the {@link Player} according to user input.
- * TODO: fix jumping on sensors
  */
 public class PlayerController extends InputAdapter {
 
@@ -118,6 +115,7 @@ public class PlayerController extends InputAdapter {
 
         }
 
+        // Set player state
         if(grounded) {
             //walking
             if(Math.abs(playerBody.getLinearVelocity().x) > 0.01f) {
@@ -156,61 +154,42 @@ public class PlayerController extends InputAdapter {
             }
         }
 
-        // Set player state
-
-//        if(!player.isJumping() && (Math.abs(playerBody.getLinearVelocity().x) < 0.01f || playerBody.getLinearVelocity().x == 0)
-//                && grounded &&  Math.abs(playerBody.getLinearVelocity().y)< 0.01) {
-//            player.setJumping(false);
-//            player.setStanding(true);
-//            player.setWalking(false);
-//            player.setFalling(false);
-//        }
-//
-//        else if( (playerBody.getLinearVelocity().x)!=0 && grounded  ) {
-//            player.setJumping(false);
-//            player.setWalking(true);
-//            player.setStanding(false);
-//            player.setFalling(false);
-//        }
-//
-//        else if ( !grounded && playerBody.getLinearVelocity().y > 0.01f) {
-//            player.setWalking(false);
-//            player.setJumping(true);
-//            player.setStanding(false);
-//            player.setFalling(false);
-//        }
-//        else {
-//
-//        }
 
         // Set if the player is facing right or left (regardless of whether it is moving or jumping)
-        if(playerBody.getLinearVelocity().x > 1f) {
+
+
+//        if(playerBody.getLinearVelocity().x > 1f) {
+//            player.setFacingRight(true);
+//        } else if(playerBody.getLinearVelocity().x < -1f) {
+//            player.setFacingRight(false);
+//        }
+
+        //screen coordinates
+        mouse.x = Gdx.input.getX();
+        mouse.y = Gdx.input.getY();
+
+        playState.getBox2DCamera().unproject(mouse, 0, 0, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
+
+        //translate to world coordinates
+        float dx = playState.getBox2DCamera().position.x * PPM - VIEWPORT_WIDTH / 2;
+        float dy = playState.getBox2DCamera().position.y * PPM - VIEWPORT_HEIGHT / 2;
+
+        mouse.add(dx, dy, 0);
+
+        // The player faces right or left according to the position of the mouse
+        if(mouse.x / PPM >= playerBody.getPosition().x)
             player.setFacingRight(true);
-        } else if(playerBody.getLinearVelocity().x < -1f) {
+        else
             player.setFacingRight(false);
-        }
 
-        //check mouse input
+        // Check mouse input
         if(Gdx.input.justTouched()) {
-
-            //screen coordinates
-            mouse.x = Gdx.input.getX();
-            mouse.y = Gdx.input.getY();
-
-            playState.getBox2DCamera().unproject(mouse, 0, 0, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
-
-            //translate to world coordinates
-            float dx = playState.getBox2DCamera().position.x * PPM - VIEWPORT_WIDTH / 2;
-            float dy = playState.getBox2DCamera().position.y * PPM - VIEWPORT_HEIGHT / 2;
-
-            mouse.add(dx, dy, 0);
             if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 player.getWeapon().actionLeftClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
             }
             if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
                 player.getWeapon().actionRightClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
             }
-
         }
 
     }
@@ -223,8 +202,13 @@ public class PlayerController extends InputAdapter {
                 Vector2 position = playerBody.getPosition();
                 WorldManifold manifold = contact.getWorldManifold();
                 boolean below = true;
+
+                // Avoid the player to jump when is on a sensor
+                if(contact.getFixtureA().isSensor() || contact.getFixtureB().isSensor()) {
+                    below = false;
+                }
                 for (int j = 0; j < manifold.getNumberOfContactPoints(); j++) {
-                    below &= (manifold.getPoints()[j].y < position.y - 1.5f / Box2DConstants.PPM);
+                    below &= (manifold.getPoints()[j].y < position.y - 1.5f / PPM);
                 }
                 if(below) {
                     return true;

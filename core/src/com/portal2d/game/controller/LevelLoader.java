@@ -5,21 +5,20 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.model.entities.*;
+import com.portal2d.game.model.entities.portals.PortableSurface;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
-import com.portal2d.game.model.entities.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.portal2d.game.controller.Box2DConstants.*;
+import static com.portal2d.game.view.ViewConstants.PPM;
 
 /**
- * Class for loading levels from tmx files (TiledMaps).
+ * Helper class for loading levels and creating entities from tmx files (TiledMaps).
  */
 public class LevelLoader {
 
@@ -45,18 +44,16 @@ public class LevelLoader {
         return level;
     }
 
+    //TODO fix gapes between portable and non-portable surfaces
     private void createLevel(TiledMap tiledMap, Level level) {
         MapLayer layer = tiledMap.getLayers().get("player");
         createPlayer(level, layer);
 
-        layer = tiledMap.getLayers().get("portal-able");
-        createTiles(level, (TiledMapTileLayer) layer, Tile.Type.PORTAL_ABLE);
+        layer = tiledMap.getLayers().get("surfaces");
+        createSurfaces(level, layer);
 
-        layer = tiledMap.getLayers().get("non-portal-able");
-        createTiles(level, (TiledMapTileLayer) layer, Tile.Type.NON_PORTAL_ABLE);
-
-        layer = tiledMap.getLayers().get("collision");
-        createWalls(level, layer);
+        layer = tiledMap.getLayers().get("portable-surfaces");
+        createPortableSurfaces(level, layer);
 
         layer = tiledMap.getLayers().get("gates");
         createGates(level, layer);
@@ -85,7 +82,7 @@ public class LevelLoader {
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        Fixture fixture = body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef);
         body.setFixedRotation(true);
 
         level.addPlayer(new Player(level, body));
@@ -93,46 +90,7 @@ public class LevelLoader {
         shape.dispose();
     }
 
-    private void createTiles(Level level, TiledMapTileLayer layer, Tile.Type type) {
-        float x;
-        float y;
-        float width = layer.getWidth();
-        float height = layer.getHeight();
-
-        float tileWidth = layer.getTileWidth();
-        float tileHeight = layer.getTileHeight();
-
-        Body body;
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(tileWidth / 2 / PPM, tileHeight / 2 / PPM);
-
-        //TODO: ChainShape, or collision layer, or surfaces
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
-
-        for(int row = 0; row < width; row++) {
-            for(int col = 0; col < height; col++) {
-
-                TiledMapTileLayer.Cell cell = layer.getCell(row, col);
-
-                if(cell == null || cell.getTile() == null)
-                    continue;
-
-//                BodyDef bodyDef = new BodyDef();
-//                bodyDef.position.set((row + 0.5f) * tileHeight / PPM, (col + 0.5f) * tileWidth / PPM);
-//                body = world.createBody(bodyDef);
-//                body.createFixture(fixtureDef);
-//                Tile tile = new Tile(world, body, type);
-//                level.tiles.add(tile);
-            }
-        }
-
-        shape.dispose();
-    }
-
-    //TODO: remove, it's a test (these are just used for collision, maybe don't remove them).
-    private void createWalls(Level level, MapLayer layer) {
+    private void createSurfaces(Level level, MapLayer layer) {
 
         BodyDef bodyDef = new BodyDef();
         RectangleMapObject rectangleMapObject;
@@ -158,6 +116,41 @@ public class LevelLoader {
             fixtureDef.shape = shape;
             fixtureDef.friction = 0.6f;
             body.createFixture(fixtureDef);
+
+            level.add(new Surface(level, body));
+        }
+
+        shape.dispose();
+    }
+
+    private void createPortableSurfaces(Level level, MapLayer layer) {
+
+        BodyDef bodyDef = new BodyDef();
+        RectangleMapObject rectangleMapObject;
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        float x;
+        float y;
+        float width;
+        float height;
+
+        for(MapObject mapObject : layer.getObjects()) {
+            rectangleMapObject = (RectangleMapObject)mapObject;
+            x = rectangleMapObject.getRectangle().getX();
+            y = rectangleMapObject.getRectangle().getY();
+            width = rectangleMapObject.getRectangle().getWidth();
+            height = rectangleMapObject.getRectangle().getHeight();
+
+            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+
+            Body body = world.createBody(bodyDef);
+
+            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+            fixtureDef.shape = shape;
+            fixtureDef.friction = 0.6f;
+            body.createFixture(fixtureDef);
+
+            level.add(new PortableSurface(level, body));
         }
 
         shape.dispose();

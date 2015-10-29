@@ -2,11 +2,8 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.model.entities.portals.PortableSurface;
+import com.portal2d.game.model.entities.portals.*;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.entities.portals.BluePortal;
-import com.portal2d.game.model.entities.portals.OrangePortal;
-import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.interactions.EntityType;
 
 /**
@@ -46,7 +43,7 @@ public abstract class Entity {
     public abstract void beginInteraction(Entity entity);
     public abstract void endInteraction(Entity entity);
 
-    // begin interactions
+    // Begin interactions
     public void beginInteraction(Box box) {
     }
 
@@ -71,6 +68,9 @@ public abstract class Entity {
     public void beginInteraction(Gate gate) {
     }
 
+    public void beginInteraction(Surface surface) {
+    }
+
     public void beginInteraction(PortableSurface surface) {
     }
 
@@ -81,7 +81,11 @@ public abstract class Entity {
         level.addToRemove(projectile);
     }
 
-    // end interactions
+    public void beginInteraction(PortalProjectile projectile) {
+        level.addToRemove(projectile);
+    }
+
+    // End interactions
     public void endInteraction(Box box) {
     }
 
@@ -106,10 +110,16 @@ public abstract class Entity {
     public void endInteraction(Gate gate) {
     }
 
+    public void endInteraction(Surface surface) {
+    }
+
     public void endInteraction(PortableSurface surface) {
     }
 
     public void endInteraction(Projectile projectile) {
+    }
+
+    public void endInteraction(PortalProjectile projectile) {
     }
 
 }

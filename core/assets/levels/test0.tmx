@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="190">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="204">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
  <layer name="non-portal-able" width="20" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYKUTxgUo0UssoKV51AAj2bzBHr+0SM/UwgCJBQHh
+   eJxjZWBgYB0CmFIwat6oeZSYN1gxACJcAjE=
   </data>
  </layer>
  <layer name="portal-able" width="20" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYKAf4MKBhzqgth9GmnlDFQyG9AwANl8AoQ==
+   eJxjYBgFo2AUDFUAAAPAAAE=
   </data>
  </layer>
  <objectgroup name="boxes"/>
@@ -25,17 +25,13 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="collision">
+ <objectgroup name="surfaces">
   <object id="81" x="0" y="600" width="1200" height="120"/>
   <object id="82" x="0" y="120" width="120" height="480"/>
   <object id="85" x="0" y="0" width="1200" height="120"/>
   <object id="86" x="1080" y="120" width="120" height="480"/>
  </objectgroup>
- <objectgroup name="portable-surfaces">
-  <object id="98" x="420" y="60" width="360" height="60"/>
-  <object id="102" x="420" y="600" width="360" height="60"/>
-  <object id="103" x="60" y="240" width="60" height="240"/>
- </objectgroup>
+ <objectgroup name="portable-surfaces"/>
  <objectgroup name="gates"/>
  <objectgroup name="acid"/>
 </map>

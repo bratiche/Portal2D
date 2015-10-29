@@ -19,9 +19,7 @@ import com.portal2d.game.view.entities.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.portal2d.game.controller.Box2DConstants.PPM;
-import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
-import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
+import static com.portal2d.game.view.ViewConstants.*;
 
 /**
  * Visual representation of the {@link Level}.
@@ -35,7 +33,7 @@ public class PlayScene extends Scene {
 
     private Set<EntityView> entityViews;
 
-    // Separate for for drawing Buttons, this is to make sure the buttons are drawn on top of the other entities
+    // Separated set for drawing buttons, this is to make sure the buttons are drawn on top of the other entities
     private Set<ButtonView> buttons;
 
     //debugging stuff
@@ -63,7 +61,7 @@ public class PlayScene extends Scene {
         float x = level.getPlayer().getBody().getPosition().x;
         float y = level.getPlayer().getBody().getPosition().y;
 
-        camera.setPosition(x * PPM + VIEWPORT_WIDTH / 8, y * PPM + VIEWPORT_HEIGHT);
+        camera.setPosition(x * PPM + VIEWPORT_WIDTH / 8, y * PPM + VIEWPORT_HEIGHT / 4);
         camera.update();
 
         //draw tiled map
@@ -81,10 +79,11 @@ public class PlayScene extends Scene {
             button.render(batch, deltaTime);
         }
 
-        b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT) / PPM);
+        b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT / 4) / PPM);
         b2dcam.update();
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+        //TODO remove, debugging stuff
+        if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             debug = !debug;
         }
 
