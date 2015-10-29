@@ -15,3 +15,4 @@ public class DesktopLauncher {
 		new LwjglApplication(new Portal2D(), config);
 	}
 }
+

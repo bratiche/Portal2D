@@ -8,7 +8,8 @@ import com.portal2d.game.model.entities.portals.BluePortal;
 import com.portal2d.game.model.entities.portals.OrangePortal;
 import com.portal2d.game.model.level.Level;
 
-import static com.portal2d.game.model.ModelConstants.*;
+import static com.portal2d.game.model.ModelConstants.PROJECTILE_RADIUS;
+import static com.portal2d.game.model.ModelConstants.PROJECTILE_SPEED;
 
 /**
  *

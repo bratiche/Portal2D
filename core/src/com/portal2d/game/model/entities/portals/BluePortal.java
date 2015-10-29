@@ -17,15 +17,18 @@ public class BluePortal extends Portal {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        if(getOrangePortal() != null && getOrangePortal().canBeUsed()){
+        if(getOrangePortal() != null && !getOrangePortal().isEmitter()){
             level.addTeleportQueue(entity, getOrangePortal());
-            setTimer(entity);
+            setEmitter(true);
         }
     }
 
     @Override
     public void endInteraction(Entity entity) {
         entity.endInteraction(this);
+        if(getOrangePortal() != null && !isEmitter()) {
+            getOrangePortal().setEmitter(false);
+        }
     }
 
 }

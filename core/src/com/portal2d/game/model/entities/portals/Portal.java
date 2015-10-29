@@ -12,25 +12,21 @@ import com.portal2d.game.model.weapons.PortalGun;
 public abstract class Portal extends StaticEntity {
 
     private PortalGun portalGun;
-    protected Timer timer;
+    protected boolean emitter;
 
     public Portal(Level level, Body body, PortalGun portalGun) {
         super(level, body);
         this.portalGun = portalGun;
+        this.emitter = false;
         type = EntityType.PORTAL;
-        timer = new Timer(0,0);
     }
 
     public void receive(Entity entity){
-        if(!canBeUsed())
-            return;
-        setTimer(entity);
         entity.getBody().setTransform(body.getPosition(), 0);
     }
 
     @Override
     public void update(){
-        timer.tick();
     }
 
     public BluePortal getBluePortal() {
@@ -41,15 +37,12 @@ public abstract class Portal extends StaticEntity {
         return portalGun.getOrangePortal();
     }
 
-    public boolean canBeUsed(){
-        if(timer.getTime() < timer.getCooldown())
-            return false;
-        return true;
+    public boolean isEmitter() {
+        return emitter;
     }
 
-    //TODO: Overload setTimer / use the same timer for all entities.
-    protected void setTimer(Entity entity){
-        timer = new Timer(1/60.0f, 5);
+    public void setEmitter(boolean emitter) {
+        this.emitter = emitter;
     }
 
 }
