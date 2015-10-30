@@ -11,6 +11,7 @@ import com.portal2d.game.model.interactions.EntityType;
 public class Exit extends StaticEntity {
 
     private LevelName destinyLevel;
+    private boolean reached;
 
     public Exit(Level level, Body body, LevelName destinyLevel) {
         super(level, body);
@@ -32,6 +33,11 @@ public class Exit extends StaticEntity {
     public void beginInteraction(Player player) {
         level.setFinished(true);
         level.setNextLevel(destinyLevel);
+        reached = true;
+    }
+
+    public boolean isReached() {
+        return reached;
     }
 
 }

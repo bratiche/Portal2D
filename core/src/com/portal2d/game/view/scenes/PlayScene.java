@@ -7,10 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.model.entities.Box;
-import com.portal2d.game.model.entities.Button;
-import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.entities.Gate;
+import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
@@ -127,6 +124,9 @@ public class PlayScene extends Scene {
             }
             else if(entity.getType().equals(EntityType.BUTTON)) {
                 buttons.add(new ButtonView((Button)entity));
+            }
+            else if(entity.getType().equals(EntityType.EXIT)) {
+                entityViews.add(new ExitView((Exit)entity));
             }
             //TODO: add other types
         }

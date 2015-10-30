@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="199">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="204">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
@@ -14,14 +14,14 @@
   </data>
  </layer>
  <objectgroup name="boxes">
-  <object id="159" x="728" y="149" width="55" height="55"/>
-  <object id="160" x="540" y="154" width="55" height="55"/>
+  <object id="159" x="928" y="487" width="55" height="55"/>
+  <object id="160" x="288" y="468" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
-  <object id="46" name="player" x="242" y="304" width="30" height="60"/>
+  <object id="46" name="player" x="242" y="222" width="30" height="60"/>
  </objectgroup>
  <objectgroup name="buttons">
-  <object id="192" x="480" y="600" width="120" height="10">
+  <object id="192" x="1828" y="344" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>
@@ -52,6 +52,7 @@
   <object id="195" x="0" y="-7.10543e-15" width="420" height="120"/>
   <object id="197" x="0" y="120" width="120" height="120"/>
   <object id="198" x="0" y="600" width="420" height="120"/>
+  <object id="202" x="124" y="296" width="322" height="62"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
   <object id="98" x="420" y="0" width="360" height="120"/>

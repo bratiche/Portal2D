@@ -15,6 +15,7 @@ public enum EntityType {
     PLAYER,
     BUTTON,
     PROJECTILE,
+    PORTAL_PROJECTILE,
     SURFACE,
     PORTABLE_SURFACE
 

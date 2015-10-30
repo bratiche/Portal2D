@@ -1,6 +1,8 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.entities.portals.PortalProjectile;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
@@ -30,7 +32,7 @@ public class Gate extends StaticEntity implements Linkable {
      * The projectile is destroyed only if this gate is closed.
      */
     @Override
-    public void beginInteraction(Projectile projectile) {
+    public void beginInteraction(PortalProjectile projectile) {
         if(!open)
             level.addToRemove(projectile);
     }

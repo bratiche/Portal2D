@@ -9,7 +9,7 @@ public interface ModelConstants {
 
     //TODO: add physical properties of each entity
 
-    float PROJECTILE_SPEED = 5.0f;
+    float PROJECTILE_SPEED = 15.0f;
     float PROJECTILE_RADIUS = 0.1f;
 
 }

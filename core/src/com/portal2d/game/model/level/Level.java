@@ -1,11 +1,16 @@
 package com.portal2d.game.model.level;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.interactions.Definitions;
 import com.portal2d.game.model.interactions.GameContactListener;
 import com.portal2d.game.model.entities.*;
+import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,6 +36,8 @@ public class Level {
     //Queues
     private Map<Entity,Portal> teleportQueue;
     private Set<Entity> removalQueue;
+    private Map<Entity,Vector2> moveQueue;
+    private Map<Portal,Definitions> creationQueue;
 
     //Player
     private Player player;
@@ -44,6 +51,8 @@ public class Level {
 
         teleportQueue = new HashMap<Entity, Portal>();
         removalQueue = new HashSet<Entity>();
+        moveQueue = new HashMap<Entity,Vector2>();
+        creationQueue = new HashMap<Portal,Definitions>();
 
         world.setContactListener(new GameContactListener());
     }
@@ -58,17 +67,33 @@ public class Level {
             entity.update();
         }
 
+        //Remove entities
+        if(!removalQueue.isEmpty())
+            removeEntities();
+
         //Queue processing
-        for(Map.Entry<Entity,Portal> e : teleportQueue.entrySet()) {
-            e.getValue().receive(e.getKey());
+        for(Map.Entry<Entity,Portal> entry : teleportQueue.entrySet()) {
+            entry.getValue().receive(entry.getKey());
+        }
+
+        for(Map.Entry<Entity,Vector2> entry : moveQueue.entrySet()) {
+            entry.getKey().getBody().setTransform(entry.getValue(),0);
+        }
+
+        for(Map.Entry<Portal,Definitions> entry : creationQueue.entrySet()) {
+            BodyDef bdef = entry.getValue().getBdef();
+            FixtureDef fdef = entry.getValue().getFdef();
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef);
+            body.setUserData(entry.getKey());
+            entry.getKey().setBody(body);
+            entry.getValue().disposeShape();
         }
 
         //Queue cleaning
         teleportQueue.clear();
-
-        //Remove entities
-        if(!removalQueue.isEmpty())
-            removeEntities();
+        moveQueue.clear();
+        creationQueue.clear();
 
     }
 
@@ -78,6 +103,14 @@ public class Level {
 
     public void addToRemove(Entity entity) {
         removalQueue.add(entity);
+    }
+
+    public void addToMoveQueue(Entity e, Vector2 position){
+        moveQueue.put(e, position);
+    }
+
+    public void addToCreationQueue(Portal portal ,Definitions definitions) {
+        creationQueue.put(portal,definitions);
     }
 
     public Player getPlayer() {
@@ -102,14 +135,11 @@ public class Level {
 
     private void removeEntities() {
 
-        System.out.println(entities.size());
         for(Entity entity : removalQueue) {
             Body body = entity.getBody();
             world.destroyBody(body);
             entities.remove(entity);
         }
-        System.out.println(entities.size());
-
         removalQueue.clear();
     }
 

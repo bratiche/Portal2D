@@ -21,7 +21,8 @@ public abstract class Entity {
         this.level = level;
         this.world = level.getWorld();
         this.body = body;
-        body.setUserData(this);
+        if(body != null)
+            body.setUserData(this);
     }
 
     public Body getBody() {
@@ -59,12 +60,6 @@ public abstract class Entity {
     public void beginInteraction(Portal portal) {
     }
 
-    public void beginInteraction(BluePortal portal) {
-    }
-
-    public void beginInteraction(OrangePortal portal) {
-    }
-
     public void beginInteraction(Gate gate) {
     }
 
@@ -77,9 +72,6 @@ public abstract class Entity {
     /**
      * Implemented this way so that the projectile is removed when touching any entity by default.
      */
-    public void beginInteraction(Projectile projectile) {
-        level.addToRemove(projectile);
-    }
 
     public void beginInteraction(PortalProjectile projectile) {
         level.addToRemove(projectile);
@@ -101,12 +93,6 @@ public abstract class Entity {
     public void endInteraction(Portal portal) {
     }
 
-    public void endInteraction(BluePortal portal) {
-    }
-
-    public void endInteraction(OrangePortal portal) {
-    }
-
     public void endInteraction(Gate gate) {
     }
 
@@ -114,9 +100,6 @@ public abstract class Entity {
     }
 
     public void endInteraction(PortableSurface surface) {
-    }
-
-    public void endInteraction(Projectile projectile) {
     }
 
     public void endInteraction(PortalProjectile projectile) {

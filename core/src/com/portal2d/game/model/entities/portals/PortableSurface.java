@@ -27,7 +27,7 @@ public class PortableSurface extends Surface {
 
     @Override
     public void beginInteraction(PortalProjectile projectile) {
-        super.beginInteraction(projectile);
+        projectile.createPortal();
     }
 
 }

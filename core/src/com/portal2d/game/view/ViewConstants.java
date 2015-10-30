@@ -16,6 +16,7 @@ public interface ViewConstants {
         ANIM_GATE,
         MENU_BG,
         SPRITE_BOX,
+        SPRITE_EXIT,
         SPRITE_BUTTON,
         ANIM_PLAYER
     }
@@ -32,6 +33,9 @@ public interface ViewConstants {
 
     int PLAYER_WIDTH = 64;
     int PLAYER_HEIGHT= 64;
+
+    int EXIT_WIDTH = 30;
+    int EXIT_HEIGHT = 180;
 
     //animations
     float ANIM_GATE_DELAY =  1 / 12f;

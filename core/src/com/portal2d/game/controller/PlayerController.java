@@ -10,7 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
+import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.interactions.PortalColor;
 import com.portal2d.game.model.level.Level;
+import com.portal2d.game.model.weapons.PortalGun;
 
 import static com.portal2d.game.view.ViewConstants.*;
 
@@ -157,13 +160,6 @@ public class PlayerController extends InputAdapter {
 
         // Set if the player is facing right or left (regardless of whether it is moving or jumping)
 
-
-//        if(playerBody.getLinearVelocity().x > 1f) {
-//            player.setFacingRight(true);
-//        } else if(playerBody.getLinearVelocity().x < -1f) {
-//            player.setFacingRight(false);
-//        }
-
         //screen coordinates
         mouse.x = Gdx.input.getX();
         mouse.y = Gdx.input.getY();
@@ -221,8 +217,9 @@ public class PlayerController extends InputAdapter {
 
     @Override
     public boolean keyDown (int keycode) {
-        if(keycode == Input.Keys.W)
+        if(keycode == Input.Keys.W) {
             jump = true;
+        }
         return false;
     }
 

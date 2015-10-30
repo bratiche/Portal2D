@@ -3,12 +3,13 @@ package com.portal2d.game.model.weapons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.entities.Projectile;
-import com.portal2d.game.model.entities.portals.BluePortal;
-import com.portal2d.game.model.entities.portals.OrangePortal;
+import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.entities.portals.PortalProjectile;
+import com.portal2d.game.model.interactions.PortalColor;
 import com.portal2d.game.model.level.Level;
 
-import static com.portal2d.game.model.ModelConstants.PROJECTILE_RADIUS;
+import java.util.NoSuchElementException;
+
 import static com.portal2d.game.model.ModelConstants.PROJECTILE_SPEED;
 
 /**
@@ -17,8 +18,8 @@ import static com.portal2d.game.model.ModelConstants.PROJECTILE_SPEED;
 public class PortalGun implements Weapon {
 
     private Entity owner;
-    private BluePortal bluePortal;
-    private OrangePortal orangePortal;
+    private Portal bluePortal;
+    private Portal orangePortal;
 
     private World world;
     private Level level;
@@ -28,54 +29,10 @@ public class PortalGun implements Weapon {
         this.owner = owner;
         this.world = level.getWorld();
     }
-
-    //TODO: replace with ray cast in PortalProjectile
-    private void shootBluePortal(Vector2 position) {
-
-        if(bluePortal == null) {
-            BodyDef bodyDef = new BodyDef();
-            bodyDef.position.set(position);
-            Body body = world.createBody(bodyDef);
-
-            CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(0.1f);
-
-            Fixture fixture = body.createFixture(circleShape, 1);
-            fixture.setSensor(true);
-            bluePortal = new BluePortal(level, body, this);
-
-            circleShape.dispose();
-        }
-        else
-            bluePortal.getBody().setTransform(position, 0);
-    }
-
-    private void shootOrangePortal(Vector2 position) {
-
-        if(orangePortal == null) {
-            BodyDef bodyDef = new BodyDef();
-            bodyDef.position.set(position);
-            Body body = world.createBody(bodyDef);
-
-            CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(0.1f);
-
-            Fixture fixture = body.createFixture(circleShape, 1);
-            fixture.setSensor(true);
-            orangePortal = new OrangePortal(level, body, this);
-
-            circleShape.dispose();
-        }
-        else {
-            orangePortal.getBody().setTransform(position, 0);
-        }
-
-    }
-
     /**
      * Placeholder until a proper method is implemented
      */
-    private void shootProjectile(Vector2 position) {
+    private void shootProjectile(Vector2 position, PortalColor color) {
         Vector2 own_pos = owner.getBody().getPosition();
 
         BodyDef bodyDef = new BodyDef();
@@ -87,41 +44,59 @@ public class PortalGun implements Weapon {
         velocity.scl(PROJECTILE_SPEED);
 
         Body body = world.createBody(bodyDef);
-        CircleShape shape = new CircleShape();
-        shape.setRadius(PROJECTILE_RADIUS);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(0.1f, 0.1f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
 
         Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setSensor(true);
+        //fixture.setSensor(true); doesn't detect normals if it's is sensor
 
         //not affected by gravity
-        body.setGravityScale(0);
+        //body.setGravityScale(0);
 
-        level.add(new Projectile(level, body, velocity));
+        level.add(new PortalProjectile(level, body, color, this, velocity));
     }
 
     public void actionLeftClick(Vector2 position) {
-        shootBluePortal(position);
+        shootProjectile(position, PortalColor.BLUE);
     }
+
+//        public void actionLeftClick(Vector2 position) {
+//        shootProjectile(position);
+//    }
 
     public void actionRightClick(Vector2 position) {
-        shootOrangePortal(position);
+        shootProjectile(position, PortalColor.ORANGE);
     }
 
-    public BluePortal getBluePortal() {
-        return bluePortal;
+    public void setPortal(Portal portal){
+        switch(portal.getColor()){
+            case BLUE:
+                bluePortal = portal;
+                break;
+            case ORANGE:
+                orangePortal = portal;
+                break;
+        }
     }
 
-    public OrangePortal getOrangePortal() {
-        return orangePortal;
+    public Portal getPortal(PortalColor color){
+        switch(color){
+            case BLUE:
+                return bluePortal;
+            case ORANGE:
+                return orangePortal;
+            default:
+                throw new NoSuchElementException(); //TODO: Add own exception
+        }
     }
 
-    public void update(){
-        if(bluePortal != null && orangePortal != null) {
-            bluePortal.update();
-            orangePortal.update();
+    public void linkPortals(){
+        if(orangePortal != null && bluePortal != null){
+            bluePortal.setOppositePortal(orangePortal);
+            orangePortal.setOppositePortal(bluePortal);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.portal2d.game.model.entities.portals.PortalProjectile;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.weapons.PortalGun;
@@ -45,18 +46,21 @@ public class Player extends DynamicEntity {
      * TODO: implement different types of projectiles.
      */
     @Override
-    public void beginInteraction(Projectile projectile) {
+    public void beginInteraction(PortalProjectile projectile){
 
     }
 
     @Override
-    public void update(){
-        super.update();
-        ((PortalGun) weapon).update();
+    public void endInteraction(PortalProjectile projectile){
+
     }
 
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public boolean isJumping() {

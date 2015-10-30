@@ -8,9 +8,8 @@ import com.portal2d.game.model.level.Level;
 
 /**
  * Base entity for all projectiles in the game.
- * TODO: make this class abstract
  */
-public class Projectile extends DynamicEntity {
+public abstract class Projectile extends DynamicEntity {
 
     // Constant velocity
     private Vector2 velocity;
@@ -28,18 +27,5 @@ public class Projectile extends DynamicEntity {
         body.setLinearVelocity(velocity);
     }
 
-    @Override
-    public void beginInteraction(Entity entity) {
-        entity.beginInteraction(this);
-    }
-
-    public void beginInteraction(Surface surface) {
-        surface.beginInteraction(this);
-    }
-
-    @Override
-    public void endInteraction(Entity entity) {
-        entity.endInteraction(this);
-    }
 
 }

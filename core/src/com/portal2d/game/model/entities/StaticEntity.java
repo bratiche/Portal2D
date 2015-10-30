@@ -11,7 +11,8 @@ public abstract class StaticEntity extends Entity {
 
     public StaticEntity(Level level, Body body) {
         super(level, body);
-        body.setType(BodyDef.BodyType.StaticBody);
+        if(body != null)
+            body.setType(BodyDef.BodyType.StaticBody);
     }
 
     @Override
