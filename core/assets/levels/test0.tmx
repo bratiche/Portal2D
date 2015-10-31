@@ -15,7 +15,7 @@
  </layer>
  <objectgroup name="boxes"/>
  <objectgroup name="player">
-  <object id="46" name="player" x="191.333" y="162.667" width="30" height="60"/>
+  <object id="46" name="player" x="191.333" y="162.667" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons"/>
  <objectgroup name="exits">
@@ -30,11 +30,11 @@
   <object id="82" x="0" y="120" width="120" height="480"/>
   <object id="85" x="0" y="0" width="1200" height="120"/>
   <object id="86" x="1080" y="120" width="120" height="480"/>
-  <object id="205" x="134.667" y="248" width="125.333" height="61.3333"/>
+  <object id="205" x="124" y="288" width="125.333" height="61.3333"/>
   <object id="207" x="542.667" y="213.333" width="86.6667" height="40"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
-  <object id="204" x="258.667" y="518.667" width="642.667" height="74.6667"/>
+  <object id="204" x="241.334" y="556" width="642.667" height="74.6667"/>
   <object id="210" x="901.333" y="280" width="66.6667" height="314.667"/>
  </objectgroup>
  <objectgroup name="gates"/>

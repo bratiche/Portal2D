@@ -1,7 +1,9 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.portal2d.game.model.entities.portals.PortalProjectile;
+import com.portal2d.game.model.interactions.CollisionFilters;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.weapons.PortalGun;
@@ -24,6 +26,11 @@ public class Player extends DynamicEntity {
         super(level, body);
         type = EntityType.PLAYER;
         weapon = new PortalGun(level, this);
+
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.PLAYER_BITS;
+        filter.maskBits = ~CollisionFilters.PORTAL_PROJECTILE_BITS;
+        body.getFixtureList().get(0).setFilterData(filter);
     }
 
     @Override

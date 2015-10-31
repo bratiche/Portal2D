@@ -47,7 +47,8 @@ public class Portal extends StaticEntity {
         System.out.println(newVelocity);
         entityBody.setLinearVelocity(newVelocity);
 
-        entityBody.setTransform(body.getPosition().add(normal.x * 0.2f, normal.y * 0.2f), 0);
+        //0.1f is the radius of the portal circular shape
+        entityBody.setTransform(body.getPosition().add(0.1f, 0.1f), 0);
 
     }
 

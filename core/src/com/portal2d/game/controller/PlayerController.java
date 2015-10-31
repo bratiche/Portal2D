@@ -62,12 +62,6 @@ public class PlayerController extends InputAdapter {
                 grounded = true;
         }
 
-        //cap max velocity
-        if(Math.abs(velocity.x) > MAX_VELOCITY) {
-            velocity.x = Math.signum(velocity.x) * MAX_VELOCITY;
-            playerBody.setLinearVelocity(velocity.x, velocity.y);
-        }
-
         //calculate stillTime and damp
         if (!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
             stillTime += Gdx.graphics.getDeltaTime();
@@ -97,13 +91,23 @@ public class PlayerController extends InputAdapter {
         }
 
         // apply left impulse if max velocity is not reached yet
-        if (Gdx.input.isKeyPressed(Input.Keys.A) && velocity.x > -MAX_VELOCITY) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             playerBody.applyLinearImpulse(-2f, 0, position.x, position.y, true);
+            //cap max velocity
+            if(Math.abs(velocity.x) > MAX_VELOCITY) {
+                velocity.x = Math.signum(velocity.x) * MAX_VELOCITY;
+                playerBody.setLinearVelocity(velocity.x, velocity.y);
+            }
         }
 
         // apply right impulse if max velocity is not reached yet
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && velocity.x < MAX_VELOCITY) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             playerBody.applyLinearImpulse(2f, 0, position.x, position.y, true);
+            //cap max velocity
+            if(Math.abs(velocity.x) > MAX_VELOCITY) {
+                velocity.x = Math.signum(velocity.x) * MAX_VELOCITY;
+                playerBody.setLinearVelocity(velocity.x, velocity.y);
+            }
         }
 
         // jump, but only when grounded
@@ -200,7 +204,7 @@ public class PlayerController extends InputAdapter {
                 boolean below = true;
 
                 // Avoid the player to jump when is on a sensor
-                if(contact.getFixtureA().isSensor() || contact.getFixtureB().isSensor()) {
+                if((contact.getFixtureA().isSensor() || contact.getFixtureB().isSensor()) && !jump) {
                     below = false;
                 }
                 for (int j = 0; j < manifold.getNumberOfContactPoints(); j++) {

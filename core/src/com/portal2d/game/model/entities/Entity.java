@@ -21,6 +21,7 @@ public abstract class Entity {
         this.level = level;
         this.world = level.getWorld();
         this.body = body;
+        //TODO: fix null body parameter for creating portals
         if(body != null)
             body.setUserData(this);
     }
@@ -72,7 +73,6 @@ public abstract class Entity {
     /**
      * Implemented this way so that the projectile is removed when touching any entity by default.
      */
-
     public void beginInteraction(PortalProjectile projectile) {
         level.addToRemove(projectile);
     }

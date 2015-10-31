@@ -27,7 +27,11 @@ public class PortableSurface extends Surface {
 
     @Override
     public void beginInteraction(PortalProjectile projectile) {
+        level.addToRemove(projectile);
         projectile.createPortal();
+
+        //this fix the bug that the objects
+        //body.getFixtureList().get(0).setSensor(true);
     }
 
 }

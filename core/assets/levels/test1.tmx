@@ -18,10 +18,10 @@
   <object id="160" x="288" y="468" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
-  <object id="46" name="player" x="242" y="222" width="30" height="60"/>
+  <object id="46" name="player" x="224" y="158" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
-  <object id="192" x="1828" y="344" width="120" height="10">
+  <object id="192" x="260" y="600" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>

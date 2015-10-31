@@ -1,7 +1,5 @@
 package com.portal2d.game.model.interactions;
 
-import com.portal2d.game.model.entities.Entity;
-
 /**
  *
  */

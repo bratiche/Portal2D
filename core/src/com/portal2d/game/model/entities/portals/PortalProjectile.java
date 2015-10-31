@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.interactions.Definitions;
 import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.interactions.CollisionFilters;
 import com.portal2d.game.model.interactions.PortalColor;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.entities.Projectile;
@@ -25,6 +26,11 @@ public class PortalProjectile extends Projectile {
         this.color = color;
         this.portalGun = portalGun;
         type = EntityType.PORTAL_PROJECTILE;
+        
+        Filter filter = new Filter();
+        filter.categoryBits = CollisionFilters.PORTAL_PROJECTILE_BITS;
+        filter.maskBits = ~CollisionFilters.PLAYER_BITS;
+        body.getFixtureList().get(0).setFilterData(filter);
     }
 
 //    @Override
