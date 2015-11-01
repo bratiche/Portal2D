@@ -50,8 +50,7 @@ public class PauseState extends GameState {
         }
 
         else if (scene.getIntructionsbutton().isClicked(mouse.x, mouse.y)) {
-
-
+            gsm.push(new InstructionState(gsm));
         }
 
         else if (scene.getExitbutton().isClicked(mouse.x, mouse.y)) {
@@ -74,7 +73,7 @@ public class PauseState extends GameState {
         // Render the paused state
         state.render(batch);
 
-        // Render this state
+        // Render this stae
         batch.setProjectionMatrix(scene.getCamera().combined);
         scene.getIntructionsbutton().render(batch, mouse.x, mouse.y);
         scene.getContinuebutton().render(batch, mouse.x, mouse.y);

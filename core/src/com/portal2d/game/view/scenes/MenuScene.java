@@ -32,7 +32,7 @@ public class MenuScene extends Scene {
 
 
         // font settings
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("core/assets/sprites/fontE.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("core/assets/font/font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = FORMAT_SIZE; // setting font size
         BitmapFont font = generator.generateFont(parameter);

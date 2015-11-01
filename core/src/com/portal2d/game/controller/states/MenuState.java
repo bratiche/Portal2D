@@ -38,8 +38,7 @@ public class MenuState extends GameState {
 
 
         if (scene.getIntructionsbutton().isClicked(mouse.x, mouse.y)) {
-
-
+            gsm.push(new InstructionState(gsm));
         }
 
         else if (scene.getLoadbutton().isClicked(mouse.x, mouse.y)) {
@@ -49,7 +48,6 @@ public class MenuState extends GameState {
 
         else if ( scene.getPlaybutton().isClicked(mouse.x, mouse.y)) {
             gsm.set(new PlayState(gsm));
-
         }
 
         else if (scene.getExitbutton().isClicked(mouse.x, mouse.y)) {

@@ -17,7 +17,8 @@ public interface ViewConstants {
         MENU_BG,
         SPRITE_BOX,
         SPRITE_BUTTON,
-        ANIM_PLAYER
+        ANIM_PLAYER,
+        INSTRUCTIONS_BG
     }
 
     //sizes in pixels
@@ -42,8 +43,13 @@ public interface ViewConstants {
     int TEXTBUTTON_HEIGHT = 20;
     int FIRST_BUTTONSTART_MENU = 600;
     int FORMAT_SIZE = 80;
+    int INSTRUCTION_SIZE= 40;
     int SPACE_BETWEEN_BUTTONS = 125;
     int FIRST_BUTTON_START_PAUSE = 500;
+    int FIRST_BUTTON_INSTRUCTIONS_X = 100;
+    int FIRST_BUTTON_INSTRUCTIONS_Y = 100;
+    int INSTRUCTION_TEXT_POSITION_X = 100;
+    int INSTRUCTION_TEXT_POSITION_Y = 650;
 
 
 }

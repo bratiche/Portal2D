@@ -40,21 +40,18 @@ public class Assets implements Disposable {
     }
 
     public void loadTextures() {
-        Texture texture;
-        texture = new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png"));
-        textures.put(TextureName.MENU_BG, texture);
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/box1.png"));
-        textures.put(TextureName.SPRITE_BOX, texture);
+        textures.put(TextureName.MENU_BG,  new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/gate.png"));
-        textures.put(TextureName.ANIM_GATE, texture);
+        textures.put(TextureName.SPRITE_BOX, new Texture(Gdx.files.internal("core/assets/sprites/box.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/button.png"));
-        textures.put(TextureName.SPRITE_BUTTON, texture);
+        textures.put(TextureName.ANIM_GATE, new Texture(Gdx.files.internal("core/assets/sprites/gate.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/player.png"));
-        textures.put(TextureName.ANIM_PLAYER, texture);
+        textures.put(TextureName.SPRITE_BUTTON, new Texture(Gdx.files.internal("core/assets/sprites/button.png")));
+
+        textures.put(TextureName.ANIM_PLAYER, new Texture(Gdx.files.internal("core/assets/sprites/player.png")));
+
+        textures.put(TextureName.INSTRUCTIONS_BG, new Texture(Gdx.files.internal("core/assets/backgrounds/instructions.jpg")));
     }
 
     public TiledMap getTiledMap(LevelName key) {
