@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector3;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.view.ui.ExitButton;
 import com.portal2d.game.view.ui.InstructionsButton;
@@ -65,10 +66,16 @@ public class MenuScene extends Scene {
         batch.draw(background, 0, 0);
         batch.end();
 
-        p.render(batch);
-        l.render(batch);
-        i.render(batch);
-        e.render(batch);
+        Vector3 mouse= new Vector3();
+        mouse.x= Gdx.input.getX();
+        mouse.y= Gdx.input.getY();
+
+        camera.unproject(mouse);
+
+        p.render(batch, mouse.x , mouse.y);
+        l.render(batch, mouse.x , mouse.y);
+        i.render(batch, mouse.x , mouse.y);
+        e.render(batch, mouse.x , mouse.y);
 
 
     }

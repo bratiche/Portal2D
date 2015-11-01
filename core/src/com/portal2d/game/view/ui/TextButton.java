@@ -1,6 +1,7 @@
 package com.portal2d.game.view.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -33,18 +34,22 @@ public class TextButton extends UIComponent {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float x, float y) {
         batch.begin();
+        if(x >= this.x - width && y >= this.y - gl.height - width && x <= this.x + gl.width + width  && y <= this.y + height) {
+            font.setColor(Color.BLACK);
+        }
+        else {
+            font.setColor(Color.WHITE);
+        }
 
-        font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-        font.draw(batch, text, x, y);
+        font.draw(batch, text, this.x, this.y);
         batch.end();
     }
 
     public boolean isClicked(float x, float y) {
 
-        return Gdx.input.isTouched() && x >= this.x - width && y >= this.y - gl.height - width && x <= this.x + gl.width + width  && y <= this.y + height;
+            return Gdx.input.isTouched() && x >= this.x - width && y >= this.y - gl.height - width && x <= this.x + gl.width + width  && y <= this.y + height;
     }
 
 }

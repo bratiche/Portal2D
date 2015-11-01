@@ -1,6 +1,7 @@
 package com.portal2d.game.view.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * Base class for user interface components, such as {@link TextButton}.
@@ -23,6 +24,5 @@ public abstract class UIComponent {
         this.height = height;
     }
 
-    public abstract void render(SpriteBatch batch);
-
+    public abstract void render(SpriteBatch batch, float x, float y);
 }
