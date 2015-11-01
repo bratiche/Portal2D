@@ -1,17 +1,15 @@
 package com.portal2d.game.view.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.math.Vector3;
 
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 
 /**
- * TODO
+ * TODO: change color when cursor is on the text
  */
 public class TextButton extends UIComponent {
 
@@ -39,18 +37,14 @@ public class TextButton extends UIComponent {
         batch.begin();
 
         font.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+
         font.draw(batch, text, x, y);
         batch.end();
     }
 
     public boolean isClicked(float x, float y) {
-        if(Gdx.input.isTouched()) {
 
-            System.out.println( x + " , " + this.x+ " AND "+ y + " , " +this.y );
-            System.out.println(x >= this.x - width && y >= this.y - width && x <= this.x + gl.width + width  && y <= this.y + gl.height + height);
-            return x >= this.x - width && y >= this.y - gl.height - width && x <= this.x + gl.width + width  && y <= this.y + height;
-        }
-        return false;
+        return Gdx.input.isTouched() && x >= this.x - width && y >= this.y - gl.height - width && x <= this.x + gl.width + width  && y <= this.y + height;
     }
 
 }

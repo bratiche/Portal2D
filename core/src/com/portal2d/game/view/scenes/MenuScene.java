@@ -7,10 +7,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.portal2d.game.Portal2D;
-import com.portal2d.game.view.ui.TextButton;
+import com.portal2d.game.view.ui.ExitButton;
+import com.portal2d.game.view.ui.InstructionsButton;
+import com.portal2d.game.view.ui.LoadButton;
+import com.portal2d.game.view.ui.PlayButton;
 
-import java.util.HashSet;
-import java.util.Set;
+
+
+
 
 import static com.portal2d.game.view.ViewConstants.*;
 
@@ -21,13 +25,16 @@ public class MenuScene extends Scene {
 
     private Texture background;
     private OrthographicCamera camera;
-    private Set<TextButton> buttons;
+    private PlayButton p;
+    private LoadButton l;
+    private InstructionsButton i;
+    private ExitButton e;
 
     public MenuScene() {
         background = Portal2D.assets.getTexture(TextureName.MENU_BG);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        buttons= new HashSet<TextButton>();
+
 
         // font settings
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator( Gdx.files.internal("core/assets/sprites/fontE.ttf"));
@@ -37,17 +44,14 @@ public class MenuScene extends Scene {
         generator.dispose();
 
         // Creating buttons
-        buttons.add(new TextButton(FIRST_BUTTONSTART, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Play", font));
-        buttons.add(new TextButton(FIRST_BUTTONSTART - SPACE_BETWEEN_BUTTONS*2, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Instructions", font));
-        buttons.add(new TextButton(FIRST_BUTTONSTART - SPACE_BETWEEN_BUTTONS, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Options", font));
-
+        p= new PlayButton(FIRST_BUTTONSTART, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Play", font);
+        i=new InstructionsButton(FIRST_BUTTONSTART - SPACE_BETWEEN_BUTTONS*2, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Instructions", font);
+        l=new LoadButton(FIRST_BUTTONSTART - SPACE_BETWEEN_BUTTONS, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Load", font);
+        e=new ExitButton(FIRST_BUTTONSTART - SPACE_BETWEEN_BUTTONS*3, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Exit", font);
 
 
     }
 
-    public Set<TextButton> getButtons () {
-        return buttons;
-    }
 
     public OrthographicCamera getCamera() {
         return camera;
@@ -61,9 +65,28 @@ public class MenuScene extends Scene {
         batch.draw(background, 0, 0);
         batch.end();
 
-        for( TextButton t : buttons)
-            t.render(batch);
+        p.render(batch);
+        l.render(batch);
+        i.render(batch);
+        e.render(batch);
 
+
+    }
+
+    public LoadButton getLoadbutton() {
+        return l;
+    }
+
+    public InstructionsButton getIntructionsbutton() {
+        return i;
+    }
+
+    public PlayButton getPlaybutton() {
+        return p;
+    }
+
+    public ExitButton getExitbutton() {
+        return e;
     }
 
 }

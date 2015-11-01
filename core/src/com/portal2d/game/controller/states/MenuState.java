@@ -37,11 +37,25 @@ public class MenuState extends GameState {
         scene.getCamera().unproject(mouse);
 
 
-        for ( TextButton t : scene.getButtons()) {
-            if(t.isClicked(mouse.x, mouse.y)) {
-                gsm.set(new PlayState(gsm));
-            }
+        if (scene.getIntructionsbutton().isClicked(mouse.x, mouse.y)) {
+
+
         }
+
+        else if (scene.getLoadbutton().isClicked(mouse.x, mouse.y)) {
+
+
+        }
+
+        else if ( scene.getPlaybutton().isClicked(mouse.x, mouse.y)) {
+            gsm.set(new PlayState(gsm));
+
+        }
+
+        else if (scene.getExitbutton().isClicked(mouse.x, mouse.y)) {
+            Gdx.app.exit();
+        }
+
 
     }
 

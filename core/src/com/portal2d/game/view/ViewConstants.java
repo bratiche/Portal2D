@@ -40,7 +40,7 @@ public interface ViewConstants {
     // textbutton sizes
     int TEXTBUTTON_WIDTH = 20;
     int TEXTBUTTON_HEIGHT = 20;
-    int FIRST_BUTTONSTART = 500;
+    int FIRST_BUTTONSTART = 600;
     int FORMAT_SIZE= 80;
     int SPACE_BETWEEN_BUTTONS= 125;
 
