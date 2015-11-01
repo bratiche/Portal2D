@@ -1,6 +1,7 @@
 package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.portal2d.game.controller.GameStateManager;
 
 /**
@@ -9,9 +10,11 @@ import com.portal2d.game.controller.GameStateManager;
  */
 public abstract class GameState {
 
+    protected Vector3 mouse;
     protected GameStateManager gsm;
 
     public GameState(GameStateManager gsm) {
+        mouse= new Vector3();
         this.gsm = gsm;
     }
 

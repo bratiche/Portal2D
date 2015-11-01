@@ -75,7 +75,7 @@ public class PlayerView extends EntityView<Player> {
             keyFrame = animations.get(Action.PLAYER_FALL).getKeyFrame(stateTime);
         }
 
-        //standing
+        //standing case
         else {
             stateTime = 0;
             keyFrame = animations.get(Action.PLAYER_STAND).getKeyFrame(stateTime);

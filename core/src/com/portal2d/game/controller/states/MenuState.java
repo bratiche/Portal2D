@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.view.scenes.MenuScene;
+import com.portal2d.game.view.ui.TextButton;
+
+import static com.portal2d.game.view.ViewConstants.PPM;
+import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
+import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
  *
@@ -25,14 +30,24 @@ public class MenuState extends GameState {
 
     @Override
     public void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            gsm.set(new PlayState(gsm));
+
+        mouse.x= Gdx.input.getX();
+        mouse.y= Gdx.input.getY();
+
+        scene.getCamera().unproject(mouse);
+
+
+        for ( TextButton t : scene.getButtons()) {
+            if(t.isClicked(mouse.x, mouse.y)) {
+                gsm.set(new PlayState(gsm));
+            }
         }
 
     }
 
     @Override
     public void update(float dt) {
+
     }
 
     @Override

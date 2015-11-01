@@ -37,4 +37,12 @@ public interface ViewConstants {
     float ANIM_GATE_DELAY =  1 / 12f;
     float ANIM_PLAYER_DELAY = 1 / 12f;
 
+    // textbutton sizes
+    int TEXTBUTTON_WIDTH = 20;
+    int TEXTBUTTON_HEIGHT = 20;
+    int FIRST_BUTTONSTART = 500;
+    int FORMAT_SIZE= 80;
+    int SPACE_BETWEEN_BUTTONS= 125;
+
+
 }
