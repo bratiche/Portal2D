@@ -1,12 +1,13 @@
 package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.Surface;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.entities.*;
 
 /**
- * Special surface able to create portals on it
+ * Special surface able to create portals on it.
  */
 public class PortableSurface extends Surface {
 
@@ -23,15 +24,6 @@ public class PortableSurface extends Surface {
     @Override
     public void endInteraction(Entity entity) {
         entity.endInteraction(this);
-    }
-
-    @Override
-    public void beginInteraction(PortalProjectile projectile) {
-        level.addToRemove(projectile);
-        projectile.createPortal();
-
-        //this fix the bug that the objects
-        //body.getFixtureList().get(0).setSensor(true);
     }
 
 }

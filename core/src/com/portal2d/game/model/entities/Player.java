@@ -1,11 +1,8 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.portal2d.game.model.entities.portals.PortalProjectile;
-import com.portal2d.game.model.interactions.CollisionFilters;
-import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 import com.portal2d.game.model.weapons.Weapon;
 
@@ -26,11 +23,6 @@ public class Player extends DynamicEntity {
         super(level, body);
         type = EntityType.PLAYER;
         weapon = new PortalGun(level, this);
-
-        Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.PLAYER_BITS;
-        filter.maskBits = ~CollisionFilters.PORTAL_PROJECTILE_BITS;
-        body.getFixtureList().get(0).setFilterData(filter);
     }
 
     @Override
@@ -45,20 +37,6 @@ public class Player extends DynamicEntity {
 
     @Override
     public void beginInteraction(Box box) {
-
-    }
-
-    /**
-     * Overridden so the Projectile is not destroyed upon touching the player.
-     * TODO: implement different types of projectiles.
-     */
-    @Override
-    public void beginInteraction(PortalProjectile projectile){
-
-    }
-
-    @Override
-    public void endInteraction(PortalProjectile projectile){
 
     }
 

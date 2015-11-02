@@ -1,13 +1,13 @@
 package com.portal2d.game.model.entities;
 
 /**
- * Interface implemented by any entity that can be linked to a button.
+ * Interface implemented by anything that can be linked to a {@link Button}.
  */
 public interface Linkable {
 
-    //connect
+    /** Called when a button linked to this is pressed */
     public void link();
 
-    //disconnect
+    /** Called when a button linked to this is released. */
     public void unlink();
 }

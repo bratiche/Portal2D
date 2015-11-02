@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.portal2d.game.view.ViewConstants.PPM;
+import static com.portal2d.game.model.ModelConstants.*;
 
 /**
  * Helper class for loading levels and creating entities from tmx files (TiledMaps).
@@ -135,22 +136,46 @@ public class LevelLoader {
         float height;
 
         for(MapObject mapObject : layer.getObjects()) {
-            rectangleMapObject = (RectangleMapObject)mapObject;
-            x = rectangleMapObject.getRectangle().getX();
-            y = rectangleMapObject.getRectangle().getY();
-            width = rectangleMapObject.getRectangle().getWidth();
-            height = rectangleMapObject.getRectangle().getHeight();
+            if(mapObject instanceof  RectangleMapObject) {
+                rectangleMapObject = (RectangleMapObject) mapObject;
+                x = rectangleMapObject.getRectangle().getX();
+                y = rectangleMapObject.getRectangle().getY();
+                width = rectangleMapObject.getRectangle().getWidth();
+                height = rectangleMapObject.getRectangle().getHeight();
 
-            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+                bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
 
-            Body body = world.createBody(bodyDef);
+                Body body = world.createBody(bodyDef);
 
-            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
-            fixtureDef.shape = shape;
-            fixtureDef.friction = 0.6f;
-            body.createFixture(fixtureDef);
+                shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+                fixtureDef.shape = shape;
+                fixtureDef.friction = 0.6f;
+                body.createFixture(fixtureDef);
+                level.add(new PortableSurface(level, body));
+            }
+            else if(mapObject instanceof PolygonMapObject) {
+                PolygonMapObject polygonMapObject = (PolygonMapObject) mapObject;
+                x = polygonMapObject.getPolygon().getX();
+                y = polygonMapObject.getPolygon().getY();
 
-            level.add(new PortableSurface(level, body));
+                bodyDef.position.set(x / PPM, y / PPM);
+
+                int vertexAmount = polygonMapObject.getPolygon().getVertices().length;
+                float[] vertices = new float[vertexAmount];
+
+                for(int i = 0; i < vertexAmount; i ++) {
+                    vertices[i] = polygonMapObject.getPolygon().getVertices()[i] / PPM;
+                }
+
+                shape.set(vertices);
+
+                fixtureDef.shape = shape;
+                fixtureDef.friction = 0.6f;
+
+                Body body = world.createBody(bodyDef);
+                body.createFixture(fixtureDef);
+                level.add(new PortableSurface(level, body));
+            }
         }
 
         shape.dispose();

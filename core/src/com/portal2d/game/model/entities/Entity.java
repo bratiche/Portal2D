@@ -21,17 +21,7 @@ public abstract class Entity {
         this.level = level;
         this.world = level.getWorld();
         this.body = body;
-        //TODO: fix null body parameter for creating portals
-        if(body != null)
-            body.setUserData(this);
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
-    public EntityType getType() {
-        return type;
+        body.setUserData(this);
     }
 
     /**
@@ -41,9 +31,19 @@ public abstract class Entity {
 
     /**
      * If we don't make these two methods abstract we get StackOverflowError. (infinite recursion)
+     * TODO: remove javadoc
      */
     public abstract void beginInteraction(Entity entity);
+
     public abstract void endInteraction(Entity entity);
+
+    public Body getBody() {
+        return body;
+    }
+
+    public EntityType getType() {
+        return type;
+    }
 
     // Begin interactions
     public void beginInteraction(Box box) {
@@ -71,10 +71,11 @@ public abstract class Entity {
     }
 
     /**
-     * Implemented this way so that the projectile is removed when touching any entity by default.
+     * Implemented this way so that the {@link Missile} is removed when touching any entity by default.
+     * If a specific Entity should not be destroyed by a missile, it has to override this method.
      */
-    public void beginInteraction(PortalProjectile projectile) {
-        level.addToRemove(projectile);
+    public void beginInteraction(Missile missile) {
+        level.addToRemove(missile);
     }
 
     // End interactions
@@ -102,7 +103,7 @@ public abstract class Entity {
     public void endInteraction(PortableSurface surface) {
     }
 
-    public void endInteraction(PortalProjectile projectile) {
+    public void endInteraction(Missile missile) {
     }
 
 }

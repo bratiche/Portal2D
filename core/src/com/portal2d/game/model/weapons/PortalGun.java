@@ -1,16 +1,14 @@
 package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.portals.Portal;
-import com.portal2d.game.model.entities.portals.PortalProjectile;
-import com.portal2d.game.model.interactions.PortalColor;
+import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.level.Level;
 
 import java.util.NoSuchElementException;
-
-import static com.portal2d.game.model.ModelConstants.PROJECTILE_SPEED;
 
 /**
  *
@@ -21,6 +19,8 @@ public class PortalGun implements Weapon {
     private Portal bluePortal;
     private Portal orangePortal;
 
+    private PortalGunRayCast raycast;
+
     private World world;
     private Level level;
 
@@ -28,47 +28,38 @@ public class PortalGun implements Weapon {
         this.level = level;
         this.owner = owner;
         this.world = level.getWorld();
-    }
-    /**
-     * Placeholder until a proper method is implemented
-     */
-    private void shootProjectile(Vector2 position, PortalColor color) {
-        Vector2 own_pos = owner.getBody().getPosition();
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(own_pos);
-
-        //calculate constant velocity
-        Vector2 velocity = new Vector2(position.sub(own_pos));
-        velocity.nor();
-        velocity.scl(PROJECTILE_SPEED);
-
-        Body body = world.createBody(bodyDef);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.1f, 0.1f);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-
-        Fixture fixture = body.createFixture(fixtureDef);
-        //fixture.setSensor(true); doesn't detect normals if it's is sensor
-
-        //not affected by gravity
-        //body.setGravityScale(0);
-
-        level.add(new PortalProjectile(level, body, color, this, velocity));
+        this.raycast = new PortalGunRayCast(this, level);
     }
 
+    @Override
     public void actionLeftClick(Vector2 position) {
-        shootProjectile(position, PortalColor.BLUE);
+        raycast.setPortalColor(PortalColor.BLUE);
+        rayCast(position);
     }
 
-//        public void actionLeftClick(Vector2 position) {
-//        shootProjectile(position);
-//    }
-
+    @Override
     public void actionRightClick(Vector2 position) {
-        shootProjectile(position, PortalColor.ORANGE);
+        raycast.setPortalColor(PortalColor.ORANGE);
+        rayCast(position);
+    }
+
+    /**
+     * Ray-cast the world using the {@link PortalGunRayCast} callback.
+     * @see World#rayCast(RayCastCallback, Vector2, Vector2)
+     */
+    private void rayCast(Vector2 position) {
+        Vector2 beginPoint = new Vector2(owner.getBody().getPosition());
+        //beginPoint.add(0, 0.4f);
+
+        Vector2 distance = new Vector2(position);
+        distance.sub(owner.getBody().getPosition());
+        distance.nor();
+        //System.out.println(distance);
+        distance.scl(10f);
+        Vector2 endPoint = new Vector2(owner.getBody().getPosition());
+        endPoint.add(distance);
+
+        world.rayCast(raycast, beginPoint, endPoint);
     }
 
     public void setPortal(Portal portal){

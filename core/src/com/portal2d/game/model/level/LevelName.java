@@ -12,7 +12,7 @@ public enum LevelName {
     TEST_LEVEL,
 
     //names will be funnier
-    LEVEL_1,
+    MOMENTUM_TEST,
     LEVEL_2,
     LEVEL_3,
     LEVEL_4,

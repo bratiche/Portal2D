@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="204">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="211">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
  <layer name="non-portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYB3mGBcYaHeR42ZSAbXNGyh7B9If1DZvKPljoNMvNvdQ2zxq+GMwhRElYLDFN7lgpPuDFL/Ro86ipj9ojanpDwDE8QUf
+   eJxjZWBgYB3mmBgw0G4kx82k+IveYDj5g9rmDSV/DHT6xeYeaptHDX8MpjCiBAy2+CYXjHR/kOI3etRZ1PQHrTE1/QEAR1EFEA==
   </data>
  </layer>
  <layer name="portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjYBj+gAsHHgWjgBgwXNLKqD8GFxgu/hgFQwOM1oP0BwAjnQCh
+   eJxjYBj+gIsIPApGAS4wXNLHqD8GFxgu/hgFQwOM1n30BwAe7AC/
   </data>
  </layer>
  <objectgroup name="boxes">
   <object id="159" x="928" y="487" width="55" height="55"/>
-  <object id="160" x="288" y="468" width="55" height="55"/>
+  <object id="160" x="422" y="289" width="55" height="55"/>
+  <object id="208" x="393.5" y="361.5" width="55" height="55"/>
+  <object id="209" x="266.5" y="384.5" width="55" height="55"/>
+  <object id="210" x="183.5" y="352.5" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
   <object id="46" name="player" x="224" y="158" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
-  <object id="192" x="260" y="600" width="120" height="10">
+  <object id="192" x="1616" y="600" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>
@@ -34,16 +37,16 @@
     <property name="NextLevel" value="0"/>
    </properties>
   </object>
-  <object id="109" name="exit 2" x="1320" y="120" width="30" height="180">
+  <object id="206" name="exit 2" x="1320" y="120" width="30" height="180">
    <properties>
-    <property name="NextLevel" value="2"/>
+    <property name="NextLevel" value="3"/>
    </properties>
   </object>
  </objectgroup>
  <objectgroup name="surfaces">
   <object id="81" x="780" y="600" width="1080" height="120"/>
   <object id="82" x="0" y="480" width="120" height="120"/>
-  <object id="85" x="780" y="0" width="2220" height="120"/>
+  <object id="85" x="960" y="0" width="2040" height="120"/>
   <object id="86" x="1200" y="120" width="120" height="300"/>
   <object id="107" x="840" y="300" width="360" height="60"/>
   <object id="184" x="2280" y="360" width="720" height="360"/>
@@ -52,15 +55,17 @@
   <object id="195" x="0" y="-7.10543e-15" width="420" height="120"/>
   <object id="197" x="0" y="120" width="120" height="120"/>
   <object id="198" x="0" y="600" width="420" height="120"/>
-  <object id="202" x="124" y="296" width="322" height="62"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
-  <object id="98" x="420" y="0" width="360" height="120"/>
+  <object id="98" x="420" y="0" width="540" height="120"/>
   <object id="102" x="420" y="600" width="360" height="120"/>
   <object id="103" x="0" y="240" width="120" height="240"/>
+  <object id="204" x="120" y="600">
+   <polygon points="0,0 178,1 -2,-178"/>
+  </object>
  </objectgroup>
  <objectgroup name="gates">
-  <object id="186" x="1240" y="420" width="40" height="180">
+  <object id="186" x="1596" y="119" width="40" height="180">
    <properties>
     <property name="ID" value="186"/>
    </properties>

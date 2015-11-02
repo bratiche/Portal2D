@@ -10,10 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
-import com.portal2d.game.model.entities.portals.Portal;
-import com.portal2d.game.model.interactions.PortalColor;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.weapons.PortalGun;
 
 import static com.portal2d.game.view.ViewConstants.*;
 
@@ -210,10 +207,11 @@ public class PlayerController extends InputAdapter {
                 for (int j = 0; j < manifold.getNumberOfContactPoints(); j++) {
                     below &= (manifold.getPoints()[j].y < position.y - 1.5f / PPM);
                 }
-                if(below) {
-                    return true;
-                }
-                return false;
+//                if(below) {
+//                    return true;
+//                }
+//                return false;
+                return below;
             }
         }
         return false;
@@ -241,6 +239,11 @@ public class PlayerController extends InputAdapter {
         playerBody = player.getBody();
         playerPhysicsFixture = playerBody.getFixtureList().get(0);
         player.setFacingRight(true);
+    }
+
+    //TESTEO
+    public Vector3 getMouse() {
+        return mouse;
     }
 
 }

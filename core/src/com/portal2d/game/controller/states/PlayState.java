@@ -2,9 +2,9 @@ package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -29,6 +29,9 @@ public class PlayState extends GameState {
 
     private PlayScene scene;
     private PlayerController playerController;
+
+    // TESTEO
+    private ShapeRenderer debugRenderer = new ShapeRenderer();
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -92,6 +95,25 @@ public class PlayState extends GameState {
     @Override
     public void render(SpriteBatch batch) {
         scene.render(batch);
+
+        //TESTEO DE RAYCAST
+        debugRenderer.setProjectionMatrix(getBox2DCamera().combined);
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+        Vector2 beginPoint = level.getPlayer().getBody().getPosition();
+//        beginPoint.add(0, 0.4f);
+
+        Vector2 distance = new Vector2(playerController.getMouse().x / 100f, playerController.getMouse().y / 100f);
+        distance.sub(beginPoint);
+        distance.nor();
+        distance.scl(5f);
+
+        Vector2 endPoint = new Vector2(beginPoint);
+        endPoint.add(distance);
+
+        debugRenderer.line(beginPoint, endPoint);
+        debugRenderer.end();
+
     }
 
     @Override
@@ -120,4 +142,5 @@ public class PlayState extends GameState {
     public OrthographicCamera getBox2DCamera() {
         return scene.getBox2DCamera();
     }
+
 }
