@@ -1,16 +1,10 @@
 package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
+import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.scenes.MenuScene;
-import com.portal2d.game.view.ui.TextButton;
-
-import static com.portal2d.game.view.ViewConstants.PPM;
-import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
-import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
  *
@@ -30,31 +24,20 @@ public class MenuState extends GameState {
 
     @Override
     public void handleInput() {
+        unproject(scene.getCamera());
 
-        mouse.x= Gdx.input.getX();
-        mouse.y= Gdx.input.getY();
-
-        scene.getCamera().unproject(mouse);
-
-
-        if (scene.getIntructionsbutton().isClicked(mouse.x, mouse.y)) {
+        if (scene.getInstructionsButton().isClicked(mouse.x, mouse.y)) {
             gsm.push(new InstructionState(gsm));
         }
-
-        else if (scene.getLoadbutton().isClicked(mouse.x, mouse.y)) {
-
-
+        else if (scene.getSelectLevelButton().isClicked(mouse.x, mouse.y)) {
+            gsm.push(new SelectLevelState(gsm));
         }
-
-        else if ( scene.getPlaybutton().isClicked(mouse.x, mouse.y)) {
-            gsm.set(new PlayState(gsm));
+        else if ( scene.getPlayButton().isClicked(mouse.x, mouse.y)) {
+            gsm.set(new PlayState(gsm, LevelName.TEST_LEVEL));
         }
-
-        else if (scene.getExitbutton().isClicked(mouse.x, mouse.y)) {
+        else if (scene.getExitButton().isClicked(mouse.x, mouse.y)) {
             Gdx.app.exit();
         }
-
-
     }
 
     @Override
@@ -64,7 +47,7 @@ public class MenuState extends GameState {
 
     @Override
     public void render(SpriteBatch batch) {
-        scene.render(batch);
+        scene.render(batch, mouse.x, mouse.y);
     }
 
     @Override

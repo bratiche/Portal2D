@@ -2,10 +2,8 @@ package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -30,19 +28,19 @@ public class PlayState extends GameState {
     private PlayScene scene;
     private PlayerController playerController;
 
-    public PlayState(GameStateManager gsm) {
+    public PlayState(GameStateManager gsm, LevelName levelName) {
         super(gsm);
-    }
 
-    @Override
-    public void entered() {
         // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader(world);
 
-        // Load first level
-        level = levelLoader.loadLevel(LevelName.TEST_LEVEL);
+        // Load level
+        level = levelLoader.loadLevel(levelName);
+    }
 
+    @Override
+    public void entered() {
         // Setup view
         scene = new PlayScene(world, level);
 
@@ -53,6 +51,7 @@ public class PlayState extends GameState {
     @Override
     public void handleInput() {
 
+        unproject(scene.getCamera());
         //pause the game
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             gsm.push(new PauseState(gsm, this));
@@ -91,7 +90,7 @@ public class PlayState extends GameState {
 
     @Override
     public void render(SpriteBatch batch) {
-        scene.render(batch);
+        scene.render(batch, mouse.x, mouse.y);
     }
 
     @Override

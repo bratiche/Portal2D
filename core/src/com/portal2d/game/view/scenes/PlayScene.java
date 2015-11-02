@@ -55,7 +55,7 @@ public class PlayScene extends Scene {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float mouseX, float mouseY) {
 
         //set camera to follow player
         float x = level.getPlayer().getBody().getPosition().x;
@@ -134,6 +134,10 @@ public class PlayScene extends Scene {
 
     public BoundedCamera getBox2DCamera() {
         return b2dcam;
+    }
+
+    public BoundedCamera getCamera() {
+        return camera;
     }
 
 }

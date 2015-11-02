@@ -16,10 +16,9 @@ import static com.portal2d.game.view.ViewConstants.TEXTBUTTON_HEIGHT;
  */
 public class PauseScene extends Scene {
 
-    private OrthographicCamera camera;
-    private TextButton i;
-    private TextButton c;
-    private TextButton e;
+    private TextButton instructionsButton;
+    private TextButton continueButton;
+    private TextButton exitButton;
 
     public PauseScene() {
         camera = new OrthographicCamera();
@@ -32,45 +31,31 @@ public class PauseScene extends Scene {
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
 
-        c=new TextButton(FIRST_BUTTON_START_PAUSE, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Continue", font);
-        i=new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Instructions", font);
-        e=new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS*2, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Exit", font);
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
+        continueButton =new TextButton(FIRST_BUTTON_START_PAUSE, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Continue", font);
+        instructionsButton =new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Instructions", font);
+        exitButton =new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS*2, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Exit", font);
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float mouseX, float mouseY) {
 
         batch.setProjectionMatrix(camera.combined);
 
-        Vector3 mouse= new Vector3();
-        mouse.x= Gdx.input.getX();
-        mouse.y= Gdx.input.getY();
-
-        camera.unproject(mouse);
-
-        c.render(batch, mouse.x , mouse.y);
-        i.render(batch, mouse.x , mouse.y);
-        e.render(batch, mouse.x , mouse.y);
-
-
+        continueButton.render(batch, mouseX, mouseY);
+        instructionsButton.render(batch, mouseX, mouseY);
+        exitButton.render(batch, mouseX, mouseY);
     }
 
-    public TextButton getIntructionsbutton() {
-        return i;
+    public TextButton getInstructionsButton() {
+        return instructionsButton;
     }
 
-    public TextButton getContinuebutton() {
-        return c;
+    public TextButton getContinueButton() {
+        return continueButton;
     }
 
-    public TextButton getExitbutton() {
-        return e;
+    public TextButton getExitButton() {
+        return exitButton;
     }
-
-
 
 }
