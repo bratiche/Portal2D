@@ -22,6 +22,7 @@ public class Portal2D extends ApplicationAdapter {
 
 		assets.loadTextures();
 		assets.loadTiledMaps();
+		assets.createFonts();
 
 		gsm = new GameStateManager();
 		gsm.push(new MenuState(gsm));

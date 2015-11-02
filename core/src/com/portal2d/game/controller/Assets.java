@@ -2,6 +2,9 @@ package com.portal2d.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Disposable;
@@ -23,9 +26,13 @@ public class Assets implements Disposable {
     //textures
     private Map<TextureName, Texture> textures;
 
+    //fonts
+    private Map<FontName, BitmapFont> fonts;
+
     public Assets() {
         tiledMaps = new HashMap<LevelName, TiledMap>();
         textures = new HashMap<TextureName, Texture>();
+        fonts = new HashMap<FontName, BitmapFont>();
     }
 
     public void loadTiledMaps() {
@@ -54,6 +61,21 @@ public class Assets implements Disposable {
         textures.put(TextureName.INSTRUCTIONS_BG, new Texture(Gdx.files.internal("core/assets/backgrounds/instructions.jpg")));
     }
 
+    public void createFonts() {
+        fonts.put(FontName.FONT_80, createFont("core/assets/fonts/font.ttf", FORMAT_SIZE));
+        fonts.put(FontName.FONT_40, createFont("core/assets/fonts/font.ttf", INSTRUCTION_SIZE));
+    }
+
+    private BitmapFont createFont(String path, int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(path));
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = size;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+
+        return font;
+    }
+
     public TiledMap getTiledMap(LevelName key) {
 
         TiledMap tiledMap = tiledMaps.get(key);
@@ -67,6 +89,10 @@ public class Assets implements Disposable {
 
     public Texture getTexture(TextureName key) {
         return textures.get(key);
+    }
+
+    public BitmapFont getFont(FontName key) {
+        return fonts.get(key);
     }
 
     @Override

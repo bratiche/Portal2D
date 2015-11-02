@@ -1,12 +1,9 @@
 package com.portal2d.game.view.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.ui.TextButton;
@@ -32,13 +29,7 @@ public class SelectLevelScene extends Scene {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
-        //TODO: font map in Assets
-        // font setting
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/font/font.ttf"));
-        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = INSTRUCTION_SIZE; // setting font size
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
+        BitmapFont font = Portal2D.assets.getFont(FontName.FONT_40);
 
         backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Back", font);
 

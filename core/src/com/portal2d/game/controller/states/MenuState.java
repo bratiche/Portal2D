@@ -29,10 +29,10 @@ public class MenuState extends GameState {
         if (scene.getInstructionsButton().isClicked(mouse.x, mouse.y)) {
             gsm.push(new InstructionState(gsm));
         }
-        else if (scene.getSelectLevelButton().isClicked(mouse.x, mouse.y)) {
+        else if (scene.getLoadGameButton().isClicked(mouse.x, mouse.y)) {
             gsm.push(new SelectLevelState(gsm));
         }
-        else if ( scene.getPlayButton().isClicked(mouse.x, mouse.y)) {
+        else if ( scene.getNewGameButton().isClicked(mouse.x, mouse.y)) {
             gsm.set(new PlayState(gsm, LevelName.TEST_LEVEL));
         }
         else if (scene.getExitButton().isClicked(mouse.x, mouse.y)) {

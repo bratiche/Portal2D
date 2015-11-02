@@ -37,7 +37,9 @@ public class SelectLevelState extends GameState {
 
             if(button.isClicked(mouse.x, mouse.y)) {
                 LevelName levelName = entry.getValue();
-                gsm.set(new PlayState(gsm, levelName));
+                if(!levelName.isLocked()) {
+                    gsm.set(new PlayState(gsm, levelName));
+                }
             }
         }
     }

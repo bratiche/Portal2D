@@ -1,0 +1,15 @@
+
+- LevelName
+
+
+MENU:
+
+New Game
+Load Game
+Instructions
+Exit
+
+
+new game -> new PlayState(level1)
+
+load game -> carga el archivo y llama a SelectLevel

@@ -1,22 +1,27 @@
 package com.portal2d.game.model.level;
 
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.model.entities.Exit;
 
 /**
- *
+ * TODO: rename
  */
-public enum LevelName {
+public enum LevelName implements Serializable {
 
-    TEST_LEVEL,
+    TEST_LEVEL(false),
 
     //names will be funnier
-    LEVEL_1,
-    LEVEL_2,
-    LEVEL_3,
-    LEVEL_4,
-    LEVEL_5;
+    LEVEL_1(true),
+    LEVEL_2(true),
+    LEVEL_3(true),
+    LEVEL_4(true),
+    LEVEL_5(true);
+
+    LevelName(boolean locked) {
+        this.locked = locked;
+    }
 
     /**
      * This method is used by the {@link LevelLoader} to create {@link Exit}s.
@@ -29,4 +34,15 @@ public enum LevelName {
 
         throw new NoSuchElementException();
     }
+
+    private boolean locked;
+
+    public void unlock() {
+        this.locked = false;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
 }

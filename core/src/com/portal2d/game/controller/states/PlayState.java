@@ -59,6 +59,7 @@ public class PlayState extends GameState {
 
         // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            //TODO save game here
             gsm.set(new MenuState(gsm));
         }
 
@@ -83,6 +84,7 @@ public class PlayState extends GameState {
         level.update();
 
         if(level.isFinished()) {
+            level.getLevelName().unlock();
             changeLevel(level.getNextLevel());
         }
 

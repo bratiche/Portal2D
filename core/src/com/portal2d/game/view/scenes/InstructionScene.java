@@ -1,21 +1,17 @@
 package com.portal2d.game.view.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.math.Vector3;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.view.ui.Text;
 import com.portal2d.game.view.ui.TextButton;
 
 import static com.portal2d.game.view.ViewConstants.*;
-import static com.portal2d.game.view.ViewConstants.TEXTBUTTON_HEIGHT;
 
 /**
- * Created by matias on 01/11/15.
+ *
  */
 public class InstructionScene extends Scene {
 
@@ -25,16 +21,11 @@ public class InstructionScene extends Scene {
 
     public InstructionScene() {
 
-        background = Portal2D.assets.getTexture(TextureName.INSTRUCTIONS_BG);
+        background = Portal2D.assets.getTexture(TextureName.MENU_BG);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
-        // font setting
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("core/assets/font/font.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = INSTRUCTION_SIZE; // setting font size
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
+        BitmapFont font = Portal2D.assets.getFont(FontName.FONT_40);
 
         backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Back", font);
         description = new Text(INSTRUCTION_TEXT_POSITION_X, INSTRUCTION_TEXT_POSITION_Y, INSTRUCTIONS_TEXT, font);
