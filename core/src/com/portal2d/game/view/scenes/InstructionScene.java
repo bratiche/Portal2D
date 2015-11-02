@@ -39,7 +39,7 @@ public class InstructionScene extends Scene{
 
 
             b = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Back", font);
-            description= new Text(INSTRUCTION_TEXT_POSITION_X, INSTRUCTION_TEXT_POSITION_Y,"Welcome to Portal2D.\nThis game is a puzzle style game where you will have\nto find your way through the map using portals.\nOnly two portals can be active simultaneously, you can\nexit and entry in bouth.\nBoxes can be used to activate gates(bouth in color RED).\nUse W,A,S,D to move, right and left click to create portals,\nP to pause.\nPortals only can be created on portable surfaces, distinguished\nby color WHITE.\nENJOY!" , font);
+            description= new Text(INSTRUCTION_TEXT_POSITION_X, INSTRUCTION_TEXT_POSITION_Y,"Welcome to Portal2D.\nThis game is a puzzle style game where you will have\nto find your way through the map using portals.\nOnly two portals can be active simultaneously, you can\nexit and entry in both.\nBoxes can be used to activate gates(both in color RED).\nUse W,A,S,D to move, right and left click to create portals,\nP to pause.\nPortals only can be created on portable surfaces, distinguished\nby color WHITE.\nENJOY!" , font);
         }
 
         public OrthographicCamera getCamera() {
@@ -48,8 +48,6 @@ public class InstructionScene extends Scene{
 
         @Override
         public void render(SpriteBatch batch) {
-
-            // TODO : Fix why the background is not rendered
 
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
