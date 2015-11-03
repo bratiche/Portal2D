@@ -1,6 +1,6 @@
 package com.portal2d.game.view.scenes;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,10 +26,10 @@ public class InstructionScene extends Scene {
         camera = new BoundedCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
-        BitmapFont font = Portal2D.assets.getFont(FontName.FONT_40);
+        BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL_33);
 
-        backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Back", font);
-        description = new Text(INSTRUCTION_TEXT_POSITION_X, INSTRUCTION_TEXT_POSITION_Y, INSTRUCTIONS_TEXT, font);
+        backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, "Back", font);
+        description = new Text(INSTRUCTION_TEXT_POSITION_X, INSTRUCTION_TEXT_POSITION_Y, INSTRUCTIONS_TEXT, font, Color.GRAY);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class InstructionScene extends Scene {
         batch.end();
 
         backButton.render(batch, mouseX, mouseY);
-        description.render(batch, 0, 0);
+        description.render(batch, mouseX, mouseY);
     }
 
     public TextButton getBackButton() {

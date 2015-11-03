@@ -1,6 +1,5 @@
 package com.portal2d.game.view.scenes;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
@@ -22,11 +21,11 @@ public class PauseScene extends Scene {
         camera = new BoundedCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
-        BitmapFont font = Portal2D.assets.getFont(FontName.FONT_80);
+        BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL);
 
-        continueButton = new TextButton(FIRST_BUTTON_START_PAUSE, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Continue", font);
-        instructionsButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Instructions", font);
-        exitButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS*2, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Exit", font);
+        continueButton = new TextButton(FIRST_BUTTON_START_PAUSE, "Continue", font);
+        instructionsButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS, "Instructions", font);
+        exitButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS*2, "Exit", font);
     }
 
     @Override

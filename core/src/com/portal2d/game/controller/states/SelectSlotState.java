@@ -2,6 +2,7 @@ package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,6 +25,7 @@ public class SelectSlotState extends GameState {
 
     //TODO: move to view ?
     private Map<TextButton, GameSlot> slotButtons;
+    private TextButton backButton;
     private OrthographicCamera camera;
     private Texture background;
     private Text title;
@@ -42,23 +44,24 @@ public class SelectSlotState extends GameState {
         background = Portal2D.assets.getTexture(TextureName.MENU_BG);
         slotButtons = new HashMap<TextButton, GameSlot>();
 
-        BitmapFont font = Portal2D.assets.getFont(FontName.FONT_40);
+        BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL);
 
         for(int i = 0; i < GameSlot.values().length; i++) {
-            TextButton button = new TextButton(FIRST_BUTTONSTART_MENU - 100 - SPACE_BETWEEN_BUTTONS * i, TEXTBUTTON_WIDTH,
-                    TEXTBUTTON_HEIGHT, GameSlot.values()[i].name, font);
+            TextButton button = new TextButton(FIRST_BUTTONSTART_MENU - 100 - SPACE_BETWEEN_BUTTONS * i,
+                    GameSlot.values()[i].name, font);
             slotButtons.put(button, GameSlot.values()[i]);
         }
+        title = new Text(650, "Select a slot", font, Color.GRAY);
 
-        font = Portal2D.assets.getFont(FontName.FONT_80);
-        title = new Text(650, "Select a slot", font);
+        font = Portal2D.assets.getFont(FontName.PORTAL_33);
+        backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, "Back", font);
     }
 
     @Override
     public void handleInput() {
         unproject(camera);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(backButton.isClicked(mouse.x, mouse.y)) {
             gsm.pop();
         }
 
@@ -68,7 +71,7 @@ public class SelectSlotState extends GameState {
 
                 if (button.isClicked(mouse.x, mouse.y)) {
                     GameSlot slot = entry.getValue();
-                    gsm.set(new SelectLevelState(gsm, slot));
+                    gsm.push(new SelectLevelState(gsm, slot));
                 }
             }
         }
@@ -76,6 +79,7 @@ public class SelectSlotState extends GameState {
 
     @Override
     public void render(SpriteBatch batch) {
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(background, 0, 0);
         batch.end();
@@ -85,6 +89,8 @@ public class SelectSlotState extends GameState {
         for(TextButton button : slotButtons.keySet()) {
             button.render(batch, mouse.x, mouse.y);
         }
+
+        backButton.render(batch, mouse.x, mouse.y);
     }
 
     @Override

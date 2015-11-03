@@ -16,29 +16,41 @@ public class TextButton extends UIComponent {
 
     private String text;
     private BitmapFont font;
-    private GlyphLayout layout;
 
-    // Normal button in screen
-    public TextButton(float x, float y, float width, float height, String text, BitmapFont font) {
-        super(x, y, width, height);
+    private float textWidth;
+    private float textHeight;
+
+    /**
+     * Creates a Button with the dimensions of the text and font.
+     * @see #setText(String)
+     */
+    public TextButton(float x, float y, String text, BitmapFont font) {
+        this.x = x;
+        this.y = y;
         this.font = font;
         setText(text);
+        this.width = textWidth;
+        this.height = textHeight;
     }
 
-    // Centered button in screen on y position
-    public TextButton(float y, float width, float height, String text, BitmapFont font) {
-        this(0, y, width, height, text, font);
-        this.x = VIEWPORT_WIDTH / 2 - layout.width / 2;
+    /**
+     * Centered button on x position.
+     */
+    public TextButton(float y, String text, BitmapFont font) {
+        this(0, y, text, font);
+        this.x = VIEWPORT_WIDTH / 2 - width / 2;
     }
 
     @Override
     public void render(SpriteBatch batch, float mouseX, float mouseY) {
         batch.begin();
         if(contains(mouseX, mouseY)) {
-            font.setColor(Color.BLACK);
+            font.setColor(Color.WHITE);
+            //font.setColor(BLUE_PORTAL_COLOR);
         }
         else {
-            font.setColor(Color.WHITE);
+            font.setColor(Color.GRAY);
+            //font.setColor(ORANGE_PORTAL_COLOR);
         }
 
         font.draw(batch, text, x, y);
@@ -50,17 +62,21 @@ public class TextButton extends UIComponent {
     }
 
     private boolean contains(float x, float y) {
-        return  x >= this.x - width && y >= this.y - layout.height - width
-                && x <= this.x + layout.width + width && y <= this.y + height;
+        return x >= this.x && x <= this.x + width && y >= this.y - height && y <= this.y;
     }
     
     public void setText(String text) {
         this.text = text;
-        layout = new GlyphLayout(font, text);
+        GlyphLayout layout = new GlyphLayout(font, text);
+        textWidth = layout.width;
+        textHeight = layout.height;
     }
 
     public void appendText(String text) {
         setText(this.text + text);
+        //TODO: fix
+        width = textWidth;
+        height = textHeight;
     }
 
 }

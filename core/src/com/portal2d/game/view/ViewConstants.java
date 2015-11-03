@@ -1,5 +1,7 @@
 package com.portal2d.game.view;
 
+import com.badlogic.gdx.graphics.Color;
+
 /**
  *
  */
@@ -13,17 +15,25 @@ public interface ViewConstants {
     float PPM = 100;
 
     enum TextureName {
-        ANIM_GATE,
+        MENU_TITLE,
         MENU_BG,
-        SPRITE_BOX,
+        BG1,
         SPRITE_BUTTON,
+        SPRITE_BOX,
+        ANIM_GATE,
         ANIM_PLAYER,
         INSTRUCTIONS_BG
     }
 
     enum FontName {
-        FONT_80,
-        FONT_40
+        PORTAL,
+        PORTAL_33,
+        DIN,
+        DIN_33,
+        DINB,
+        DINB_33,
+        MOLOT,
+        MOLOT_33
     }
 
     //sizes in pixels
@@ -60,11 +70,15 @@ public interface ViewConstants {
     int INSTRUCTION_TEXT_POSITION_X = 325;
     int INSTRUCTION_TEXT_POSITION_Y = 650;
 
-    String INSTRUCTIONS_TEXT = "Welcome to Portal2D!\n\nThis game is a puzzle style game\nwhere you will have " +
+    String INSTRUCTIONS_TEXT = "Welcome to POrtal2D!\n\nThis game is a puzzle style game\nwhere you will have " +
                                 "to find your\nway through the map using portals.\nOnly two portals can be active\n" +
                                 "simultaneously, you can exit and\nentry in both.\nBoxes can be used to activate gates\n" +
                                 "(both in color RED).\nUse W,A,S,D to move, right and left \nclick to create portals, " +
                                 "P to pause.\nPortals only can be created \non portable surfaces, distinguished\n" +
                                 "by color WHITE.\nENJOY!";
+
+    // Colors in rgba format
+    Color BLUE_PORTAL_COLOR = new Color(0x1488C7ff);
+    Color ORANGE_PORTAL_COLOR = new Color(0x9C7C29ff);
 
 }

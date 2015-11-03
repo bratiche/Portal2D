@@ -48,7 +48,7 @@ public class Assets implements Disposable {
 
     public void loadTextures() {
 
-        textures.put(TextureName.MENU_BG,  new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png")));
+        textures.put(TextureName.MENU_BG, new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png")));
 
         textures.put(TextureName.SPRITE_BOX, new Texture(Gdx.files.internal("core/assets/sprites/box.png")));
 
@@ -58,11 +58,22 @@ public class Assets implements Disposable {
 
         textures.put(TextureName.ANIM_PLAYER, new Texture(Gdx.files.internal("core/assets/sprites/player.png")));
 
+        textures.put(TextureName.BG1, new Texture(Gdx.files.internal("core/assets/backgrounds/bg1.jpg")));
+
     }
 
     public void createFonts() {
-        fonts.put(FontName.FONT_80, createFont("core/assets/fonts/font.ttf", FORMAT_SIZE));
-        fonts.put(FontName.FONT_40, createFont("core/assets/fonts/font.ttf", INSTRUCTION_SIZE));
+        fonts.put(FontName.PORTAL, createFont("core/assets/fonts/Portal.ttf", 60));
+        fonts.put(FontName.PORTAL_33, createFont("core/assets/fonts/Portal.ttf", 33));
+
+        fonts.put(FontName.DIN, createFont("core/assets/fonts/DINM.ttf", 60));
+        fonts.put(FontName.DIN_33, createFont("core/assets/fonts/DINM.ttf", 33));
+
+        fonts.put(FontName.DINB, createFont("core/assets/fonts/DINB.ttf", 60));
+        fonts.put(FontName.DINB_33, createFont("core/assets/fonts/DINB.ttf", 33));
+
+        fonts.put(FontName.MOLOT, createFont("core/assets/fonts/Molot.otf", 60));
+        fonts.put(FontName.MOLOT_33, createFont("core/assets/fonts/Molot.otf", 33));
     }
 
     private BitmapFont createFont(String path, int size) {

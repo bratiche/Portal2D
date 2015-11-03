@@ -16,24 +16,27 @@ public class Text extends UIComponent {
     private BitmapFont font;
     private GlyphLayout layout;
 
+    private Color color;
+
     // Normal text in screen
-    public Text(float x, float y, String text, BitmapFont font) {
+    public Text(float x, float y, String text, BitmapFont font, Color color) {
         super(x, y, 0, 0);
         this.font = font;
         this.text = text;
+        this.color = color;
         layout = new GlyphLayout(font, text);
     }
 
     // Centered text in screen on y position
-    public Text(float y, String text, BitmapFont font) {
-        this(0, y, text, font);
+    public Text(float y, String text, BitmapFont font, Color color) {
+        this(0, y, text, font, color);
         this.x = VIEWPORT_WIDTH / 2 - layout.width / 2;
     }
 
     @Override
     public void render(SpriteBatch batch, float mouseX, float mouseY) {
         batch.begin();
-        font.setColor(Color.WHITE);
+        font.setColor(color);
         font.draw(batch, text, x, y);
         batch.end();
     }

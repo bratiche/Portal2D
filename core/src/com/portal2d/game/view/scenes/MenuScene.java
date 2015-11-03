@@ -1,6 +1,5 @@
 package com.portal2d.game.view.scenes;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,12 +26,12 @@ public class MenuScene extends Scene {
         camera = new BoundedCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
-        BitmapFont font = Portal2D.assets.getFont(FontName.FONT_80);
+        BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL);
 
         // Creating buttons
-        playButton = new TextButton(FIRST_BUTTONSTART_MENU, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Play", font);
-        instructionsButton = new TextButton(FIRST_BUTTONSTART_MENU - SPACE_BETWEEN_BUTTONS, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Instructions", font);
-        exitButton = new TextButton(FIRST_BUTTONSTART_MENU - SPACE_BETWEEN_BUTTONS*2, TEXTBUTTON_WIDTH, TEXTBUTTON_HEIGHT, "Exit", font);
+        playButton = new TextButton(450, "PLAY", font);
+        instructionsButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS, "INSTRUCTIONS", font);
+        exitButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS*2, "QUIT", font);
     }
 
     @Override
