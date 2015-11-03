@@ -48,18 +48,25 @@ public class PortalGun implements Weapon {
      * @see World#rayCast(RayCastCallback, Vector2, Vector2)
      */
     private void rayCast(Vector2 position) {
+        raycast.restartHit();
         Vector2 beginPoint = new Vector2(owner.getBody().getPosition());
         //beginPoint.add(0, 0.4f);
 
-        Vector2 distance = new Vector2(position);
-        distance.sub(owner.getBody().getPosition());
-        distance.nor();
-        //System.out.println(distance);
-        distance.scl(10f);
-        Vector2 endPoint = new Vector2(owner.getBody().getPosition());
-        endPoint.add(distance);
+        //TODO: fix hardcoding
+        Vector2 step = new Vector2(position);
+        step.sub(owner.getBody().getPosition());
+        step.nor();
+        step.scl(0.1f);
 
-        world.rayCast(raycast, beginPoint, endPoint);
+        //System.out.println(step);
+
+        Vector2 endPoint = new Vector2(owner.getBody().getPosition());
+        endPoint.add(step);
+
+        while(!raycast.hit()) {
+            world.rayCast(raycast, beginPoint, endPoint);
+            endPoint.add(step);
+        }
     }
 
     public void setPortal(Portal portal){

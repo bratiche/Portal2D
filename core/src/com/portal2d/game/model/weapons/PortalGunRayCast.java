@@ -18,13 +18,14 @@ public class PortalGunRayCast implements RayCastCallback {
     private Level level;
     private World world;
 
+    private boolean hit;
+
     public PortalGunRayCast(PortalGun portalGun, Level level){
         this.portalGun = portalGun;
         this.level = level;
         this.world = level.getWorld();
     }
 
-    //TODO: fix raycasting
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
@@ -32,14 +33,22 @@ public class PortalGunRayCast implements RayCastCallback {
         EntityType type = entity.getType();
 
         // return 0 terminates the raycast
-        if(type == EntityType.SURFACE || type == EntityType.BUTTON)
+        if(type == EntityType.SURFACE || type == EntityType.BUTTON) {
+            hit = true;
             return 0;
+        }
 
         if(entity.getType() == EntityType.PORTABLE_SURFACE){
-            System.out.println("COLISION CON PORTABLE_SURFACE");
-            System.out.println("Normal: " + normal);
-            System.out.println("Fraccion: " + fraction);
-            createPortal(point, normal);
+//            System.out.println("COLISION CON PORTABLE_SURFACE");
+//            System.out.println("Normal: " + normal);
+//            System.out.println("Fraccion: " + fraction);
+            //0.1f is the radius of the portal
+            //createPortal(new Vector2(point.add(normal.scl(0.1f, 0.1f))), new Vector2(normal));
+            Vector2 vec = new Vector2(normal.x * 0.1f, normal.y * 0.1f);
+            createPortal(point.add(vec), new Vector2(normal));
+
+            //entity.getBody().getFixtureList().get(0).setSensor(true);
+            hit = true;
             return 0;
         }
 
@@ -83,6 +92,17 @@ public class PortalGunRayCast implements RayCastCallback {
 
     public void setPortalColor(PortalColor color) {
         this.color = color;
+    }
+
+    public boolean hit() {
+        return hit;
+    }
+
+    /**
+     * Restarts this ray.
+     */
+    public void restartHit() {
+        hit = false;
     }
 
 }

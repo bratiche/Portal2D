@@ -1,6 +1,7 @@
 package com.portal2d.game.model.level;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
@@ -60,6 +61,7 @@ public class Level {
 
         //Queue processing
         for(Map.Entry<Entity,Portal> entry : teleportQueue.entrySet()) {
+            System.out.println("Current velocity2: " + entry.getValue().entityVelocity);
             entry.getValue().receive(entry.getKey());
         }
 

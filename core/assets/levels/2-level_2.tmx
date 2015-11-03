@@ -15,10 +15,8 @@
  </layer>
  <objectgroup name="boxes">
   <object id="159" x="928" y="487" width="55" height="55"/>
-  <object id="160" x="422" y="289" width="55" height="55"/>
-  <object id="208" x="393.5" y="361.5" width="55" height="55"/>
-  <object id="209" x="266.5" y="384.5" width="55" height="55"/>
-  <object id="210" x="183.5" y="352.5" width="55" height="55"/>
+  <object id="160" x="681" y="464" width="55" height="55"/>
+  <object id="208" x="513.5" y="476.5" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
   <object id="46" name="player" x="224" y="158" width="60" height="120"/>

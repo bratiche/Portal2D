@@ -32,12 +32,10 @@
   <object id="218" x="0" y="360" width="300" height="360"/>
   <object id="220" x="900" y="360" width="300" height="360"/>
   <object id="223" x="900" y="0" width="300" height="120"/>
-  <object id="230" x="441" y="366" width="54" height="31"/>
-  <object id="231" x="680" y="368" width="57" height="35"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
-  <object id="215" x="300" y="600" width="600" height="120"/>
-  <object id="217" x="300" y="0" width="600" height="120"/>
+  <object id="215" x="300" y="600" width="600" height="61"/>
+  <object id="217" x="300" y="62" width="600" height="58"/>
  </objectgroup>
  <objectgroup name="gates"/>
  <objectgroup name="acid"/>
