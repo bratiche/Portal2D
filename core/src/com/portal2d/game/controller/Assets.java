@@ -43,7 +43,7 @@ public class Assets implements Disposable {
         tiledMaps.put(LevelName.TEST_LEVEL, tiledMap);
 
         tiledMap = tmxMapLoader.load("core/assets/levels/test1.tmx");
-        tiledMaps.put(LevelName.LEVEL_1, tiledMap);
+        tiledMaps.put(LevelName.TEST_LEVEL_2, tiledMap);
     }
 
     public void loadTextures() {
@@ -58,7 +58,6 @@ public class Assets implements Disposable {
 
         textures.put(TextureName.ANIM_PLAYER, new Texture(Gdx.files.internal("core/assets/sprites/player.png")));
 
-        textures.put(TextureName.INSTRUCTIONS_BG, new Texture(Gdx.files.internal("core/assets/backgrounds/instructions.jpg")));
     }
 
     public void createFonts() {

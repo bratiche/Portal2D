@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.level.LevelName;
+import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.ui.TextButton;
 
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class SelectLevelScene extends Scene {
     public SelectLevelScene() {
 
         background = Portal2D.assets.getTexture(TextureName.MENU_BG);
-        camera = new OrthographicCamera();
+        camera = new BoundedCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
         BitmapFont font = Portal2D.assets.getFont(FontName.FONT_40);
@@ -37,10 +38,16 @@ public class SelectLevelScene extends Scene {
         levelButtons = new HashMap<TextButton, LevelName>();
 
         for(int i = 0; i < LevelName.values().length; i++) {
-            LevelName levelName = LevelName.getLevelName(i);
-            TextButton button = new TextButton(FIRST_BUTTONSTART_MENU - SPACE_BETWEEN_BUTTONS * i, TEXTBUTTON_WIDTH,
-                                TEXTBUTTON_HEIGHT, levelName.toString(), font);
-            levelButtons.put(button, LevelName.getLevelName(i));
+            LevelName levelName = LevelName.values()[i];
+            TextButton button = new TextButton(400, FIRST_BUTTONSTART_MENU - SPACE_BETWEEN_BUTTONS * i, TEXTBUTTON_WIDTH,
+                                TEXTBUTTON_HEIGHT, "0" + (i + 1), font);
+            levelButtons.put(button, LevelName.values()[i]);
+            if(levelButtons.get(button).isLocked()) {
+                button.appendText("     -LOCKED");
+            }
+            else {
+                button.appendText("     -" + levelName.toString());
+            }
         }
     }
 

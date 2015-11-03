@@ -24,7 +24,6 @@ public class PauseState extends GameState {
     @Override
     public void entered() {
         scene = new PauseScene();
-        System.out.println("Game Paused");
     }
 
     @Override
@@ -34,19 +33,12 @@ public class PauseState extends GameState {
         if(Gdx.input.isKeyJustPressed(Input.Keys.P) || scene.getContinueButton().isClicked(mouse.x, mouse.y)) {
             gsm.pop();
         }
-
         else if (scene.getInstructionsButton().isClicked(mouse.x, mouse.y)) {
             gsm.push(new InstructionState(gsm));
         }
-
         else if (scene.getExitButton().isClicked(mouse.x, mouse.y)) {
             Gdx.app.exit();
         }
-    }
-
-    @Override
-    public void update(float dt) {
-
     }
 
     @Override

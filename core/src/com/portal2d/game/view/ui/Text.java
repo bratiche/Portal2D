@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
 /**
- * Created by matias on 01/11/15.
+ *
  */
 public class Text extends UIComponent {
 

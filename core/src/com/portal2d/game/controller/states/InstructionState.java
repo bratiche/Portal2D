@@ -5,7 +5,7 @@ import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.view.scenes.InstructionScene;
 
 /**
- * Created by matias on 01/11/15.
+ *
  */
 public class InstructionState extends GameState {
 
@@ -30,12 +30,7 @@ public class InstructionState extends GameState {
     }
 
     @Override
-    public void update(float dt) {
-    }
-
-    @Override
     public void render(SpriteBatch batch) {
-        // Render this state
         batch.setProjectionMatrix(scene.getCamera().combined);
         scene.render(batch, mouse.x, mouse.y);
     }

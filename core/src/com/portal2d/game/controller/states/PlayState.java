@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.controller.PlayerController;
+import com.portal2d.game.controller.save.GameSlot;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.scenes.PlayScene;
@@ -27,9 +28,11 @@ public class PlayState extends GameState {
 
     private PlayScene scene;
     private PlayerController playerController;
+    private GameSlot slot;
 
-    public PlayState(GameStateManager gsm, LevelName levelName) {
+    public PlayState(GameStateManager gsm, LevelName levelName, GameSlot slot) {
         super(gsm);
+        this.slot = slot;
 
         // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
@@ -60,6 +63,7 @@ public class PlayState extends GameState {
         // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             //TODO save game here
+            slot.save();
             gsm.set(new MenuState(gsm));
         }
 
@@ -84,7 +88,6 @@ public class PlayState extends GameState {
         level.update();
 
         if(level.isFinished()) {
-            level.getLevelName().unlock();
             changeLevel(level.getNextLevel());
         }
 
@@ -101,6 +104,10 @@ public class PlayState extends GameState {
     }
 
     public void changeLevel(LevelName nextLevel) {
+
+        // Unlock nextLevel and save the game
+        nextLevel.setLocked(false);
+        slot.save();
 
         // Remove all bodies
         Array<Body> bodies = new Array<Body>();

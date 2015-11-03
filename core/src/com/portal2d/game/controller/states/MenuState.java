@@ -3,7 +3,6 @@ package com.portal2d.game.controller.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
-import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.scenes.MenuScene;
 
 /**
@@ -26,23 +25,15 @@ public class MenuState extends GameState {
     public void handleInput() {
         unproject(scene.getCamera());
 
-        if (scene.getInstructionsButton().isClicked(mouse.x, mouse.y)) {
+        if(scene.getPlayButton().isClicked(mouse.x, mouse.y)) {
+            gsm.push(new SelectSlotState(gsm));
+        }
+        else if(scene.getInstructionsButton().isClicked(mouse.x, mouse.y)) {
             gsm.push(new InstructionState(gsm));
         }
-        else if (scene.getLoadGameButton().isClicked(mouse.x, mouse.y)) {
-            gsm.push(new SelectLevelState(gsm));
-        }
-        else if ( scene.getNewGameButton().isClicked(mouse.x, mouse.y)) {
-            gsm.set(new PlayState(gsm, LevelName.TEST_LEVEL));
-        }
-        else if (scene.getExitButton().isClicked(mouse.x, mouse.y)) {
+        else if(scene.getExitButton().isClicked(mouse.x, mouse.y)) {
             Gdx.app.exit();
         }
-    }
-
-    @Override
-    public void update(float dt) {
-
     }
 
     @Override

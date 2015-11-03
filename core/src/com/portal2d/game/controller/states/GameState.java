@@ -36,7 +36,9 @@ public abstract class GameState {
      * Updates the state's logic, if there is any.
      * @param dt time passed since last frame (delta time).
      */
-    public abstract void update(float dt);
+    public void update(float dt) {
+
+    }
 
     /**
      * Draws the state into the screen.

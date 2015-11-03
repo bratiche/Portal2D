@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.ui.Text;
 import com.portal2d.game.view.ui.TextButton;
 
@@ -22,7 +23,7 @@ public class InstructionScene extends Scene {
     public InstructionScene() {
 
         background = Portal2D.assets.getTexture(TextureName.MENU_BG);
-        camera = new OrthographicCamera();
+        camera = new BoundedCamera();
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
         BitmapFont font = Portal2D.assets.getFont(FontName.FONT_40);

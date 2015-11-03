@@ -1,18 +1,18 @@
 package com.portal2d.game.view.scenes;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.portal2d.game.view.BoundedCamera;
 
 /**
  *
  */
 public abstract class Scene {
 
-    protected OrthographicCamera camera;
+    protected BoundedCamera camera;
 
     public abstract void render(SpriteBatch batch, float mouseX, float mouseY);
 
-    public OrthographicCamera getCamera() {
+    public BoundedCamera getCamera() {
         return camera;
     }
 

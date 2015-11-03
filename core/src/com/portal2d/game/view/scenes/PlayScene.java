@@ -28,7 +28,6 @@ public class PlayScene extends Scene {
 
     private Level level;
 
-    private BoundedCamera camera;
     private OrthogonalTiledMapRenderer tmr;
 
     private Set<EntityView> entityViews;
@@ -134,10 +133,6 @@ public class PlayScene extends Scene {
 
     public BoundedCamera getBox2DCamera() {
         return b2dcam;
-    }
-
-    public BoundedCamera getCamera() {
-        return camera;
     }
 
 }
