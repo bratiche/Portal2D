@@ -336,7 +336,7 @@ public class LevelLoader {
 
             //System.out.println("Exit " + (i + 1)  + ": takes to level " + nextLevel);
 
-            Exit exit = new Exit(level, body, LevelName.getLevelName(nextLevel));
+            Exit exit = new Exit(level, body, LevelName.values()[nextLevel]);
             level.add(exit);
             i++;
 

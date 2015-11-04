@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.controller.PlayerController;
+import com.portal2d.game.controller.save.GameSlot;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.scenes.PlayScene;
@@ -29,23 +30,26 @@ public class PlayState extends GameState {
 
     private PlayScene scene;
     private PlayerController playerController;
-
+    private GameSlot slot;
+    
     // TESTEO
     private ShapeRenderer debugRenderer = new ShapeRenderer();
 
-    public PlayState(GameStateManager gsm) {
-        super(gsm);
-    }
 
-    @Override
-    public void entered() {
+    public PlayState(GameStateManager gsm, LevelName levelName, GameSlot slot) {
+        super(gsm);
+        this.slot = slot;
+
         // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader(world);
 
-        // Load first level
-        level = levelLoader.loadLevel(LevelName.TEST_LEVEL);
+        // Load level
+        level = levelLoader.loadLevel(levelName);
+    }
 
+    @Override
+    public void entered() {
         // Setup view
         scene = new PlayScene(world, level);
 
@@ -56,6 +60,7 @@ public class PlayState extends GameState {
     @Override
     public void handleInput() {
 
+        unproject(scene.getCamera());
         //pause the game
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             gsm.push(new PauseState(gsm, this));
@@ -63,6 +68,8 @@ public class PlayState extends GameState {
 
         // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            //TODO save game here
+            slot.save();
             gsm.set(new MenuState(gsm));
         }
 
@@ -94,7 +101,7 @@ public class PlayState extends GameState {
 
     @Override
     public void render(SpriteBatch batch) {
-        scene.render(batch);
+        scene.render(batch, mouse.x, mouse.y);
 
         //TESTEO DE RAYCAST
         debugRenderer.setProjectionMatrix(getBox2DCamera().combined);
@@ -124,6 +131,10 @@ public class PlayState extends GameState {
     }
 
     public void changeLevel(LevelName nextLevel) {
+
+        // Unlock nextLevel and save the game
+        nextLevel.setLocked(false);
+        slot.save();
 
         // Remove all bodies
         Array<Body> bodies = new Array<Body>();

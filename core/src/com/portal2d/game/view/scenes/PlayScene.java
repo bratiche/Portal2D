@@ -25,7 +25,6 @@ public class PlayScene extends Scene {
 
     private Level level;
 
-    private BoundedCamera camera;
     private OrthogonalTiledMapRenderer tmr;
 
     private Set<EntityView> entityViews;
@@ -52,7 +51,7 @@ public class PlayScene extends Scene {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float mouseX, float mouseY) {
 
         //set camera to follow player
         float x = level.getPlayer().getBody().getPosition().x;

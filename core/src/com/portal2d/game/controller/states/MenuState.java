@@ -1,8 +1,6 @@
 package com.portal2d.game.controller.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.view.scenes.MenuScene;
@@ -25,19 +23,22 @@ public class MenuState extends GameState {
 
     @Override
     public void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-            gsm.set(new PlayState(gsm));
+        unproject(scene.getCamera());
+
+        if(scene.getPlayButton().isClicked(mouse.x, mouse.y)) {
+            gsm.push(new SelectSlotState(gsm));
         }
-
-    }
-
-    @Override
-    public void update(float dt) {
+        else if(scene.getInstructionsButton().isClicked(mouse.x, mouse.y)) {
+            gsm.push(new InstructionState(gsm));
+        }
+        else if(scene.getExitButton().isClicked(mouse.x, mouse.y)) {
+            Gdx.app.exit();
+        }
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        scene.render(batch);
+        scene.render(batch, mouse.x, mouse.y);
     }
 
     @Override

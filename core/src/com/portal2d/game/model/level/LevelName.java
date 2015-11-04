@@ -1,25 +1,37 @@
 package com.portal2d.game.model.level;
 
 import java.util.NoSuchElementException;
-import com.portal2d.game.controller.LevelLoader;
-import com.portal2d.game.model.entities.Exit;
 
 /**
- *
+ * TODO: rename
  */
 public enum LevelName {
 
-    TEST_LEVEL,
+    TEST_LEVEL(false),
 
     //names will be funnier
-    MOMENTUM_TEST,
-    LEVEL_2,
-    LEVEL_3,
-    LEVEL_4,
-    LEVEL_5;
+    TEST_LEVEL_2(true),
+    LEVEL_2(true),
+    LEVEL_3(true),
+    LEVEL_4(true),
+    LEVEL_5(true);
+
+    private boolean locked;
+
+    LevelName(boolean locked) {
+        this.locked = locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
 
     /**
-     * This method is used by the {@link LevelLoader} to create {@link Exit}s.
+     * @deprecated
      */
     public static LevelName getLevelName(int levelNumber) {
         for(LevelName levelName : values()) {
@@ -29,4 +41,5 @@ public enum LevelName {
 
         throw new NoSuchElementException();
     }
+
 }

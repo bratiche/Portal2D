@@ -1,24 +1,19 @@
 package com.portal2d.game.view.scenes;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.portal2d.game.view.ui.UIComponent;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.portal2d.game.view.BoundedCamera;
 
 /**
  *
  */
 public abstract class Scene {
 
-    protected List<UIComponent> components;
+    protected BoundedCamera camera;
 
-    public Scene() {
-        components = new ArrayList<UIComponent>();
-    }
+    public abstract void render(SpriteBatch batch, float mouseX, float mouseY);
 
-    public void render(SpriteBatch batch) {
-
+    public BoundedCamera getCamera() {
+        return camera;
     }
 
 }

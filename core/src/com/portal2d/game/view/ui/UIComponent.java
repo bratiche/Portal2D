@@ -23,6 +23,6 @@ public abstract class UIComponent {
         this.height = height;
     }
 
-    public abstract void render(SpriteBatch batch);
+    public abstract void render(SpriteBatch batch, float mouseX, float mouseY);
 
 }

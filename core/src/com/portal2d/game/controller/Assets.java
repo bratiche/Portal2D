@@ -2,6 +2,9 @@ package com.portal2d.game.controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Disposable;
@@ -23,9 +26,13 @@ public class Assets implements Disposable {
     //textures
     private Map<TextureName, Texture> textures;
 
+    //fonts
+    private Map<FontName, BitmapFont> fonts;
+
     public Assets() {
         tiledMaps = new HashMap<LevelName, TiledMap>();
         textures = new HashMap<TextureName, Texture>();
+        fonts = new HashMap<FontName, BitmapFont>();
     }
 
     public void loadTiledMaps() {
@@ -44,24 +51,43 @@ public class Assets implements Disposable {
     }
 
     public void loadTextures() {
-        Texture texture;
-        texture = new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png"));
-        textures.put(TextureName.MENU_BG, texture);
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/box1.png"));
-        textures.put(TextureName.SPRITE_BOX, texture);
+        textures.put(TextureName.MENU_BG, new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/gate.png"));
-        textures.put(TextureName.ANIM_GATE, texture);
+        textures.put(TextureName.SPRITE_BOX, new Texture(Gdx.files.internal("core/assets/sprites/box.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/button.png"));
-        textures.put(TextureName.SPRITE_BUTTON, texture);
+        textures.put(TextureName.ANIM_GATE, new Texture(Gdx.files.internal("core/assets/sprites/gate.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/player.png"));
-        textures.put(TextureName.ANIM_PLAYER, texture);
+        textures.put(TextureName.SPRITE_BUTTON, new Texture(Gdx.files.internal("core/assets/sprites/button.png")));
 
-        texture = new Texture(Gdx.files.internal("core/assets/sprites/exit.png"));
-        textures.put(TextureName.SPRITE_EXIT, texture);
+        textures.put(TextureName.ANIM_PLAYER, new Texture(Gdx.files.internal("core/assets/sprites/player.png")));
+
+        textures.put(TextureName.BG1, new Texture(Gdx.files.internal("core/assets/backgrounds/bg1.jpg")));
+
+    }
+
+    public void createFonts() {
+        fonts.put(FontName.PORTAL, createFont("core/assets/fonts/Portal.ttf", 60));
+        fonts.put(FontName.PORTAL_33, createFont("core/assets/fonts/Portal.ttf", 33));
+
+        fonts.put(FontName.DIN, createFont("core/assets/fonts/DINM.ttf", 60));
+        fonts.put(FontName.DIN_33, createFont("core/assets/fonts/DINM.ttf", 33));
+
+        fonts.put(FontName.DINB, createFont("core/assets/fonts/DINB.ttf", 60));
+        fonts.put(FontName.DINB_33, createFont("core/assets/fonts/DINB.ttf", 33));
+
+        fonts.put(FontName.MOLOT, createFont("core/assets/fonts/Molot.otf", 60));
+        fonts.put(FontName.MOLOT_33, createFont("core/assets/fonts/Molot.otf", 33));
+    }
+
+    private BitmapFont createFont(String path, int size) {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(path));
+        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+        parameter.size = size;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+
+        return font;
     }
 
     public TiledMap getTiledMap(LevelName key) {
@@ -77,6 +103,10 @@ public class Assets implements Disposable {
 
     public Texture getTexture(TextureName key) {
         return textures.get(key);
+    }
+
+    public BitmapFont getFont(FontName key) {
+        return fonts.get(key);
     }
 
     @Override
