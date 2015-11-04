@@ -8,6 +8,8 @@ import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
+import static com.portal2d.game.model.ModelConstants.*;
+
 /**
  * {@link RayCastCallback} used to create portals.
  */
@@ -42,8 +44,7 @@ public class PortalGunRayCast implements RayCastCallback {
 //            System.out.println("COLISION CON PORTABLE_SURFACE");
 //            System.out.println("Normal: " + normal);
 //            System.out.println("Fraccion: " + fraction);
-            // 0.1f is the radius of the portal
-            Vector2 vec = new Vector2(normal.x * 0.1f, normal.y * 0.1f);
+            Vector2 vec = new Vector2(normal.x * PORTAL_RADIUS, normal.y * PORTAL_RADIUS);
             createPortal(new Vector2(point.add(vec)), new Vector2(normal));
             //createPortal(new Vector2(point), new Vector2(normal));
 
@@ -70,7 +71,7 @@ public class PortalGunRayCast implements RayCastCallback {
             Body body = world.createBody(bdef);
 
             CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(0.1f);
+            circleShape.setRadius(PORTAL_RADIUS);
 
             FixtureDef fdef = new FixtureDef();
             fdef.shape = circleShape;

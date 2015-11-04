@@ -9,6 +9,8 @@ import com.portal2d.game.model.interactions.CollisionFilters;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
+import static com.portal2d.game.model.ModelConstants.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,8 +55,8 @@ public class Portal extends StaticEntity {
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
         if(oppositePortal != null && !oppositePortal.isEmitter()) {
-            entityVelocity = new Vector2(entity.getBody().getLinearVelocity().x, entity.getBody().getLinearVelocity().y);
-            System.out.println("Current velocity1: " + entityVelocity);
+            entityVelocity = new Vector2(entity.getBody().getLinearVelocity());
+            //System.out.println("Current velocity1: " + entityVelocity);
             level.addTeleportQueue(entity, oppositePortal);
             setEmitter(true);
             sentEntities.add(entity);
@@ -74,7 +76,7 @@ public class Portal extends StaticEntity {
 
     //TODO: sacar el hardcodeo
     public void receive(Entity entity) {
-        System.out.println("Current velocity3: " + entityVelocity);
+        //System.out.println("Current velocity3: " + oppositePortal.entityVelocity);
 
         Vector2 oppositePortalNormal = oppositePortal.normal;
 
@@ -84,14 +86,13 @@ public class Portal extends StaticEntity {
 
         // Set the new Position
         //0.1f is the radius of the portal circular shape
-        entityBody.setTransform(this.body.getPosition().add(normal.x * (/**0.1f +*/ entityType.getWidth() / 3),
-                normal.y * (/**0.1f +*/ entityType.getHeight() / 3)), 0);
+        entityBody.setTransform(this.body.getPosition().add(normal.x * (PORTAL_RADIUS + entityType.getWidth() / 2),
+                normal.y * (PORTAL_RADIUS + entityType.getHeight() / 2)), 0);
         //entityBody.setTransform(this.body.getPosition(), 0);
 
         //Set the new velocity
-        Vector2 currentEntityVelocity = entity.getBody().getLinearVelocity();
-        System.out.println(currentEntityVelocity);
-        Vector2 currentVelocity = currentEntityVelocity;
+        Vector2 currentVelocity = oppositePortal.entityVelocity;
+        System.out.println(currentVelocity);
 
         // This is to avoid the player gaining momentum. (cheating)
         currentVelocity.scl(Math.abs(oppositePortalNormal.x), Math.abs(oppositePortalNormal.y));

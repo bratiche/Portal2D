@@ -5,7 +5,8 @@ package com.portal2d.game.model;
  */
 public interface ModelConstants {
 
-    float TERMINAL_VELOCITY = 25.0f;
+    //TODO: test terminal velocity
+    float TERMINAL_VELOCITY = 15.0f;
 
     // Radius fot the player to grab objects
     float GRAB_RADIUS = 0.5f;
@@ -31,7 +32,7 @@ public interface ModelConstants {
     float EXIT_WIDTH = 0.3f;
     float EXIT_HEIGHT = 1.8f;
 
-    float PORTAL_RADIUS = 0.1f;
+    float PORTAL_RADIUS = 0.1f; //Con 0.6 no hay problemas
 
     float PROJECTILE_SPEED = 15.0f;
     float PROJECTILE_RADIUS = 0.1f;

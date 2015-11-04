@@ -61,7 +61,7 @@ public class Level {
 
         //Queue processing
         for(Map.Entry<Entity,Portal> entry : teleportQueue.entrySet()) {
-            System.out.println("Current velocity2: " + entry.getValue().entityVelocity);
+            //System.out.println("Current velocity2: " + entry.getValue().entityVelocity);
             entry.getValue().receive(entry.getKey());
         }
 
@@ -77,6 +77,7 @@ public class Level {
     }
 
     public void addTeleportQueue(Entity e, Portal portal){
+
         teleportQueue.put(e, portal);
     }
 
