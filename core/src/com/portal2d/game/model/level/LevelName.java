@@ -8,9 +8,9 @@ import java.util.NoSuchElementException;
 public enum LevelName {
 
     TEST_LEVEL(false),
+    MOMENTUM_TEST(true),
 
     //names will be funnier
-    TEST_LEVEL_2(true),
     LEVEL_2(true),
     LEVEL_3(true),
     LEVEL_4(true),

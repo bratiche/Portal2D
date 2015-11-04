@@ -68,7 +68,6 @@ public class PlayState extends GameState {
 
         // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            //TODO save game here
             slot.save();
             gsm.set(new MenuState(gsm));
         }
@@ -121,7 +120,7 @@ public class PlayState extends GameState {
         debugRenderer.line(beginPoint, endPoint);
         debugRenderer.end();
 
-        //playerController.playerCallback.updateAABB();
+        playerController.playerCallback.drawGrabRange();
 
     }
 

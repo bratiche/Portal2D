@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
 
-
 /**
  *
  */
@@ -16,9 +15,6 @@ public class TextButton extends UIComponent {
 
     private String text;
     private BitmapFont font;
-
-    private float textWidth;
-    private float textHeight;
 
     /**
      * Creates a Button with the dimensions of the text and font.
@@ -29,8 +25,6 @@ public class TextButton extends UIComponent {
         this.y = y;
         this.font = font;
         setText(text);
-        this.width = textWidth;
-        this.height = textHeight;
     }
 
     /**
@@ -68,15 +62,12 @@ public class TextButton extends UIComponent {
     public void setText(String text) {
         this.text = text;
         GlyphLayout layout = new GlyphLayout(font, text);
-        textWidth = layout.width;
-        textHeight = layout.height;
+        width = layout.width;
+        height = layout.height;
     }
 
     public void appendText(String text) {
         setText(this.text + text);
-        //TODO: fix
-        width = textWidth;
-        height = textHeight;
     }
 
 }

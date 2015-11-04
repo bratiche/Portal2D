@@ -12,7 +12,7 @@ import com.portal2d.game.view.ViewConstants;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- * Created by matias on 28/10/15.
+ *
  */
 public class PlayerView extends EntityView<Player> {
 
@@ -47,7 +47,6 @@ public class PlayerView extends EntityView<Player> {
 
     @Override
     public void render(SpriteBatch batch, float deltaTime) {
-
 
         TextureRegion keyFrame;
 

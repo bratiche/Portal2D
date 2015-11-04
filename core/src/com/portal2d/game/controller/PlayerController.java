@@ -292,6 +292,19 @@ public class PlayerController extends InputAdapter {
             playState.getDebugRenderer().end();
         }
 
+        // TODO REMOVE
+        public void drawGrabRange() {
+            lowerX = playerBody.getPosition().x - player.getType().getWidth() / 2 - GRAB_RADIUS;
+            lowerY = playerBody.getPosition().y - player.getType().getHeight() / 2 - GRAB_RADIUS;
+            upperX = playerBody.getPosition().x + player.getType().getWidth() / 2 + GRAB_RADIUS;
+            upperY = playerBody.getPosition().y + player.getType().getHeight() / 2 + GRAB_RADIUS;
+
+            //playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
+            playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
+            playState.getDebugRenderer().rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
+            playState.getDebugRenderer().end();
+        }
+
     }
 
     @Override

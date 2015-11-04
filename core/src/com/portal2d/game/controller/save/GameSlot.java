@@ -41,7 +41,7 @@ public enum GameSlot {
 
         file.writeString(sb.toString(), false); // false is to overwrite the file
 
-        System.out.println("Game saved");
+        //System.out.println("Game saved");
     }
 
     public void load() {
@@ -64,7 +64,7 @@ public enum GameSlot {
             }
         }
 
-        System.out.println("Game loaded");
+        //System.out.println("Game loaded");
 
     }
 

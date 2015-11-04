@@ -20,6 +20,7 @@ public interface ViewConstants {
         BG1,
         SPRITE_BUTTON,
         SPRITE_BOX,
+        SPRITE_EXIT,
         ANIM_GATE,
         ANIM_PLAYER,
         INSTRUCTIONS_BG
