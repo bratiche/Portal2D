@@ -9,7 +9,7 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**
- * {@link RayCastCallback} used for creating portals.
+ * {@link RayCastCallback} used to create portals.
  */
 public class PortalGunRayCast implements RayCastCallback {
 
@@ -42,10 +42,10 @@ public class PortalGunRayCast implements RayCastCallback {
 //            System.out.println("COLISION CON PORTABLE_SURFACE");
 //            System.out.println("Normal: " + normal);
 //            System.out.println("Fraccion: " + fraction);
-            //0.1f is the radius of the portal
-            //createPortal(new Vector2(point.add(normal.scl(0.1f, 0.1f))), new Vector2(normal));
+            // 0.1f is the radius of the portal
             Vector2 vec = new Vector2(normal.x * 0.1f, normal.y * 0.1f);
-            createPortal(point.add(vec), new Vector2(normal));
+            createPortal(new Vector2(point.add(vec)), new Vector2(normal));
+            //createPortal(new Vector2(point), new Vector2(normal));
 
             //entity.getBody().getFixtureList().get(0).setSensor(true);
             hit = true;
@@ -59,6 +59,8 @@ public class PortalGunRayCast implements RayCastCallback {
     public void createPortal(Vector2 position, Vector2 portalNormal) {
 
         Portal portal = portalGun.getPortal(color);
+
+        //System.out.println("position = [" + position + "], portalNormal = [" + portalNormal + "]");
 
         if(portal == null) {
             BodyDef bdef = new BodyDef();
@@ -101,7 +103,7 @@ public class PortalGunRayCast implements RayCastCallback {
     /**
      * Restarts this ray.
      */
-    public void restartHit() {
+    public void restartRay() {
         hit = false;
     }
 

@@ -10,7 +10,6 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -22,7 +21,6 @@ public class Portal extends StaticEntity {
     private PortalColor color;
 
     private Set<Entity> sentEntities;
-    private Map<Entity, Vector2> sentEntitiesWithVelocity;
     private boolean emitter;
 
     private Vector2 normal;
@@ -46,58 +44,6 @@ public class Portal extends StaticEntity {
         body.getFixtureList().get(0).setFilterData(filter);
 
         //System.out.println(Integer.toBinaryString(filter.maskBits));
-    }
-
-    //TODO: sacar el hardcodeo
-    public void receive(Entity entity){
-        System.out.println("Current velocity3: " + entityVelocity);
-        Vector2 oppositePortalNormal = oppositePortal.normal;
-
-        Body entityBody = entity.getBody();
-        EntityType entityType = entity.getType();
-
-        Vector2 currentEntityVelocity = entity.getBody().getLinearVelocity();
-        System.out.println(currentEntityVelocity);
-        Vector2 currentVelocity = currentEntityVelocity;
-
-
-        // This is to avoid the player gaining momentum. (cheating)
-        currentVelocity.scl(Math.abs(oppositePortalNormal.x), Math.abs(oppositePortalNormal.y));
-
-        // Set the new Velocity of the entityBody
-        Vector2 newVelocity = new Vector2(normal.x * currentVelocity.len(), normal.y * currentVelocity.len());
-        entityBody.setLinearVelocity(newVelocity);
-
-        // Set the new Position
-        //0.1f is the radius of the portal circular shape
-        entityBody.setTransform(this.body.getPosition().add(normal.x * (0.1f + entityType.getWidth() / 2),
-                normal.y * (0.1f + entityType.getHeight() / 2)), 0);
-
-        //entityBody.setTransform(this.body.getPosition(), 0);
-
-        // Apply a minimum impulse so it doesn't get stuck in the walls
-        entityBody.applyLinearImpulse(normal.x, normal.y, body.getPosition().x, body.getPosition().y, true);
-
-    }
-
-    public Portal getOppositePortal(){
-        return oppositePortal;
-    }
-
-    public boolean isEmitter() {
-        return emitter;
-    }
-
-    public void setEmitter(boolean emitter) {
-        this.emitter = emitter;
-    }
-
-    public boolean listIsEmpty(){
-        return sentEntities.isEmpty();
-    }
-
-    public void removeEntityFromList(Entity entity){
-        sentEntities.remove(entity);
     }
 
     /**
@@ -126,17 +72,73 @@ public class Portal extends StaticEntity {
         }
     }
 
-    public PortalColor getColor(){
-        return color;
+    //TODO: sacar el hardcodeo
+    public void receive(Entity entity) {
+        System.out.println("Current velocity3: " + entityVelocity);
+
+        Vector2 oppositePortalNormal = oppositePortal.normal;
+
+        Body entityBody = entity.getBody();
+
+        EntityType entityType = entity.getType();
+
+        // Set the new Position
+        //0.1f is the radius of the portal circular shape
+        entityBody.setTransform(this.body.getPosition().add(normal.x * (/**0.1f +*/ entityType.getWidth() / 3),
+                normal.y * (/**0.1f +*/ entityType.getHeight() / 3)), 0);
+        //entityBody.setTransform(this.body.getPosition(), 0);
+
+        //Set the new velocity
+        Vector2 currentEntityVelocity = entity.getBody().getLinearVelocity();
+        System.out.println(currentEntityVelocity);
+        Vector2 currentVelocity = currentEntityVelocity;
+
+        // This is to avoid the player gaining momentum. (cheating)
+        currentVelocity.scl(Math.abs(oppositePortalNormal.x), Math.abs(oppositePortalNormal.y));
+
+        Vector2 newVelocity = new Vector2(normal.x * currentVelocity.len(), normal.y * currentVelocity.len());
+        entityBody.setLinearVelocity(newVelocity);
+
+        // Apply a minimum impulse so it doesn't get stuck in the walls
+        //entityBody.applyLinearImpulse(normal.x, normal.y, body.getPosition().x, body.getPosition().y, true);
+
     }
 
-    public void setNormal(Vector2 normal){
+    public Vector2 getNormal() {
+        return normal;
+    }
+
+    public void setNormal(Vector2 normal) {
         this.normal.x = normal.x;
         this.normal.y = normal.y;
     }
 
+    public Portal getOppositePortal(){
+        return oppositePortal;
+    }
+
     public void setOppositePortal(Portal portal){
         this.oppositePortal = portal;
+    }
+
+    public boolean isEmitter() {
+        return emitter;
+    }
+
+    public void setEmitter(boolean emitter) {
+        this.emitter = emitter;
+    }
+
+    public boolean listIsEmpty(){
+        return sentEntities.isEmpty();
+    }
+
+    public void removeEntityFromList(Entity entity){
+        sentEntities.remove(entity);
+    }
+
+    public PortalColor getColor(){
+        return color;
     }
 
 }

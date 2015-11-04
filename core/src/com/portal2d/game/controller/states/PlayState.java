@@ -114,6 +114,8 @@ public class PlayState extends GameState {
         debugRenderer.line(beginPoint, endPoint);
         debugRenderer.end();
 
+        //playerController.playerCallback.updateAABB();
+
     }
 
     @Override
@@ -141,6 +143,11 @@ public class PlayState extends GameState {
 
     public OrthographicCamera getBox2DCamera() {
         return scene.getBox2DCamera();
+    }
+
+    //TESTEO
+    public ShapeRenderer getDebugRenderer() {
+        return debugRenderer;
     }
 
 }

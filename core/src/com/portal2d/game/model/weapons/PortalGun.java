@@ -34,21 +34,21 @@ public class PortalGun implements Weapon {
     @Override
     public void actionLeftClick(Vector2 position) {
         raycast.setPortalColor(PortalColor.BLUE);
-        rayCast(position);
+        shoot(position);
     }
 
     @Override
     public void actionRightClick(Vector2 position) {
         raycast.setPortalColor(PortalColor.ORANGE);
-        rayCast(position);
+        shoot(position);
     }
 
     /**
      * Ray-cast the world using the {@link PortalGunRayCast} callback.
      * @see World#rayCast(RayCastCallback, Vector2, Vector2)
      */
-    private void rayCast(Vector2 position) {
-        raycast.restartHit();
+    private void shoot(Vector2 position) {
+        raycast.restartRay();
         Vector2 beginPoint = new Vector2(owner.getBody().getPosition());
         //beginPoint.add(0, 0.4f);
 
@@ -57,8 +57,6 @@ public class PortalGun implements Weapon {
         step.sub(owner.getBody().getPosition());
         step.nor();
         step.scl(0.1f);
-
-        //System.out.println(step);
 
         Vector2 endPoint = new Vector2(owner.getBody().getPosition());
         endPoint.add(step);
@@ -69,7 +67,7 @@ public class PortalGun implements Weapon {
         }
     }
 
-    public void setPortal(Portal portal){
+    public void setPortal(Portal portal) {
         switch(portal.getColor()){
             case BLUE:
                 bluePortal = portal;
@@ -80,8 +78,8 @@ public class PortalGun implements Weapon {
         }
     }
 
-    public Portal getPortal(PortalColor color){
-        switch(color){
+    public Portal getPortal(PortalColor color) {
+        switch(color) {
             case BLUE:
                 return bluePortal;
             case ORANGE:
@@ -91,7 +89,7 @@ public class PortalGun implements Weapon {
         }
     }
 
-    public void linkPortals(){
+    public void linkPortals() {
         if(orangePortal != null && bluePortal != null){
             bluePortal.setOppositePortal(orangePortal);
             orangePortal.setOppositePortal(bluePortal);

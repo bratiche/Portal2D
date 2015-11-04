@@ -7,6 +7,11 @@ public interface ModelConstants {
 
     float TERMINAL_VELOCITY = 25.0f;
 
+    // Radius fot the player to grab objects
+    float GRAB_RADIUS = 0.5f;
+
+    float PLAYER_MAX_VELOCITY = 2.0f;
+
     //TODO: add physical properties of each entity
 
     float TILESIZE = 0.6f;
