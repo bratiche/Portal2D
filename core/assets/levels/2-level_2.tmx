@@ -22,7 +22,7 @@
   <object id="46" name="player" x="224" y="158" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
-  <object id="192" x="1616" y="600" width="120" height="10">
+  <object id="192" x="1241" y="600" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>
@@ -63,7 +63,7 @@
   </object>
  </objectgroup>
  <objectgroup name="gates">
-  <object id="186" x="1596" y="119" width="40" height="180">
+  <object id="186" x="1640" y="420" width="40" height="180">
    <properties>
     <property name="ID" value="186"/>
    </properties>
@@ -72,4 +72,5 @@
  <objectgroup name="acid">
   <object id="188" name="acid" x="1860" y="620" width="420" height="100"/>
  </objectgroup>
+ <objectgroup name="turrets"/>
 </map>

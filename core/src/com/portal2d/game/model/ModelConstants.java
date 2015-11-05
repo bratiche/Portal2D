@@ -13,6 +13,11 @@ public interface ModelConstants {
 
     float PLAYER_MAX_VELOCITY = 2.0f;
 
+    float TURRET_VISION_RADIUS = 3.0f;
+
+    // Dimension of each ray cast
+    float RAY_CAST_STEP = 0.1f;
+
     //TODO: add physical properties of each entity
 
     float TILESIZE = 0.6f;
@@ -32,9 +37,12 @@ public interface ModelConstants {
     float EXIT_WIDTH = 0.3f;
     float EXIT_HEIGHT = 1.8f;
 
+    float TURRET_WIDTH = 0.6f;
+    float TURRET_HEIGHT = 0.6f;
+
     float PORTAL_RADIUS = 0.1f; //Con 0.6 no hay problemas
 
-    float PROJECTILE_SPEED = 15.0f;
+    float PROJECTILE_SPEED = 1.0f;
     float PROJECTILE_RADIUS = 0.1f;
 
 }

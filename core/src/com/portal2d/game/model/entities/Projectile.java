@@ -17,6 +17,7 @@ public abstract class Projectile extends DynamicEntity {
         super(level, body);
         this.velocity = velocity;
         body.setBullet(true);
+        body.getFixtureList().get(0).setSensor(true);
         type = EntityType.PROJECTILE;
         body.setLinearVelocity(velocity);
     }

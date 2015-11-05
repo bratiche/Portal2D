@@ -84,7 +84,7 @@ public class PlayerController extends InputAdapter {
                 boolean below = true;
 
                 // Avoid the player to jump when is on a sensor
-                if((contact.getFixtureA().isSensor() || contact.getFixtureB().isSensor()) && !jump) {
+                if((contact.getFixtureA().isSensor() || contact.getFixtureB().isSensor())) {
                     below = false;
                 }
                 for (int j = 0; j < manifold.getNumberOfContactPoints(); j++) {

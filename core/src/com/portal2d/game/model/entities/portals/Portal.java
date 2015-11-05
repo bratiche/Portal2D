@@ -92,7 +92,7 @@ public class Portal extends StaticEntity {
 
         //Set the new velocity
         Vector2 currentVelocity = oppositePortal.entityVelocity;
-        System.out.println(currentVelocity);
+        //System.out.println(currentVelocity);
 
         // This is to avoid the player gaining momentum. (cheating)
         currentVelocity.scl(Math.abs(oppositePortalNormal.x), Math.abs(oppositePortalNormal.y));

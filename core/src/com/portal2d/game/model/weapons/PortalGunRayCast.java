@@ -41,14 +41,9 @@ public class PortalGunRayCast implements RayCastCallback {
         }
 
         if(entity.getType() == EntityType.PORTABLE_SURFACE){
-//            System.out.println("COLISION CON PORTABLE_SURFACE");
-//            System.out.println("Normal: " + normal);
-//            System.out.println("Fraccion: " + fraction);
             Vector2 vec = new Vector2(normal.x * PORTAL_RADIUS, normal.y * PORTAL_RADIUS);
             createPortal(new Vector2(point.add(vec)), new Vector2(normal));
             //createPortal(new Vector2(point), new Vector2(normal));
-
-            //entity.getBody().getFixtureList().get(0).setSensor(true);
             hit = true;
             return 0;
         }
@@ -60,8 +55,6 @@ public class PortalGunRayCast implements RayCastCallback {
     public void createPortal(Vector2 position, Vector2 portalNormal) {
 
         Portal portal = portalGun.getPortal(color);
-
-        //System.out.println("position = [" + position + "], portalNormal = [" + portalNormal + "]");
 
         if(portal == null) {
             BodyDef bdef = new BodyDef();

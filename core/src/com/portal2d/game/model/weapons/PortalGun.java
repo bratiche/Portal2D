@@ -8,6 +8,8 @@ import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.level.Level;
 
+import static com.portal2d.game.model.ModelConstants.*;
+
 import java.util.NoSuchElementException;
 
 /**
@@ -50,13 +52,11 @@ public class PortalGun implements Weapon {
     private void shoot(Vector2 position) {
         raycast.restartRay();
         Vector2 beginPoint = new Vector2(owner.getBody().getPosition());
-        //beginPoint.add(0, 0.4f);
 
-        //TODO: fix hardcoding
         Vector2 step = new Vector2(position);
         step.sub(owner.getBody().getPosition());
         step.nor();
-        step.scl(0.1f);
+        step.scl(RAY_CAST_STEP);
 
         Vector2 endPoint = new Vector2(owner.getBody().getPosition());
         endPoint.add(step);

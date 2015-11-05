@@ -1,12 +1,13 @@
 package com.portal2d.game.model.level;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Player;
+import com.portal2d.game.model.entities.Projectile;
 import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.interactions.GameContactListener;
 
 import java.util.HashMap;
@@ -30,6 +31,9 @@ public class Level {
     //Entities
     private Set<Entity> entities;
 
+    // Projectiles (entities that are created at runtime)
+    private Set<Projectile> projectiles;
+
     //Queues
     private Map<Entity,Portal> teleportQueue;
     private Set<Entity> removalQueue;
@@ -43,6 +47,7 @@ public class Level {
         this.levelName = levelName;
 
         entities = new HashSet<Entity>();
+        projectiles = new HashSet<Projectile>();
         teleportQueue = new HashMap<Entity, Portal>();
         removalQueue = new HashSet<Entity>();
 
@@ -59,9 +64,12 @@ public class Level {
             entity.update();
         }
 
+        for(Projectile projectile : projectiles) {
+            projectile.update();
+        }
+
         //Queue processing
         for(Map.Entry<Entity,Portal> entry : teleportQueue.entrySet()) {
-            //System.out.println("Current velocity2: " + entry.getValue().entityVelocity);
             entry.getValue().receive(entry.getKey());
         }
 
@@ -72,17 +80,14 @@ public class Level {
         //Queue cleaning
         teleportQueue.clear();
         removalQueue.clear();
-
-
     }
 
     public void addTeleportQueue(Entity e, Portal portal){
-
         teleportQueue.put(e, portal);
     }
 
-    public void addToRemove(Entity entity) {
-        removalQueue.add(entity);
+    public void addToRemove(Entity projectile) {
+        removalQueue.add(projectile);
     }
 
     public Player getPlayer() {
@@ -105,11 +110,20 @@ public class Level {
         entities.add(entity);
     }
 
+    public void add(Projectile projectile) {
+        projectiles.add(projectile);
+    }
+
     private void removeEntities() {
         for(Entity entity : removalQueue) {
             Body body = entity.getBody();
             world.destroyBody(body);
-            entities.remove(entity);
+            if(entity.getType().equals(EntityType.PROJECTILE)) {
+                projectiles.remove(entity);
+            }
+            else {
+                entities.remove(entity);
+            }
         }
     }
 

@@ -5,9 +5,11 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.*;
+import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.PortableSurface;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
@@ -16,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.portal2d.game.view.ViewConstants.PPM;
-import static com.portal2d.game.model.ModelConstants.*;
 
 /**
  * Helper class for loading levels and creating entities from tmx files (TiledMaps).
@@ -67,6 +68,9 @@ public class LevelLoader {
 
         layer = tiledMap.getLayers().get("exits");
         createExits(level, layer);
+
+        layer = tiledMap.getLayers().get("turrets");
+        createTurrets(level, layer);
     }
 
     private void createPlayer(Level level, MapLayer layer) {
@@ -297,6 +301,36 @@ public class LevelLoader {
             body.createFixture(fixtureDef);
             Box box = new Box(level, body);
             level.add(box);
+        }
+
+        shape.dispose();
+    }
+
+    private void createTurrets(Level level, MapLayer layer) {
+        BodyDef bodyDef = new BodyDef();
+        RectangleMapObject rectangleMapObject;
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        float x;
+        float y;
+        float width;
+        float height;
+
+        for(MapObject mapObject : layer.getObjects()) {
+
+            rectangleMapObject = (RectangleMapObject)mapObject;
+            x = rectangleMapObject.getRectangle().getX();
+            y = rectangleMapObject.getRectangle().getY();
+            width = rectangleMapObject.getRectangle().getWidth();
+            height = rectangleMapObject.getRectangle().getHeight();
+
+            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+            Body body = world.createBody(bodyDef);
+            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+            fixtureDef.shape = shape;
+            body.createFixture(fixtureDef);
+            Turret turret = new Turret(level, body);
+            level.add(turret);
         }
 
         shape.dispose();
