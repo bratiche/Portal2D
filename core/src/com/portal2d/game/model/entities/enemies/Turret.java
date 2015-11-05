@@ -21,14 +21,11 @@ public class Turret extends StaticEntity {
     private boolean targetLockedOn;
     private Entity target;
 
-    // Rate of fire in seconds
-    private float rateOfFire = 0.5f;
-
     public Turret(Level level, Body body) {
         super(level, body);
         type = EntityType.TURRET;
         pointToShoot = new Vector2();
-        raycast = new TurretRayCast(this, level);
+        raycast = new TurretRayCast(world, this);
 
         //Add vision fixture
         CircleShape circleShape = new CircleShape();
@@ -65,28 +62,12 @@ public class Turret extends StaticEntity {
     private float time = 0;
     public void update() {
         time += Gdx.graphics.getDeltaTime();
-        if(targetLockedOn && time >= rateOfFire) {
+        if(targetLockedOn && time >= TURRET_RATE_OF_FIRE) {
             pointToShoot.set(target.getBody().getPosition());
-            rayCast();
+            raycast.setRay(body.getPosition(), pointToShoot, RAY_CAST_STEP_LENGTH);
+            raycast.process();
+            //rayCast();
             time = 0;
-        }
-    }
-
-    public void rayCast() {
-        raycast.restartRay();
-        Vector2 beginPoint = new Vector2(body.getPosition());
-
-        Vector2 step = new Vector2(pointToShoot);
-        step.sub(beginPoint);
-        step.nor();
-        step.scl(RAY_CAST_STEP);
-
-        Vector2 endPoint = new Vector2(beginPoint);
-        endPoint.add(step);
-
-        while(!raycast.hit()) {
-            world.rayCast(raycast, beginPoint, endPoint);
-            endPoint.add(step);
         }
     }
 

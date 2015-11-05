@@ -328,7 +328,7 @@ public class LevelLoader {
             Body body = world.createBody(bodyDef);
             shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
             fixtureDef.shape = shape;
-            body.createFixture(fixtureDef);
+            //body.createFixture(fixtureDef);
             Turret turret = new Turret(level, body);
             level.add(turret);
         }

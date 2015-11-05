@@ -74,7 +74,6 @@ public class Portal extends StaticEntity {
         }
     }
 
-    //TODO: sacar el hardcodeo
     public void receive(Entity entity) {
         //System.out.println("Current velocity3: " + oppositePortal.entityVelocity);
 

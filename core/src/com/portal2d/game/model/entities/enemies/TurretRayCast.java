@@ -2,26 +2,21 @@ package com.portal2d.game.model.entities.enemies;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.interactions.EntityType;
-import com.portal2d.game.model.level.Level;
+import com.portal2d.game.model.interactions.RayCast;
 
 /**
- *
+ * {@link RayCast} used by a Turret to to shoot at it's target.
  */
-public class TurretRayCast implements RayCastCallback {
+public class TurretRayCast extends RayCast {
 
     private Turret turret;
-    private Level level;
-    private World world;
-    private boolean hit;
 
-    public TurretRayCast(Turret turret, Level level) {
+    public TurretRayCast(World world, Turret turret) {
+        super(world);
         this.turret = turret;
-        this.level = level;
-        this.world = level.getWorld();
     }
 
     @Override
@@ -35,18 +30,11 @@ public class TurretRayCast implements RayCastCallback {
         }
 
         if(type == EntityType.PLAYER){
-            turret.shoot(fixture.getBody().getPosition().scl(fraction));
+            turret.shoot(fixture.getBody().getPosition());
         }
 
         hit = true;
         return 0;
     }
 
-    public boolean hit() {
-        return hit;
-    }
-
-    public void restartRay() {
-        hit = false;
-    }
 }

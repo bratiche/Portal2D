@@ -8,7 +8,7 @@ import com.portal2d.game.model.entities.Exit;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- * TODO
+ *
  */
 public class ExitView extends EntityView<Exit> {
 

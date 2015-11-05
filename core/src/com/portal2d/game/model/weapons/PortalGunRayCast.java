@@ -6,23 +6,23 @@ import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.interactions.RayCast;
 import com.portal2d.game.model.level.Level;
 
 import static com.portal2d.game.model.ModelConstants.*;
 
 /**
- * {@link RayCastCallback} used to create portals.
+ * {@link RayCast} used to create portals.
  */
-public class PortalGunRayCast implements RayCastCallback {
+public class PortalGunRayCast extends RayCast {
 
     private PortalGun portalGun;
     private PortalColor color;
     private Level level;
     private World world;
 
-    private boolean hit;
-
     public PortalGunRayCast(PortalGun portalGun, Level level){
+        super(level.getWorld());
         this.portalGun = portalGun;
         this.level = level;
         this.world = level.getWorld();
@@ -57,20 +57,20 @@ public class PortalGunRayCast implements RayCastCallback {
         Portal portal = portalGun.getPortal(color);
 
         if(portal == null) {
-            BodyDef bdef = new BodyDef();
-            bdef.position.set(position);
-            bdef.type = BodyDef.BodyType.StaticBody;
+            BodyDef bodyDef = new BodyDef();
+            bodyDef.position.set(position);
+            bodyDef.type = BodyDef.BodyType.StaticBody;
 
-            Body body = world.createBody(bdef);
+            Body body = world.createBody(bodyDef);
 
             CircleShape circleShape = new CircleShape();
             circleShape.setRadius(PORTAL_RADIUS);
 
-            FixtureDef fdef = new FixtureDef();
-            fdef.shape = circleShape;
-            fdef.isSensor = true;
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = circleShape;
+            fixtureDef.isSensor = true;
 
-            body.createFixture(fdef);
+            body.createFixture(fixtureDef);
 
             portal = new Portal(level, body, color);
             portal.setNormal(portalNormal);
@@ -88,17 +88,6 @@ public class PortalGunRayCast implements RayCastCallback {
 
     public void setPortalColor(PortalColor color) {
         this.color = color;
-    }
-
-    public boolean hit() {
-        return hit;
-    }
-
-    /**
-     * Restarts this ray.
-     */
-    public void restartRay() {
-        hit = false;
     }
 
 }

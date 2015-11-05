@@ -35,8 +35,6 @@ public class BoxView extends EntityView<Box> {
         //batch.draw(texture, x, y);
 
         sprite.setPosition(x, y);
-        //TODO: sprite rotation
-        //sprite.rotate((float) (body.getAngle() * 180 / StrictMath.PI));
         sprite.draw(batch);
 
         batch.end();

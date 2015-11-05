@@ -15,34 +15,42 @@ import java.util.NoSuchElementException;
 /**
  *
  */
-public class PortalGun implements Weapon {
+public class PortalGun extends GravityGun {
 
-    private Entity owner;
     private Portal bluePortal;
     private Portal orangePortal;
 
     private PortalGunRayCast raycast;
 
-    private World world;
-    private Level level;
-
     public PortalGun(Level level, Entity owner) {
-        this.level = level;
-        this.owner = owner;
-        this.world = level.getWorld();
+        super(level, owner);
         this.raycast = new PortalGunRayCast(this, level);
     }
 
+    /**
+     * If this gun has an entity grabbed, throw it away.
+     * Else shoot a blue portal.
+     */
     @Override
     public void actionLeftClick(Vector2 position) {
-        raycast.setPortalColor(PortalColor.BLUE);
-        shoot(position);
+        if(grabbedEntity != null) {
+            super.actionLeftClick(position);
+        }
+        else {
+            raycast.setPortalColor(PortalColor.BLUE);
+            shoot(position);
+        }
     }
 
+    /**
+     * Only shoot an orange portal if the gun has no entity grabbed.
+     */
     @Override
     public void actionRightClick(Vector2 position) {
-        raycast.setPortalColor(PortalColor.ORANGE);
-        shoot(position);
+        if(grabbedEntity == null) {
+            raycast.setPortalColor(PortalColor.ORANGE);
+            shoot(position);
+        }
     }
 
     /**
@@ -50,21 +58,8 @@ public class PortalGun implements Weapon {
      * @see World#rayCast(RayCastCallback, Vector2, Vector2)
      */
     private void shoot(Vector2 position) {
-        raycast.restartRay();
-        Vector2 beginPoint = new Vector2(owner.getBody().getPosition());
-
-        Vector2 step = new Vector2(position);
-        step.sub(owner.getBody().getPosition());
-        step.nor();
-        step.scl(RAY_CAST_STEP);
-
-        Vector2 endPoint = new Vector2(owner.getBody().getPosition());
-        endPoint.add(step);
-
-        while(!raycast.hit()) {
-            world.rayCast(raycast, beginPoint, endPoint);
-            endPoint.add(step);
-        }
+        raycast.setRay(owner.getBody().getPosition(), position, RAY_CAST_STEP_LENGTH);
+        raycast.process();
     }
 
     public void setPortal(Portal portal) {
@@ -94,5 +89,10 @@ public class PortalGun implements Weapon {
             bluePortal.setOppositePortal(orangePortal);
             orangePortal.setOppositePortal(bluePortal);
         }
+    }
+
+    //TESTEO
+    public PortalGunRayCast getRayCast() {
+        return raycast;
     }
 }

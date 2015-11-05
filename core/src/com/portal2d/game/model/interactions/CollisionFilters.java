@@ -12,8 +12,4 @@ public interface CollisionFilters {
     short BOX_BITS = 4;
     short PORTAL_BITS = 8;
 
-    //example, TODO: remove
-    //              player      pp            portal
-    // category   0000 0001   0000 0010     0000 0100
-    // mask       1111 1101   1111 1010     1111 1101
 }

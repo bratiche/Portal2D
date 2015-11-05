@@ -17,7 +17,7 @@ import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.scenes.PlayScene;
 
-import static com.portal2d.game.controller.Box2DConstants.*;
+import static com.portal2d.game.model.ModelConstants.Box2D.*;
 
 /**
  * Main state of the game.
@@ -31,10 +31,6 @@ public class PlayState extends GameState {
     private PlayScene scene;
     private PlayerController playerController;
     private GameSlot slot;
-    
-    // TESTEO
-    private ShapeRenderer debugRenderer = new ShapeRenderer();
-
 
     public PlayState(GameStateManager gsm, LevelName levelName, GameSlot slot) {
         super(gsm);
@@ -98,29 +94,16 @@ public class PlayState extends GameState {
 
     }
 
+    // TESTEO
+    private ShapeRenderer debugRenderer = new ShapeRenderer();
+
     @Override
     public void render(SpriteBatch batch) {
         scene.render(batch, mouse.x, mouse.y);
 
-        //TESTEO DE RAYCAST
-        debugRenderer.setProjectionMatrix(getBox2DCamera().combined);
-        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
-
-        Vector2 beginPoint = level.getPlayer().getBody().getPosition();
-//        beginPoint.add(0, 0.4f);
-
-        Vector2 distance = new Vector2(playerController.getMouse().x / 100f, playerController.getMouse().y / 100f);
-        distance.sub(beginPoint);
-        distance.nor();
-        distance.scl(5f);
-
-        Vector2 endPoint = new Vector2(beginPoint);
-        endPoint.add(distance);
-
-        debugRenderer.line(beginPoint, endPoint);
-        debugRenderer.end();
-
-        playerController.playerCallback.drawGrabRange();
+        //TESTEO
+        playerController.drawPortalGunRayCast();
+        playerController.drawGrabRange();
 
     }
 

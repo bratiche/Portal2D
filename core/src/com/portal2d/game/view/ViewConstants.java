@@ -12,7 +12,7 @@ public interface ViewConstants {
     int VIEWPORT_HEIGHT = 720;
 
     // scale for box2d world, pixels per meter
-    float PPM = 100;
+    float PPM = 100.0f;
 
     enum TextureName {
         MENU_TITLE,

@@ -13,9 +13,11 @@ import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.interactions.RayCast;
 import com.portal2d.game.model.level.Level;
+import com.portal2d.game.model.weapons.GravityGunQuery;
+import com.portal2d.game.model.weapons.PortalGunRayCast;
 
-import static com.portal2d.game.model.ModelConstants.PLAYER_HEIGHT;
 import static com.portal2d.game.view.ViewConstants.*;
 import static com.portal2d.game.model.ModelConstants.*;
 
@@ -201,6 +203,8 @@ public class PlayerController extends InputAdapter {
         }
     }
 
+    private final Vector2 tmp = new Vector2();
+
     private void checkMouseInput() {
         //screen coordinates
         mouse.x = Gdx.input.getX();
@@ -217,94 +221,76 @@ public class PlayerController extends InputAdapter {
         // Set if the player is facing right or left (regardless of whether it is moving or jumping)
         // The player faces right or left according to the position of the mouse
         player.setFacingRight(mouse.x / PPM >= playerBody.getPosition().x);
-//        if(mouse.x / PPM >= playerBody.getPosition().x)
-//            player.setFacingRight(true);
-//        else
-//            player.setFacingRight(false);
 
         // Shoot
         if(Gdx.input.justTouched()) {
+            tmp.set(mouse.x / PPM, mouse.y / PPM);
             if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-                player.getWeapon().actionLeftClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
+                player.getPortalGun().actionLeftClick(tmp);
             }
-            if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-                player.getWeapon().actionRightClick(new Vector2(mouse.x / PPM, mouse.y / PPM));
+            else if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                player.getPortalGun().actionRightClick(tmp);
             }
         }
 
+        // Move the entity grabbed
+        if(!player.getPortalGun().canGrabEntity()) {
+            tmp.set(mouse.x / PPM, mouse.y / PPM);
+            player.getPortalGun().update(tmp);
+        }
+
+
         // Grab or drop an entity
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            if(player.canGrabEntity()) {
-                playerCallback.updateAABB();
+            if(player.getPortalGun().canGrabEntity()) {
+                player.getPortalGun().queryAABB();
             }
             else {
-                player.drop();
+                player.getPortalGun().dropEntity();
             }
         }
     }
 
-    public PlayerQueryCallback playerCallback = new PlayerQueryCallback();
+    //TESTEO
+    public void drawPortalGunRayCast() {
 
-    /**
-     * TODO: move to its own class
-     * Query callback for the player's AABB to find out which bodies are around it and can be grabbed.
-     * @see World#QueryAABB(QueryCallback, float, float, float, float)
-     * @see QueryCallback
-     */
-    public class PlayerQueryCallback implements QueryCallback {
+        playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
+        playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
 
-        float lowerX;
-        float lowerY;
-        float upperX;
-        float upperY;
+//        RayCast rayCast = player.getPortalGun().getRayCast();
+//        rayCast.setRay(playerBody.getPosition(), new Vector2(mouse.x / PPM, mouse.y / PPM), 1);
+//        rayCast.process();
+//        Vector2 beginPoint = rayCast.getBeginPoint();
+//        Vector2 endPoint = rayCast.getEndPoint();
 
-        @Override
-        public boolean reportFixture(Fixture fixture) {
+        Vector2 beginPoint = new Vector2(playerBody.getPosition());
 
-            if(fixture.getBody().getUserData() == null) {
-                System.out.println("Fixture's body's user data is null.");
-                return true;
-            }
+        Vector2 distance = new Vector2(mouse.x / PPM, mouse.y / 100f);
+        distance.sub(beginPoint);
+        distance.nor();
+        distance.scl(5f);
 
-            Entity entity = (Entity) fixture.getBody().getUserData();
+        Vector2 endPoint = new Vector2(beginPoint);
+        endPoint.add(distance);
 
-            if(entity.getType().equals(EntityType.BOX)) {
-                if(player.canGrabEntity()) {
-                    player.grab(entity);
-                }
-                return false; //return false to terminate the query
-            }
+        playState.getDebugRenderer().line(beginPoint, endPoint);
+        playState.getDebugRenderer().end();
+    }
 
-            return true;
-        }
+    //TESTEO
+    public void drawGrabRange() {
+        GravityGunQuery query = player.getPortalGun().getQuery();
+        query.updateAABB();
 
-        public void updateAABB() {
-            lowerX = playerBody.getPosition().x - player.getType().getWidth() / 2 - GRAB_RADIUS;
-            lowerY = playerBody.getPosition().y - player.getType().getHeight() / 2 - GRAB_RADIUS;
-            upperX = playerBody.getPosition().x + player.getType().getWidth() / 2 + GRAB_RADIUS;
-            upperY = playerBody.getPosition().y + player.getType().getHeight() / 2 + GRAB_RADIUS;
+        float lowerX = query.getLowerX();
+        float lowerY = query.getLowerY();
+        float upperX = query.getUpperX();
+        float upperY = query.getUpperY();
 
-            world.QueryAABB(this, lowerX, lowerY, upperX, upperY);
-
-            //playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
-            playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
-            playState.getDebugRenderer().rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
-            playState.getDebugRenderer().end();
-        }
-
-        // TODO REMOVE
-        public void drawGrabRange() {
-            lowerX = playerBody.getPosition().x - player.getType().getWidth() / 2 - GRAB_RADIUS;
-            lowerY = playerBody.getPosition().y - player.getType().getHeight() / 2 - GRAB_RADIUS;
-            upperX = playerBody.getPosition().x + player.getType().getWidth() / 2 + GRAB_RADIUS;
-            upperY = playerBody.getPosition().y + player.getType().getHeight() / 2 + GRAB_RADIUS;
-
-            //playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
-            playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
-            playState.getDebugRenderer().rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
-            playState.getDebugRenderer().end();
-        }
-
+        playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
+        playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
+        playState.getDebugRenderer().rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
+        playState.getDebugRenderer().end();
     }
 
     @Override

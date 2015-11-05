@@ -11,4 +11,6 @@ public interface Weapon {
 
     public void actionLeftClick(Vector2 position);
 
+    public void update(Vector2 position);
+
 }

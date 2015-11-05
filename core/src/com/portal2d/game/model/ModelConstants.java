@@ -1,9 +1,22 @@
 package com.portal2d.game.model;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  *
  */
 public interface ModelConstants {
+
+    /**
+     * Constants for updating the box2d world
+     */
+    interface Box2D {
+        Vector2 DEFAULT_GRAVITY = new Vector2(0, -9.8f);
+
+        //iterations for updating the World
+        int VELOCITY_ITERATIONS = 6; //8
+        int POSITION_ITERATIONS = 2; //3
+    }
 
     //TODO: test terminal velocity
     float TERMINAL_VELOCITY = 15.0f;
@@ -14,9 +27,11 @@ public interface ModelConstants {
     float PLAYER_MAX_VELOCITY = 2.0f;
 
     float TURRET_VISION_RADIUS = 3.0f;
+    // Rate of fire in seconds
+    float TURRET_RATE_OF_FIRE = 0.7f;
 
-    // Dimension of each ray cast
-    float RAY_CAST_STEP = 0.1f;
+    // Length of each ray cast step
+    float RAY_CAST_STEP_LENGTH = 0.1f;
 
     //TODO: add physical properties of each entity
 
