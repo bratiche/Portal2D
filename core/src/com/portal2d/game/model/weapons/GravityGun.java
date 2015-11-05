@@ -67,6 +67,7 @@ public class GravityGun implements Weapon {
         //destroy joint
         spring.destroy();
 
+        grabbedEntity.getBody().setGravityScale(1); // gravity back to normal
         grabbedEntity = null;
     }
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.PortableSurface;
@@ -25,12 +26,14 @@ import static com.portal2d.game.view.ViewConstants.PPM;
 public class LevelLoader {
 
     private World world;
+    private PlayState playState;
 
     //map for linking Gates with Buttons
     private Map<Integer, Gate> gatesID;
 
-    public LevelLoader(World world) {
+    public LevelLoader(World world, PlayState playState) {
         this.world = world;
+        this.playState = playState;
         gatesID = new HashMap<Integer, Gate>();
     }
 
@@ -41,7 +44,7 @@ public class LevelLoader {
      */
     public Level loadLevel(LevelName levelName) {
         TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
-        Level level = new Level(world, tiledMap, levelName);
+        Level level = new Level(world, tiledMap, levelName, playState);
         createLevel(tiledMap, level);
         return level;
     }

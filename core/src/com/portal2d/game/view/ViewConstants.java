@@ -23,7 +23,9 @@ public interface ViewConstants {
         SPRITE_EXIT,
         ANIM_GATE,
         ANIM_PLAYER,
-        INSTRUCTIONS_BG
+        INSTRUCTIONS_BG,
+        BLUE_PORTAL,
+        ORANGE_PORTAL
     }
 
     enum FontName {
@@ -52,6 +54,10 @@ public interface ViewConstants {
 
     int EXIT_WIDTH = 30;
     int EXIT_HEIGHT = 180;
+
+    // Dimension of the portals when they are horizontal
+    int PORTAL_WIDTH = 120;
+    int PORTAL_HEIGHT = 20;
 
     //animations
     float ANIM_GATE_DELAY =  1 / 12f;

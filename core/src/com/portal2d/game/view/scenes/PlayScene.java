@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.*;
+import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
@@ -129,6 +130,24 @@ public class PlayScene extends Scene {
             }
             //TODO: add other types
         }
+    }
+
+    public void addView(Entity entity) {
+        switch (entity.getType()) {
+            case PROJECTILE:
+                System.out.println("No projectile view yet");
+                break;
+            case PORTAL:
+                System.out.println("Add portal");
+                PortalView portalView = new PortalView((Portal)entity);
+                entityViews.add(portalView);
+                break;
+        }
+    }
+
+    //TODO remove entity views
+    public void removeView(Entity entity) {
+
     }
 
     public BoundedCamera getBox2DCamera() {

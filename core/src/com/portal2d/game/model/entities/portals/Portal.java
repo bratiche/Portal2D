@@ -9,10 +9,7 @@ import com.portal2d.game.model.interactions.CollisionFilters;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
-import static com.portal2d.game.model.ModelConstants.*;
-
-import java.util.HashSet;
-import java.util.Set;
+import static com.portal2d.game.model.ModelConstants.PORTAL_RADIUS;
 
 /**
  *
@@ -21,9 +18,6 @@ public class Portal extends StaticEntity {
 
     private Portal oppositePortal;
     private PortalColor color;
-
-    private Set<Entity> sentEntities;
-    private boolean emitter;
 
     private Vector2 normal;
 
@@ -34,7 +28,6 @@ public class Portal extends StaticEntity {
         super(level, body);
         this.color = color;
         this.normal = new Vector2();
-        this.sentEntities = new HashSet<Entity>();
 
         entityVelocity = new Vector2();
 
@@ -54,24 +47,15 @@ public class Portal extends StaticEntity {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        if(oppositePortal != null && !oppositePortal.isEmitter()) {
+        if(oppositePortal != null) {
             entityVelocity = new Vector2(entity.getBody().getLinearVelocity());
-            //System.out.println("Current velocity1: " + entityVelocity);
             level.addTeleportQueue(entity, oppositePortal);
-            setEmitter(true);
-            sentEntities.add(entity);
         }
     }
 
     @Override
     public void endInteraction(Entity entity) {
         entity.endInteraction(this);
-        if(oppositePortal != null && !isEmitter()){
-            oppositePortal.removeEntityFromList(entity);
-            if (oppositePortal.listIsEmpty()) {
-                oppositePortal.setEmitter(false);
-            }
-        }
     }
 
     public void receive(Entity entity) {
@@ -85,8 +69,8 @@ public class Portal extends StaticEntity {
 
         // Set the new Position
         //0.1f is the radius of the portal circular shape
-        entityBody.setTransform(this.body.getPosition().add(normal.x * (PORTAL_RADIUS + entityType.getWidth() / 2),
-                normal.y * (PORTAL_RADIUS + entityType.getHeight() / 2)), 0);
+        entityBody.setTransform(this.body.getPosition().add(normal.x * (PORTAL_RADIUS + 0.02f + entityType.getWidth() / 2),
+                normal.y * (PORTAL_RADIUS + 0.02f + entityType.getHeight() / 2)), 0);
         //entityBody.setTransform(this.body.getPosition(), 0);
 
         //Set the new velocity
@@ -119,22 +103,6 @@ public class Portal extends StaticEntity {
 
     public void setOppositePortal(Portal portal){
         this.oppositePortal = portal;
-    }
-
-    public boolean isEmitter() {
-        return emitter;
-    }
-
-    public void setEmitter(boolean emitter) {
-        this.emitter = emitter;
-    }
-
-    public boolean listIsEmpty(){
-        return sentEntities.isEmpty();
-    }
-
-    public void removeEntityFromList(Entity entity){
-        sentEntities.remove(entity);
     }
 
     public PortalColor getColor(){

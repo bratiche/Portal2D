@@ -3,6 +3,7 @@ package com.portal2d.game.model.level;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.entities.Projectile;
@@ -41,10 +42,14 @@ public class Level {
     //Player
     private Player player;
 
-    public Level(World world, TiledMap tiledMap, LevelName levelName) {
+    // To add entities at runtime
+    private PlayState playState;
+
+    public Level(World world, TiledMap tiledMap, LevelName levelName, PlayState playState) {
         this.world = world;
         this.tiledMap = tiledMap;
         this.levelName = levelName;
+        this.playState = playState;
 
         entities = new HashSet<Entity>();
         projectiles = new HashSet<Projectile>();
@@ -106,12 +111,20 @@ public class Level {
         this.player = player;
     }
 
+    // Entity addition from level loader
     public void add(Entity entity) {
         entities.add(entity);
     }
 
+    // Entity addition at runtime
     public void add(Projectile projectile) {
         projectiles.add(projectile);
+        playState.add(projectile);
+    }
+
+    public void add(Portal portal) {
+        entities.add(portal);
+        playState.add(portal);
     }
 
     private void removeEntities() {
@@ -124,6 +137,7 @@ public class Level {
             else {
                 entities.remove(entity);
             }
+
         }
     }
 

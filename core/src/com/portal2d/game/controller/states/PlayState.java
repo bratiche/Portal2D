@@ -13,6 +13,7 @@ import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.controller.PlayerController;
 import com.portal2d.game.controller.save.GameSlot;
+import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.scenes.PlayScene;
@@ -38,7 +39,7 @@ public class PlayState extends GameState {
 
         // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
-        levelLoader = new LevelLoader(world);
+        levelLoader = new LevelLoader(world, this);
 
         // Load level
         level = levelLoader.loadLevel(levelName);
@@ -136,6 +137,15 @@ public class PlayState extends GameState {
 
     public OrthographicCamera getBox2DCamera() {
         return scene.getBox2DCamera();
+    }
+
+    public void add(Entity entity) {
+        scene.addView(entity);
+    }
+
+    //TODO remove entity views
+    public void remove(Entity entity) {
+        scene.removeView(entity);
     }
 
     //TESTEO
