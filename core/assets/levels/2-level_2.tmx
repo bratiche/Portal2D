@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="211">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="212">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
  <layer name="non-portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYB3mmBgw0G4kx82k+IveYDj5g9rmDSV/DHT6xeYeaptHDX8MpjCiBAy2+CYXjHR/kOI3etRZ1PQHrTE1/QEAR1EFEA==
+   eJxjZWBgYB3mmBgw0G4kx82k+IveYDj5g9rmDSV/DHT6xeYeegFS7BpMYUQJGGzxTS4Y6f4gxW/0qLNoXV/SI5zI8QcAr8YE7Q==
   </data>
  </layer>
  <layer name="portal-able" width="50" height="12">
@@ -45,14 +45,15 @@
   <object id="81" x="780" y="600" width="1080" height="120"/>
   <object id="82" x="0" y="480" width="120" height="120"/>
   <object id="85" x="960" y="0" width="2040" height="120"/>
-  <object id="86" x="1200" y="120" width="120" height="300"/>
+  <object id="86" x="1200" y="120" width="120" height="240"/>
   <object id="107" x="840" y="300" width="360" height="60"/>
   <object id="184" x="2280" y="360" width="720" height="360"/>
-  <object id="185" x="1320" y="300" width="360" height="120"/>
+  <object id="185" x="1320" y="300" width="300" height="60"/>
   <object id="189" x="3000" y="0" width="60" height="720"/>
   <object id="195" x="0" y="-7.10543e-15" width="420" height="120"/>
   <object id="197" x="0" y="120" width="120" height="120"/>
   <object id="198" x="0" y="600" width="420" height="120"/>
+  <object id="211" x="1620" y="300" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
   <object id="98" x="420" y="0" width="540" height="120"/>

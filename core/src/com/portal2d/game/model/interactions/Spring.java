@@ -6,33 +6,36 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.*;
 
 /**
- * Spring for managing mouse joints.
+ * Spring for managing distance joints between two bodies.
  */
 public class Spring {
 
     private DistanceJoint joint;
     private World world;
-    private Body bodyA; //the player
-    private Body bodyB; //the box
 
-    private float max_lenght = 1.0f;
+    // Main body
+    private Body bodyA;
+    // Secondary body
+    private Body bodyB;
 
-    public Spring(World world) {
+    private float maxLength;
+
+    public Spring(World world, float maxLength) {
         this.world = world;
+        this.maxLength = maxLength;
     }
 
     public void update(Vector2 position) {
 
         float distance = new Vector2(position).sub(bodyA.getPosition()).len();
-        System.out.println(distance);
 
         Vector2 direction = new Vector2(position);
         direction.sub(bodyA.getPosition());
         direction.nor();
 
-        // Set distance joint
-        if(distance > max_lenght) {
-            distance = max_lenght;
+        // Set joint length
+        if(distance > maxLength) {
+            distance = maxLength;
         }
 
         joint.setLength(distance);
@@ -44,9 +47,8 @@ public class Spring {
         DistanceJointDef jointDef = new DistanceJointDef();
         jointDef.bodyA = this.bodyA = bodyA;
         jointDef.bodyB = this.bodyB = bodyB;
-        bodyB.setGravityScale(0);
         jointDef.collideConnected = false;
-        jointDef.length = max_lenght;
+        jointDef.length = maxLength;
         joint = (DistanceJoint)world.createJoint(jointDef);
     }
 

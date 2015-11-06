@@ -31,13 +31,15 @@ public class PlayScene extends Scene {
     private Set<EntityView> entityViews;
 
     // Separated set for drawing buttons, this is to make sure the buttons are drawn on top of the other entities
-    private Set<ButtonView> buttons;
+    private Set<ButtonView> buttonViews;
+
+    private PlayerView playerView;
 
     //debugging stuff
     private boolean debug = true;
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private BoundedCamera b2dcam;
+    private BoundedCamera box2DCamera;
 
     public PlayScene(World world, Level level) {
         this.world = world;
@@ -46,7 +48,7 @@ public class PlayScene extends Scene {
 
         entityViews = new HashSet<EntityView>();
 
-        buttons = new HashSet<ButtonView>();
+        buttonViews = new HashSet<ButtonView>();
 
         setLevel(level);
     }
@@ -54,7 +56,7 @@ public class PlayScene extends Scene {
     @Override
     public void render(SpriteBatch batch, float mouseX, float mouseY) {
 
-        //set camera to follow player
+        //set camera to follow the player
         float x = level.getPlayer().getBody().getPosition().x;
         float y = level.getPlayer().getBody().getPosition().y;
 
@@ -69,24 +71,27 @@ public class PlayScene extends Scene {
         float deltaTime = Gdx.graphics.getDeltaTime();
         batch.setProjectionMatrix(camera.combined);
 
+        playerView.render(batch, deltaTime);
+
         for(EntityView entityView : entityViews) {
             entityView.render(batch, deltaTime);
         }
-        for(ButtonView button : buttons) {
+        for(ButtonView button : buttonViews) {
             button.render(batch, deltaTime);
         }
 
-        b2dcam.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT / 4) / PPM);
-        b2dcam.update();
+        box2DCamera.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT / 4) / PPM);
+        box2DCamera.update();
 
         //TODO remove, debugging stuff
         if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             debug = !debug;
+            Gdx.input.setCursorCatched(!debug);
         }
 
         //draw box2d world (debug)
         if (debug) {
-            debugRenderer.render(world, b2dcam.combined);
+            debugRenderer.render(world, box2DCamera.combined);
         }
     }
 
@@ -105,53 +110,71 @@ public class PlayScene extends Scene {
         camera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
         //create debug camera
-        b2dcam = new BoundedCamera(0, 0, width / PPM, height / PPM);
-        b2dcam.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
+        box2DCamera = new BoundedCamera(0, 0, width / PPM, height / PPM);
+        box2DCamera.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
 
-        //create entity views
-        entityViews.clear();
-        buttons.clear();
 
         //add player view
-        entityViews.add(new PlayerView(level.getPlayer()));
+        playerView = new PlayerView(level.getPlayer());
 
+        //create new entity views
+        entityViews.clear();
+        buttonViews.clear();
         for(Entity entity : level.getEntities()) {
-            if(entity.getType().equals(EntityType.BOX)) {
-                entityViews.add(new BoxView((Box) entity));
-            }
-            else if(entity.getType().equals(EntityType.GATE)) {
-                entityViews.add(new GateView((Gate)entity));
-            }
-            else if(entity.getType().equals(EntityType.BUTTON)) {
-                buttons.add(new ButtonView((Button)entity));
-            }
-            else if(entity.getType().equals(EntityType.EXIT)) {
-                entityViews.add(new ExitView((Exit)entity));
-            }
-            //TODO: add other types
+            addView(entity);
         }
     }
 
     public void addView(Entity entity) {
         switch (entity.getType()) {
-            case PROJECTILE:
-                System.out.println("No projectile view yet");
+            case BUTTON:
+                buttonViews.add(new ButtonView((Button) entity));
+                break;
+            case BOX:
+                entityViews.add(new BoxView((Box) entity));
+                break;
+            case BULLET:
+                System.out.println("No bullet view yet");
+                break;
+            case EXIT:
+                entityViews.add(new ExitView((Exit) entity));
+                break;
+            case GATE:
+                entityViews.add(new GateView((Gate)entity));
+                break;
+            case PLAYER:
+                playerView = new PlayerView((Player)entity);
+                System.out.println("WTF");
                 break;
             case PORTAL:
                 System.out.println("Add portal");
-                PortalView portalView = new PortalView((Portal)entity);
-                entityViews.add(portalView);
+                entityViews.add(new PortalView((Portal)entity));
                 break;
         }
     }
 
-    //TODO remove entity views
+    // TODO make separated sets for each entity type
     public void removeView(Entity entity) {
-
+        if(entity.getType().equals(EntityType.BUTTON)) {
+            for(ButtonView buttonView : buttonViews) {
+                if(buttonView.getModel().equals(entity)) {
+                    buttonViews.remove(buttonView);
+                    return;
+                }
+            }
+        }
+        else {
+            for(EntityView entityView : entityViews) {
+                if(entityView.getModel().equals(entity)) {
+                    entityViews.remove(entityView);
+                    return;
+                }
+            }
+        }
     }
 
     public BoundedCamera getBox2DCamera() {
-        return b2dcam;
+        return box2DCamera;
     }
 
 }

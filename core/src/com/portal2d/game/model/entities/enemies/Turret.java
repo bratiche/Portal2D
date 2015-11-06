@@ -60,13 +60,14 @@ public class Turret extends StaticEntity {
     }
 
     private float time = 0;
+
+    @Override
     public void update() {
         time += Gdx.graphics.getDeltaTime();
         if(targetLockedOn && time >= TURRET_RATE_OF_FIRE) {
             pointToShoot.set(target.getBody().getPosition());
             raycast.setRay(body.getPosition(), pointToShoot, RAY_CAST_STEP_LENGTH);
             raycast.process();
-            //rayCast();
             time = 0;
         }
     }
@@ -81,7 +82,7 @@ public class Turret extends StaticEntity {
         bodyDef.position.set(this.body.getPosition());
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(PROJECTILE_RADIUS);
+        shape.setRadius(BULLET_RADIUS);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -90,14 +91,14 @@ public class Turret extends StaticEntity {
         Body body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
 
-        level.add(new Missile(level, body, new Vector2(direction.x * PROJECTILE_SPEED, direction.y * PROJECTILE_SPEED)));
+        level.add(new Bullet(level, body, new Vector2(direction.x * BULLET_SPEED, direction.y * BULLET_SPEED)));
     }
 
     /**
      * Overridden so the turret doesn't destroy the projectile.
      */
     @Override
-    public void beginInteraction(Missile missile) {
+    public void beginInteraction(Bullet bullet) {
 
     }
 }

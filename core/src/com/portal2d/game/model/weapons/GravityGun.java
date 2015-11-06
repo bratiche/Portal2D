@@ -6,26 +6,27 @@ import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.interactions.Spring;
 import com.portal2d.game.model.level.Level;
 
+import static com.portal2d.game.model.ModelConstants.*;
+
 /**
- *
+ * Weapon that allows the owner to manipulate an object by grabbing it.
  */
 public class GravityGun implements Weapon {
 
     protected Entity owner;
     protected Level level;
     protected World world;
-
-    protected Entity grabbedEntity;
     protected GravityGunQuery query;
 
     protected Spring spring;
+    protected Entity grabbedEntity;
 
     public GravityGun(Level level, Entity owner) {
         this.owner = owner;
         this.level = level;
         this.world = level.getWorld();
 
-        spring = new Spring(world);
+        spring = new Spring(world, GRAVITY_GUN_RADIUS);
         query = new GravityGunQuery(this);
     }
 
@@ -33,14 +34,13 @@ public class GravityGun implements Weapon {
 
     @Override
     public void actionLeftClick(Vector2 position) {
-        // Set the grabbed entity new position / velocity
+        // Shoot the grabbed entity
         Vector2 direction = new Vector2(position);
         direction.sub(owner.getBody().getPosition());
         direction.nor();
 
-        // Shoot the grabbed entity
         grabbedEntity.getBody().setLinearVelocity(direction.scl(SPEED));
-        // Drop the grabbed entity
+
         dropEntity();
     }
 
@@ -51,23 +51,26 @@ public class GravityGun implements Weapon {
 
     @Override
     public void update(Vector2 position) {
-        spring.update(position);
+        if(grabbedEntity != null) {
+            spring.update(position);
+        }
     }
 
     public void grabEntity(Entity entity) {
         System.out.println("ENTITY GRABBED");
-        //create joint
         spring.setBodies(owner.getBody(), entity.getBody());
 
         grabbedEntity = entity;
+        grabbedEntity.getBody().setGravityScale(0); // this body is no longer affected by gravity
+        grabbedEntity.getBody().getFixtureList().get(0).setSensor(true);
     }
 
     public void dropEntity() {
         System.out.println("ENTITY DROPPED");
-        //destroy joint
         spring.destroy();
 
         grabbedEntity.getBody().setGravityScale(1); // gravity back to normal
+        grabbedEntity.getBody().getFixtureList().get(0).setSensor(false);
         grabbedEntity = null;
     }
 

@@ -39,7 +39,7 @@ public class SelectLevelScene extends Scene {
 
         for(int i = 0; i < LevelName.values().length; i++) {
             LevelName levelName = LevelName.values()[i];
-            TextButton button = new TextButton(400, FIRST_BUTTONSTART_MENU - 50 * i, "0" + (i + 1), font);
+            TextButton button = new TextButton(400, FIRST_BUTTON_START_MENU - 50 * i, "0" + (i + 1), font);
             levelButtons.put(button, LevelName.values()[i]);
             if(levelButtons.get(button).isLocked()) {
                 button.appendText("     -LOCKED");

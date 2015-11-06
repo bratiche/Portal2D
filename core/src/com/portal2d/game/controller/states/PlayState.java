@@ -43,10 +43,12 @@ public class PlayState extends GameState {
 
         // Load level
         level = levelLoader.loadLevel(levelName);
+
     }
 
     @Override
     public void entered() {
+
         // Setup view
         scene = new PlayScene(world, level);
 

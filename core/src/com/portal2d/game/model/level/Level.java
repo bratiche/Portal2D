@@ -36,13 +36,14 @@ public class Level {
     private Set<Projectile> projectiles;
 
     //Queues
-    private Map<Entity,Portal> teleportQueue;
+    private Map<Entity, Portal> teleportQueue;
     private Set<Entity> removalQueue;
+    private Set<Projectile> projectileRemovalQueue;
 
     //Player
     private Player player;
 
-    // To add entities at runtime
+    // To add and remove entities at runtime
     private PlayState playState;
 
     public Level(World world, TiledMap tiledMap, LevelName levelName, PlayState playState) {
@@ -55,6 +56,7 @@ public class Level {
         projectiles = new HashSet<Projectile>();
         teleportQueue = new HashMap<Entity, Portal>();
         removalQueue = new HashSet<Entity>();
+        projectileRemovalQueue = new HashSet<Projectile>();
 
         world.setContactListener(new GameContactListener());
     }
@@ -78,21 +80,24 @@ public class Level {
             entry.getValue().receive(entry.getKey());
         }
 
-        //Remove entities
-        if(!removalQueue.isEmpty())
-            removeEntities();
+        removeEntities();
 
-        //Queue cleaning
+        //Queue clearing
         teleportQueue.clear();
         removalQueue.clear();
+        projectileRemovalQueue.clear();
     }
 
     public void addTeleportQueue(Entity e, Portal portal){
         teleportQueue.put(e, portal);
     }
 
-    public void addToRemove(Entity projectile) {
-        removalQueue.add(projectile);
+    public void addToRemove(Entity entity) {
+        removalQueue.add(entity);
+    }
+
+    public void addToRemove(Projectile projectile) {
+        projectileRemovalQueue.add(projectile);
     }
 
     public Player getPlayer() {
@@ -114,6 +119,7 @@ public class Level {
     // Entity addition from level loader
     public void add(Entity entity) {
         entities.add(entity);
+//        playState.add(entity);
     }
 
     // Entity addition at runtime
@@ -131,13 +137,12 @@ public class Level {
         for(Entity entity : removalQueue) {
             Body body = entity.getBody();
             world.destroyBody(body);
-            if(entity.getType().equals(EntityType.PROJECTILE)) {
-                projectiles.remove(entity);
-            }
-            else {
-                entities.remove(entity);
-            }
-
+            entities.remove(entity);
+        }
+        for(Projectile projectile : projectileRemovalQueue) {
+            Body body = projectile.getBody();
+            world.destroyBody(body);
+            projectiles.remove(projectile);
         }
     }
 

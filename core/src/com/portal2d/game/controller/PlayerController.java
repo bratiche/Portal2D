@@ -222,6 +222,7 @@ public class PlayerController extends InputAdapter {
         // The player faces right or left according to the position of the mouse
         player.setFacingRight(mouse.x / PPM >= playerBody.getPosition().x);
 
+
         // Shoot
         if(Gdx.input.justTouched()) {
             tmp.set(mouse.x / PPM, mouse.y / PPM);
@@ -233,13 +234,6 @@ public class PlayerController extends InputAdapter {
             }
         }
 
-        // Move the entity grabbed
-        if(!player.getPortalGun().canGrabEntity()) {
-            tmp.set(mouse.x / PPM, mouse.y / PPM);
-            player.getPortalGun().update(tmp);
-        }
-
-
         // Grab or drop an entity
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             if(player.getPortalGun().canGrabEntity()) {
@@ -249,6 +243,10 @@ public class PlayerController extends InputAdapter {
                 player.getPortalGun().dropEntity();
             }
         }
+
+        // Update the portal gun
+        tmp.set(mouse.x / PPM, mouse.y / PPM);
+        player.getPortalGun().update(tmp);
     }
 
     //TESTEO

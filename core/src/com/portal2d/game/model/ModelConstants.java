@@ -21,8 +21,8 @@ public interface ModelConstants {
     //TODO: test terminal velocity
     float TERMINAL_VELOCITY = 15.0f;
 
-    // Radius fot the player to grab objects
-    float GRAB_RADIUS = 0.5f;
+    // Radius for grabbing objects with the gravity gun
+    float GRAVITY_GUN_RADIUS = 0.7f;
 
     float PLAYER_MAX_VELOCITY = 2.0f;
 
@@ -57,7 +57,8 @@ public interface ModelConstants {
 
     float PORTAL_RADIUS = 0.1f; //Con 0.6 no hay problemas
 
-    float PROJECTILE_SPEED = 1.0f;
+    float BULLET_SPEED = 1.0f;
+    float BULLET_RADIUS = 0.1f;
     float PROJECTILE_RADIUS = 0.1f;
 
 }

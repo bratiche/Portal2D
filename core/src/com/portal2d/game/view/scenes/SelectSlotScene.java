@@ -37,7 +37,7 @@ public class SelectSlotScene extends Scene {
         BitmapFont font = Portal2D.assets.getFont(ViewConstants.FontName.PORTAL);
 
         for(int i = 0; i < GameSlot.values().length; i++) {
-            TextButton button = new TextButton(FIRST_BUTTONSTART_MENU - 100 - SPACE_BETWEEN_BUTTONS * i,
+            TextButton button = new TextButton(FIRST_BUTTON_START_MENU - 100 - SPACE_BETWEEN_BUTTONS * i,
                     GameSlot.values()[i].name, font);
             slotButtons.put(button, GameSlot.values()[i]);
         }

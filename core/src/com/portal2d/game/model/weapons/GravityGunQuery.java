@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.interactions.EntityType;
 
-import static com.portal2d.game.model.ModelConstants.GRAB_RADIUS;
+import static com.portal2d.game.model.ModelConstants.GRAVITY_GUN_RADIUS;
 
 /**
  * Query callback for the GravityGun to find out which bodies are around it's owner and can be grabbed.
@@ -48,10 +48,10 @@ public class GravityGunQuery implements QueryCallback {
         Entity owner = gravityGun.getOwner();
         Body ownerBody = owner.getBody();
 
-        lowerX = ownerBody.getPosition().x - owner.getType().getWidth() / 2 - GRAB_RADIUS;
-        lowerY = ownerBody.getPosition().y - owner.getType().getHeight() / 2 - GRAB_RADIUS;
-        upperX = ownerBody.getPosition().x + owner.getType().getWidth() / 2 + GRAB_RADIUS;
-        upperY = ownerBody.getPosition().y + owner.getType().getHeight() / 2 + GRAB_RADIUS;
+        lowerX = ownerBody.getPosition().x - owner.getType().getWidth() / 2 - GRAVITY_GUN_RADIUS;
+        lowerY = ownerBody.getPosition().y - owner.getType().getHeight() / 2 - GRAVITY_GUN_RADIUS;
+        upperX = ownerBody.getPosition().x + owner.getType().getWidth() / 2 + GRAVITY_GUN_RADIUS;
+        upperY = ownerBody.getPosition().y + owner.getType().getHeight() / 2 + GRAVITY_GUN_RADIUS;
     }
 
     public void queryAABB() {

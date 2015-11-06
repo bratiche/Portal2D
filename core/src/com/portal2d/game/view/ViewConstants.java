@@ -23,7 +23,6 @@ public interface ViewConstants {
         SPRITE_EXIT,
         ANIM_GATE,
         ANIM_PLAYER,
-        INSTRUCTIONS_BG,
         BLUE_PORTAL,
         ORANGE_PORTAL
     }
@@ -43,8 +42,8 @@ public interface ViewConstants {
     int GATE_WIDTH = 40;
     int GATE_HEIGHT = 180;
 
-    int BUTTON_WIDTH = 130;
-    int BUTTON_HEIGHT = 20;
+    int BUTTON_WIDTH = 120;
+    int BUTTON_HEIGHT = 22;
 
     int BOX_WIDTH = 60;
     int BOX_HEIGHT = 60;
@@ -63,15 +62,8 @@ public interface ViewConstants {
     float ANIM_GATE_DELAY =  1 / 12f;
     float ANIM_PLAYER_DELAY = 1 / 12f;
 
-    //font sizes
-    int FORMAT_SIZE = 80;
-    int INSTRUCTION_SIZE = 33;
-
-    // textbutton sizes
-    int TEXTBUTTON_WIDTH = 20;
-    int TEXTBUTTON_HEIGHT = 20;
-
-    int FIRST_BUTTONSTART_MENU = 600;
+    //menu buttons
+    int FIRST_BUTTON_START_MENU = 600;
     int SPACE_BETWEEN_BUTTONS = 125;
     int FIRST_BUTTON_START_PAUSE = 500;
 

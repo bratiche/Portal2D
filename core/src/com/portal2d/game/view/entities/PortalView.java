@@ -8,6 +8,8 @@ import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.view.ViewConstants;
 
+import java.util.NoSuchElementException;
+
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
@@ -20,16 +22,17 @@ public class PortalView extends EntityView<Portal> {
     public PortalView(Portal model) {
         super(model);
 
-        //TODO switch
         Texture texture;
-        if(model.getColor() == PortalColor.BLUE) {
-            texture = Portal2D.assets.getTexture(TextureName.BLUE_PORTAL);
-        }
-        else if(model.getColor() == PortalColor.ORANGE) {
-            texture = Portal2D.assets.getTexture(TextureName.ORANGE_PORTAL);
-        }
-        else {
-            texture = null;
+
+        switch(model.getColor()) {
+            case BLUE:
+                texture = Portal2D.assets.getTexture(TextureName.BLUE_PORTAL);
+                break;
+            case ORANGE:
+                texture = Portal2D.assets.getTexture(TextureName.ORANGE_PORTAL);
+                break;
+            default:
+                throw new NoSuchElementException();
         }
 
         width = PORTAL_WIDTH;

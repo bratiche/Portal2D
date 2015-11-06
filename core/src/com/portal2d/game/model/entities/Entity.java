@@ -2,7 +2,7 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.portal2d.game.model.entities.enemies.Missile;
+import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.*;
 import com.portal2d.game.model.level.Level;
@@ -76,11 +76,11 @@ public abstract class Entity {
     }
 
     /**
-     * Implemented this way so that the {@link Missile} is removed when touching any entity by default.
-     * If a specific Entity should not be destroyed by a missile, it has to override this method.
+     * Implemented this way so that the {@link Bullet} is removed when touching any entity by default.
+     * If a specific Entity should not be destroyed by a bullet, it has to override this method.
      */
-    public void beginInteraction(Missile missile) {
-        level.addToRemove(missile);
+    public void beginInteraction(Bullet bullet) {
+        level.addToRemove(bullet);
     }
 
     // End interactions
@@ -108,7 +108,7 @@ public abstract class Entity {
     public void endInteraction(PortableSurface surface) {
     }
 
-    public void endInteraction(Missile missile) {
+    public void endInteraction(Bullet bullet) {
     }
 
     public void endInteraction(Turret turret) {

@@ -34,4 +34,8 @@ public abstract class EntityView<T extends Entity> {
      */
     public abstract void render(SpriteBatch batch, float deltaTime);
 
+    public T getModel() {
+        return model;
+    }
+
 }
