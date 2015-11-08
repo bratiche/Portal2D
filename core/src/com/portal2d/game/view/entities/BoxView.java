@@ -2,6 +2,7 @@ package com.portal2d.game.view.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.Box;
 import com.portal2d.game.view.ViewConstants;
@@ -29,12 +30,11 @@ public class BoxView extends EntityView<Box> {
 
         batch.begin();
 
-        float x = body.getPosition().x * PPM - width / 2;
-        float y = body.getPosition().y * PPM - height / 2;
+        float x = model.getBody().getPosition().x * PPM;
+        float y = model.getBody().getPosition().y * PPM;
 
-        //batch.draw(texture, x, y);
-
-        sprite.setPosition(x, y);
+        sprite.setCenter(x, y);
+        sprite.setRotation(model.getBody().getAngle() * MathUtils.radiansToDegrees);
         sprite.draw(batch);
 
         batch.end();

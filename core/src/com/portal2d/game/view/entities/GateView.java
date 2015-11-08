@@ -14,6 +14,7 @@ import static com.portal2d.game.view.ViewConstants.*;
  */
 public class GateView extends EntityView<Gate> {
 
+    private Animation open;
     private float stateTime;
 
     public GateView(Gate model) {
@@ -26,8 +27,7 @@ public class GateView extends EntityView<Gate> {
 
         TextureRegion[][] sprites = TextureRegion.split(texture, GATE_WIDTH, GATE_HEIGHT);
 
-        Animation open = new Animation(ANIM_GATE_DELAY, sprites[0]);
-        animations.put(Action.GATE_OPEN, open);
+        open = new Animation(ANIM_GATE_DELAY, sprites[0]);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class GateView extends EntityView<Gate> {
 
         if(model.isOpen()) {
             stateTime += deltaTime;
-            if(stateTime > animations.get(Action.GATE_OPEN).getAnimationDuration())
-                stateTime = animations.get(Action.GATE_OPEN).getAnimationDuration();
+            if(stateTime > open.getAnimationDuration())
+                stateTime = open.getAnimationDuration();
         }
         else {
             //to play in reverse mode:
@@ -47,9 +47,9 @@ public class GateView extends EntityView<Gate> {
                 stateTime = 0;
         }
 
-        keyFrame = animations.get(Action.GATE_OPEN).getKeyFrame(stateTime);
+        keyFrame = open.getKeyFrame(stateTime);
         batch.begin();
-        batch.draw(keyFrame, body.getPosition().x * PPM - width / 2, body.getPosition().y * PPM - height / 2);
+        batch.draw(keyFrame, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);
         batch.end();
     }
 

@@ -6,15 +6,14 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**
- * TODO: make abstract?
+ * Represents a wall or the floor, it's an obstacle that cannot be cross by.
  */
 public class Surface extends StaticEntity {
 
     protected Vector2 normal;
 
     public Surface(Level level, Body body) {
-        super(level, body);
-        type = EntityType.SURFACE;
+        super(level, body, EntityType.SURFACE); // The type is overridden by PortableSurface
     }
 
     @Override

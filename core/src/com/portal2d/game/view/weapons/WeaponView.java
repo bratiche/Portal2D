@@ -2,7 +2,7 @@ package com.portal2d.game.view.weapons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.model.weapons.Weapon;
-import com.portal2d.game.view.CursorView;
+import com.portal2d.game.view.ui.CursorView;
 
 /**
  *

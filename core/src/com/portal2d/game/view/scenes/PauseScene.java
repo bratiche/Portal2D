@@ -1,5 +1,6 @@
 package com.portal2d.game.view.scenes;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
@@ -24,8 +25,11 @@ public class PauseScene extends Scene {
         BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL);
 
         continueButton = new TextButton(FIRST_BUTTON_START_PAUSE, "Continue", font);
+        continueButton.setColors(Color.DARK_GRAY, Color.LIGHT_GRAY);
         instructionsButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS, "Instructions", font);
+        instructionsButton.setColors(Color.DARK_GRAY, Color.LIGHT_GRAY);
         exitButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS*2, "Exit", font);
+        exitButton.setColors(Color.DARK_GRAY, Color.LIGHT_GRAY);
     }
 
     @Override

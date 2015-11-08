@@ -7,8 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.Player;
-import com.portal2d.game.view.ViewConstants;
+import com.portal2d.game.model.entities.Player.PlayerState;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.portal2d.game.model.entities.Player.PlayerState.*;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
@@ -16,12 +20,15 @@ import static com.portal2d.game.view.ViewConstants.*;
  */
 public class PlayerView extends EntityView<Player> {
 
+    private Map<PlayerState, Animation> animations;
     private float stateTime;
 
     public PlayerView(Player model) {
         super(model);
 
-        Texture texture = Portal2D.assets.getTexture(ViewConstants.TextureName.ANIM_PLAYER);
+        animations = new HashMap<PlayerState, Animation>();
+
+        Texture texture = Portal2D.assets.getTexture(TextureName.ANIM_PLAYER);
 
         width = PLAYER_WIDTH;
         height = PLAYER_HEIGHT;
@@ -30,19 +37,19 @@ public class PlayerView extends EntityView<Player> {
 
         Animation walk = new Animation(ANIM_PLAYER_DELAY, sprites[4]);
         walk.setPlayMode(Animation.PlayMode.LOOP);
-        animations.put(Action.PLAYER_WALK, walk);
+        animations.put(WALKING, walk);
 
         Animation jump= new Animation(ANIM_PLAYER_DELAY, sprites[5][2]);
-        animations.put(Action.PLAYER_JUMP, jump);
+        animations.put(JUMPING, jump);
 
         Animation dead= new Animation(ANIM_PLAYER_DELAY, sprites[2]);
-        animations.put(Action.PLAYER_DEAD, dead);
+        animations.put(DEAD, dead);
 
         Animation stand= new Animation(ANIM_PLAYER_DELAY, sprites[8]);
-        animations.put(Action.PLAYER_STAND, stand);
+        animations.put(STANDING, stand);
 
         Animation fall= new Animation(ANIM_PLAYER_DELAY, sprites[5][2]);
-        animations.put(Action.PLAYER_FALL, fall);
+        animations.put(FALLING, fall);
     }
 
     @Override
@@ -54,30 +61,30 @@ public class PlayerView extends EntityView<Player> {
 
         if(model.isWalking()) {
 
-            if(stateTime > animations.get(Action.PLAYER_WALK).getAnimationDuration()) {
+            if(stateTime > animations.get(WALKING).getAnimationDuration()) {
                 stateTime = 0;
             }
-            keyFrame = animations.get(Action.PLAYER_WALK).getKeyFrame(stateTime);
+            keyFrame = animations.get(WALKING).getKeyFrame(stateTime);
         }
 
         else if(model.isJumping()) {
-            if(stateTime > animations.get(Action.PLAYER_JUMP).getAnimationDuration()) {
+            if(stateTime > animations.get(JUMPING).getAnimationDuration()) {
                 stateTime=0;
             }
-            keyFrame = animations.get(Action.PLAYER_JUMP).getKeyFrame(stateTime);
+            keyFrame = animations.get(JUMPING).getKeyFrame(stateTime);
         }
 
         else if( model.isFalling()) {
-            if(stateTime > animations.get(Action.PLAYER_FALL).getAnimationDuration()) {
+            if(stateTime > animations.get(FALLING).getAnimationDuration()) {
                 stateTime = 0;
             }
-            keyFrame = animations.get(Action.PLAYER_FALL).getKeyFrame(stateTime);
+            keyFrame = animations.get(FALLING).getKeyFrame(stateTime);
         }
 
         //standing case
         else {
             stateTime = 0;
-            keyFrame = animations.get(Action.PLAYER_STAND).getKeyFrame(stateTime);
+            keyFrame = animations.get(STANDING).getKeyFrame(stateTime);
         }
 
         batch.begin();
@@ -85,11 +92,11 @@ public class PlayerView extends EntityView<Player> {
             Sprite sprite = new Sprite(keyFrame);
             sprite.flip(true, false);
 
-            batch.draw(sprite, body.getPosition().x * PPM - width / 2, body.getPosition().y * PPM - height / 2);
+            batch.draw(sprite, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);
         }
 
         else {
-            batch.draw(keyFrame, body.getPosition().x * PPM - width / 2, body.getPosition().y * PPM - height / 2);
+            batch.draw(keyFrame, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);
         }
         batch.end();
 

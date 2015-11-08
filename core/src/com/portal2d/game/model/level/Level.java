@@ -1,14 +1,14 @@
 package com.portal2d.game.model.level;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.portal2d.game.controller.states.PlayState;
-import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.entities.Player;
-import com.portal2d.game.model.entities.Projectile;
+import com.portal2d.game.model.entities.*;
+import com.portal2d.game.model.entities.enemies.Bullet;
+import com.portal2d.game.model.entities.enemies.Turret;
+import com.portal2d.game.model.entities.portals.PortableSurface;
 import com.portal2d.game.model.entities.portals.Portal;
-import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.interactions.GameContactListener;
 
 import java.util.HashMap;
@@ -21,52 +21,46 @@ import java.util.Set;
  */
 public class Level {
 
-    //Level properties
+    // Level properties
     private LevelName levelName;
     private LevelName nextLevel;
     private boolean finished;
 
     private World world;
-    private TiledMap tiledMap;
 
-    //Entities
+    // Entities
+    private Player player;
     private Set<Entity> entities;
-
-    // Projectiles (entities that are created at runtime)
     private Set<Projectile> projectiles;
 
-    //Queues
+    // Queues
     private Map<Entity, Portal> teleportQueue;
-    private Set<Entity> removalQueue;
-    private Set<Projectile> projectileRemovalQueue;
+    private Set<Entity> entitiesToRemove;
+    private Set<Projectile> projectilesToRemove;
 
-    //Player
-    private Player player;
-
-    // To add and remove entities at runtime
+    // To add and remove entities
     private PlayState playState;
 
-    public Level(World world, TiledMap tiledMap, LevelName levelName, PlayState playState) {
+    public Level(World world, LevelName levelName, PlayState playState) {
         this.world = world;
-        this.tiledMap = tiledMap;
         this.levelName = levelName;
         this.playState = playState;
 
         entities = new HashSet<Entity>();
         projectiles = new HashSet<Projectile>();
         teleportQueue = new HashMap<Entity, Portal>();
-        removalQueue = new HashSet<Entity>();
-        projectileRemovalQueue = new HashSet<Projectile>();
+        entitiesToRemove = new HashSet<Entity>();
+        projectilesToRemove = new HashSet<Projectile>();
 
         world.setContactListener(new GameContactListener());
     }
 
     public void update() {
 
-        //Update player
+        // Update player
         player.update();
 
-        //Update all other entities
+        // Update all other entities
         for(Entity entity : entities) {
             entity.update();
         }
@@ -75,57 +69,69 @@ public class Level {
             projectile.update();
         }
 
-        //Queue processing
+        // Queue processing
         for(Map.Entry<Entity,Portal> entry : teleportQueue.entrySet()) {
-            entry.getValue().receive(entry.getKey());
+            Entity entity = entry.getKey();
+            Portal portal = entry.getValue();
+            portal.receive(entity);
         }
 
         removeEntities();
 
-        //Queue clearing
+        // Queue clearing
         teleportQueue.clear();
-        removalQueue.clear();
-        projectileRemovalQueue.clear();
+        entitiesToRemove.clear();
+        projectilesToRemove.clear();
+
     }
 
-    public void addTeleportQueue(Entity e, Portal portal){
-        teleportQueue.put(e, portal);
+    public void removeAllEntities() {
+        // Destroy all bodies
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+
+        System.out.println(bodies.size);
+
+        for(int i = 0; i < bodies.size; i++) {
+            Body body = bodies.get(i);
+            world.destroyBody(body);
+        }
+
+        // Remove entities
+        entities.clear();
+        projectiles.clear();
+    }
+
+    public void addTeleportQueue(Entity entity, Portal portal){
+        teleportQueue.put(entity, portal);
     }
 
     public void addToRemove(Entity entity) {
-        removalQueue.add(entity);
+        entitiesToRemove.add(entity);
     }
 
     public void addToRemove(Projectile projectile) {
-        projectileRemovalQueue.add(projectile);
+        projectilesToRemove.add(projectile);
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public TiledMap getTiledMap() {
-        return tiledMap;
-    }
-
-    public World getWorld() {
-        return world;
-    }
-
-    public void addPlayer(Player player) {
+    public void add(Player player) {
         this.player = player;
+        playState.add(player);
     }
 
-    // Entity addition from level loader
-    public void add(Entity entity) {
-        entities.add(entity);
-//        playState.add(entity);
+    public void add(Box box) {
+        entities.add(box);
+        playState.add(box);
     }
 
-    // Entity addition at runtime
-    public void add(Projectile projectile) {
-        projectiles.add(projectile);
-        playState.add(projectile);
+    public void add(Exit exit) {
+        entities.add(exit);
+        playState.add(exit);
+    }
+
+    public void add(Gate gate) {
+        entities.add(gate);
+        playState.add(gate);
     }
 
     public void add(Portal portal) {
@@ -133,53 +139,72 @@ public class Level {
         playState.add(portal);
     }
 
+    public void add(Button button) {
+        entities.add(button);
+        playState.add(button);
+    }
+
+    public void add(Bullet bullet) {
+        projectiles.add(bullet);
+        playState.add(bullet);
+    }
+
+    public void add(Turret turret) {
+        entities.add(turret);
+        playState.add(turret);
+    }
+
+    public void add(Acid acid) {
+        entities.add(acid);
+        playState.add(acid);
+    }
+
+    public void add(Surface surface) {
+        entities.add(surface);
+    }
+
+    public void add(PortableSurface surface) {
+        entities.add(surface);
+    }
+
     private void removeEntities() {
-        for(Entity entity : removalQueue) {
+        for(Entity entity : entitiesToRemove) {
+            playState.remove(entity);
             Body body = entity.getBody();
             world.destroyBody(body);
             entities.remove(entity);
         }
-        for(Projectile projectile : projectileRemovalQueue) {
+        for(Projectile projectile : projectilesToRemove) {
+            playState.remove(projectile);
             Body body = projectile.getBody();
             world.destroyBody(body);
             projectiles.remove(projectile);
         }
     }
 
-    public int getWidth() {
-        int tilewidth = (Integer) tiledMap.getProperties().get("tilewidth");
-        int mapwidth = (Integer) tiledMap.getProperties().get("width");
-        return tilewidth * mapwidth;
+    public Player getPlayer() {
+        return player;
     }
 
-    public int getHeight() {
-        int tileheight = (Integer) tiledMap.getProperties().get("tileheight");
-        int mapheight = (Integer) tiledMap.getProperties().get("height");
-        return tileheight * mapheight;
+    public World getWorld() {
+        return world;
     }
 
     public boolean isFinished() {
         return finished;
     }
 
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
     public LevelName getNextLevel() {
         return nextLevel;
     }
 
-    public void setNextLevel(LevelName nextLevel) {
-        this.nextLevel = nextLevel;
+    public void setNextLevel(Exit exit) {
+        finished = true;
+        nextLevel = exit.getDestinyLevel();
     }
 
     public LevelName getLevelName() {
         return levelName;
-    }
-
-    public Set<Entity> getEntities() {
-        return entities;
     }
 
 }

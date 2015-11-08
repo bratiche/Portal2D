@@ -14,9 +14,8 @@ public class Exit extends StaticEntity {
     private boolean reached;
 
     public Exit(Level level, Body body, LevelName destinyLevel) {
-        super(level, body);
+        super(level, body, EntityType.EXIT);
         this.destinyLevel = destinyLevel;
-        type = EntityType.EXIT;
     }
 
     @Override
@@ -31,13 +30,16 @@ public class Exit extends StaticEntity {
 
     @Override
     public void beginInteraction(Player player) {
-        level.setFinished(true);
-        level.setNextLevel(destinyLevel);
         reached = true;
+        level.setNextLevel(this);
     }
 
     public boolean isReached() {
         return reached;
+    }
+
+    public LevelName getDestinyLevel() {
+        return destinyLevel;
     }
 
 }

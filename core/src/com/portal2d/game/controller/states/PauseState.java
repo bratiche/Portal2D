@@ -11,7 +11,7 @@ import com.portal2d.game.view.scenes.PauseScene;
  */
 public class PauseState extends GameState {
 
-    // The state that is paused
+    // The state that is paused (usually the PlayState)
     private GameState state;
 
     private PauseScene scene;
@@ -24,6 +24,7 @@ public class PauseState extends GameState {
     @Override
     public void entered() {
         scene = new PauseScene();
+        Gdx.input.setCursorCatched(false);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class PauseState extends GameState {
 
     @Override
     public void leaving() {
-        System.out.println("Game Unpaused");
+        Gdx.input.setCursorCatched(true);
     }
 
 }

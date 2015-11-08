@@ -2,7 +2,10 @@ package com.portal2d.game.model.entities.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.entities.StaticEntity;
@@ -22,12 +25,11 @@ public class Turret extends StaticEntity {
     private Entity target;
 
     public Turret(Level level, Body body) {
-        super(level, body);
-        type = EntityType.TURRET;
+        super(level, body, EntityType.TURRET);
         pointToShoot = new Vector2();
         raycast = new TurretRayCast(world, this);
 
-        //Add vision fixture
+        // Add vision fixture
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(TURRET_VISION_RADIUS);
         FixtureDef fixtureDef = new FixtureDef();
@@ -75,11 +77,19 @@ public class Turret extends StaticEntity {
     public void shoot(Vector2 position) {
 
         Vector2 direction = new Vector2(position);
-        direction.sub(this.body.getPosition());
+        direction.sub(this.getPosition());
         direction.nor();
+        this.setAngle(direction.angleRad());
+
+        body.setTransform(body.getPosition(), direction.angleRad());
+
+        Vector2 velocity = new Vector2(direction.x * BULLET_SPEED, direction.y * BULLET_SPEED);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(this.body.getPosition());
+        bodyDef.linearVelocity.set(velocity);
+        bodyDef.angle = direction.angleRad();
+        bodyDef.gravityScale = 0;
 
         CircleShape shape = new CircleShape();
         shape.setRadius(BULLET_RADIUS);
@@ -91,12 +101,10 @@ public class Turret extends StaticEntity {
         Body body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
 
-        level.add(new Bullet(level, body, new Vector2(direction.x * BULLET_SPEED, direction.y * BULLET_SPEED)));
+        level.add(new Bullet(level, body, velocity));
     }
 
-    /**
-     * Overridden so the turret doesn't destroy the projectile.
-     */
+    /** Overridden so the turret doesn't destroy it's own bullets. */
     @Override
     public void beginInteraction(Bullet bullet) {
 

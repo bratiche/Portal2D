@@ -27,7 +27,7 @@ public class Text extends UIComponent {
         layout = new GlyphLayout(font, text);
     }
 
-    // Centered text in screen on y position
+    // Centered text in screen on x position
     public Text(float y, String text, BitmapFont font, Color color) {
         this(0, y, text, font, color);
         this.x = VIEWPORT_WIDTH / 2 - layout.width / 2;

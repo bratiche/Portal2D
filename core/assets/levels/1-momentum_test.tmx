@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="235">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="239">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
@@ -13,9 +13,11 @@
    eJxjYKA94CISj4JRMBTAYErPAHxfAMk=
   </data>
  </layer>
- <objectgroup name="boxes"/>
+ <objectgroup name="boxes">
+  <object id="236" x="456.5" y="250.5" width="55" height="55"/>
+ </objectgroup>
  <objectgroup name="player">
-  <object id="46" name="player" x="229.333" y="218.667" width="60" height="120"/>
+  <object id="46" name="player" x="217.333" y="122.667" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons"/>
  <objectgroup name="exits">
@@ -32,10 +34,12 @@
   <object id="218" x="0" y="360" width="300" height="360"/>
   <object id="220" x="900" y="360" width="300" height="360"/>
   <object id="223" x="900" y="0" width="300" height="120"/>
+  <object id="237" x="300" y="660" width="600" height="60"/>
+  <object id="238" x="300" y="0" width="600" height="60"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
-  <object id="215" x="300" y="600" width="600" height="61"/>
-  <object id="217" x="300" y="62" width="600" height="58"/>
+  <object id="215" x="300" y="600" width="600" height="60"/>
+  <object id="217" x="300" y="60" width="600" height="60"/>
  </objectgroup>
  <objectgroup name="gates"/>
  <objectgroup name="acid"/>

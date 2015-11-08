@@ -15,6 +15,7 @@ import static com.portal2d.game.view.ViewConstants.*;
 public class MenuScene extends Scene {
 
     private Texture background;
+    private TextButton title;
 
     //Buttons
     private TextButton playButton;
@@ -28,10 +29,13 @@ public class MenuScene extends Scene {
 
         BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL);
 
-        // Creating buttons
-        playButton = new TextButton(450, "PLAY", font);
-        instructionsButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS, "INSTRUCTIONS", font);
-        exitButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS*2, "QUIT", font);
+        title = new TextButton(VIEWPORT_HEIGHT - 100, "PORTAL 2D", font);
+        title.setColors(BLUE_PORTAL_COLOR, ORANGE_PORTAL_COLOR);
+
+        BitmapFont font2 = Portal2D.assets.getFont(FontName.DINB);
+        playButton = new TextButton(450, "PLAY", font2);
+        exitButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS * 2, "QUIT", font2);
+        instructionsButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS, "INSTRUCTIONS", font2);
     }
 
     @Override
@@ -42,6 +46,7 @@ public class MenuScene extends Scene {
         batch.draw(background, 0, 0);
         batch.end();
 
+        title.render(batch, mouseX, mouseY);
         playButton.render(batch, mouseX, mouseY);
         instructionsButton.render(batch, mouseX, mouseY);
         exitButton.render(batch, mouseX, mouseY);

@@ -11,23 +11,23 @@ public class Button extends StaticEntity {
 
     private boolean pressed;
     private int interactions;
+
     private Linkable linkedEntity;
 
     public Button(Level level, Body body, Linkable linkedEntity) {
-        super(level, body);
+        super(level, body, EntityType.BUTTON);
         this.linkedEntity = linkedEntity;
-        type = EntityType.BUTTON;
     }
 
     @Override
     public void update() {
         if(interactions > 0 && !pressed) {
             pressed = true;
-            linkedEntity.link();
+            linkedEntity.buttonPressed();
         }
         else if(interactions == 0 && pressed) {
             pressed = false;
-            linkedEntity.unlink();
+            linkedEntity.buttonReleased();
         }
     }
 

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.controller.Assets;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.states.MenuState;
-import com.portal2d.game.controller.states.PlayState;
 
 public class Portal2D extends ApplicationAdapter {
 

@@ -16,7 +16,8 @@ public enum EntityType {
     BULLET(BULLET_RADIUS * 2, BULLET_RADIUS * 2),
     TURRET(TURRET_WIDTH, TURRET_HEIGHT),
 
-    //TODO
+    // These entities have no dimension because their width and height are variables
+    ACID(0, 0),
     SURFACE(0, 0),
     PORTABLE_SURFACE(0, 0);
 

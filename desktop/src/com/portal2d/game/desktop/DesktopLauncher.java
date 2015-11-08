@@ -3,6 +3,7 @@ package com.portal2d.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.portal2d.game.Portal2D;
+
 import static com.portal2d.game.view.ViewConstants.*;
 
 public class DesktopLauncher {
@@ -11,6 +12,7 @@ public class DesktopLauncher {
 		config.title = TITLE;
 		config.width = VIEWPORT_WIDTH;
 		config.height = VIEWPORT_HEIGHT;
+		//config.fullscreen = true;
 		config.resizable = false;
 		new LwjglApplication(new Portal2D(), config);
 	}

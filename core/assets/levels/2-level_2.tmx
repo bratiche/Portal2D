@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="212">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="12" tilewidth="60" tileheight="60" nextobjectid="216">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
+ <imagelayer name="acidview" x="1834" y="611">
+  <image source="acid.png"/>
+ </imagelayer>
  <layer name="non-portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
    eJxjZWBgYB3mmBgw0G4kx82k+IveYDj5g9rmDSV/DHT6xeYeegFS7BpMYUQJGGzxTS4Y6f4gxW/0qLNoXV/SI5zI8QcAr8YE7Q==
@@ -23,6 +26,12 @@
  </objectgroup>
  <objectgroup name="buttons">
   <object id="192" x="1241" y="600" width="120" height="10">
+   <properties>
+    <property name="LinkedEntityID" value="186"/>
+   </properties>
+   <polygon points="0,0 29.8182,-14.3187 91.0909,-14.5 120,0"/>
+  </object>
+  <object id="215" x="1080" y="600" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>
@@ -54,19 +63,23 @@
   <object id="197" x="0" y="120" width="120" height="120"/>
   <object id="198" x="0" y="600" width="420" height="120"/>
   <object id="211" x="1620" y="300" width="60" height="120"/>
+  <object id="212" x="420" y="660" width="360" height="60"/>
+  <object id="213" x="0" y="240" width="60" height="240"/>
+  <object id="214" x="420" y="0" width="540" height="60"/>
  </objectgroup>
  <objectgroup name="portable-surfaces">
-  <object id="98" x="420" y="0" width="540" height="120"/>
-  <object id="102" x="420" y="600" width="360" height="120"/>
-  <object id="103" x="0" y="240" width="120" height="240"/>
+  <object id="98" x="420" y="60" width="540" height="60"/>
+  <object id="102" x="420" y="600" width="360" height="60"/>
+  <object id="103" x="60" y="240" width="60" height="240"/>
   <object id="204" x="120" y="600">
-   <polygon points="0,0 178,1 -2,-178"/>
+   <polygon points="0,0 180,0 0,-180"/>
   </object>
  </objectgroup>
  <objectgroup name="gates">
   <object id="186" x="1640" y="420" width="40" height="180">
    <properties>
     <property name="ID" value="186"/>
+    <property name="locks" value="2"/>
    </properties>
   </object>
  </objectgroup>

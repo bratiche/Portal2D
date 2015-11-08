@@ -2,10 +2,8 @@ package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.StaticEntity;
-import com.portal2d.game.model.interactions.CollisionFilters;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
@@ -25,20 +23,18 @@ public class Portal extends StaticEntity {
     public Vector2 entityVelocity;
 
     public Portal(Level level, Body body, PortalColor color) {
-        super(level, body);
+        super(level, body, EntityType.PORTAL);
         this.color = color;
         this.normal = new Vector2();
 
         entityVelocity = new Vector2();
 
-        type = EntityType.PORTAL;
-
-        Filter filter = new Filter();
-        filter.categoryBits = CollisionFilters.PORTAL_BITS;
-        filter.maskBits &= ~CollisionFilters.PORTAL_BITS;
-        body.getFixtureList().get(0).setFilterData(filter);
-
-        //System.out.println(Integer.toBinaryString(filter.maskBits));
+//        Filter filter = new Filter();
+//        filter.categoryBits = CollisionFilters.PORTAL_BITS;
+//        filter.maskBits &= ~CollisionFilters.PORTAL_BITS;
+//        body.getFixtureList().get(0).setFilterData(filter);
+//
+//        //System.out.println(Integer.toBinaryString(filter.maskBits));
     }
 
     /**
@@ -48,7 +44,7 @@ public class Portal extends StaticEntity {
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
         if(oppositePortal != null) {
-            entityVelocity = new Vector2(entity.getBody().getLinearVelocity());
+            entityVelocity = new Vector2(entity.getLinearVelocity());
             level.addTeleportQueue(entity, oppositePortal);
         }
     }
@@ -59,33 +55,30 @@ public class Portal extends StaticEntity {
     }
 
     public void receive(Entity entity) {
-        //System.out.println("Current velocity3: " + oppositePortal.entityVelocity);
-
-        Vector2 oppositePortalNormal = oppositePortal.normal;
-
-        Body entityBody = entity.getBody();
 
         EntityType entityType = entity.getType();
 
         // Set the new Position
-        //0.1f is the radius of the portal circular shape
-        entityBody.setTransform(this.body.getPosition().add(normal.x * (PORTAL_RADIUS + 0.02f + entityType.getWidth() / 2),
-                normal.y * (PORTAL_RADIUS + 0.02f + entityType.getHeight() / 2)), 0);
-        //entityBody.setTransform(this.body.getPosition(), 0);
+        Vector2 position = this.getPosition().add(normal.x * (PORTAL_RADIUS + 0.02f + entityType.getWidth() / 2),
+                normal.y * (PORTAL_RADIUS + 0.02f + entityType.getHeight() / 2));
 
-        //Set the new velocity
+        entity.setPosition(position);
+
+        // Calculate the new velocity
         Vector2 currentVelocity = oppositePortal.entityVelocity;
-        //System.out.println(currentVelocity);
 
-        // This is to avoid the player gaining momentum. (cheating)
-        currentVelocity.scl(Math.abs(oppositePortalNormal.x), Math.abs(oppositePortalNormal.y));
+        // This is to avoid the player gaining momentum by increasing it's velocity. (cheating)
+        currentVelocity.scl(Math.abs(oppositePortal.normal.x), Math.abs(oppositePortal.normal.y));
 
         Vector2 newVelocity = new Vector2(normal.x * currentVelocity.len(), normal.y * currentVelocity.len());
-        entityBody.setLinearVelocity(newVelocity);
 
-        // Apply a minimum impulse so it doesn't get stuck in the walls
-        //entityBody.applyLinearImpulse(normal.x, normal.y, body.getPosition().x, body.getPosition().y, true);
+        // Cap minimum velocity
+        if(Math.abs(newVelocity.x) < normal.x * 2f || Math.abs(newVelocity.y) < normal.y * 2f) {
+            newVelocity.set(normal.x * 2.0f, normal.y * 2.0f);
+        }
 
+        // Set the new velocity of the entity
+        entity.setLinearVelocity(newVelocity);
     }
 
     public Vector2 getNormal() {

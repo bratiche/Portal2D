@@ -15,11 +15,10 @@ public class Definition {
     private FixtureDef[] additionalFixtures;
     private Shape shape;
 
-    public Definition(BodyDef bodyDef, FixtureDef interactionFixture, Shape shape, FixtureDef... additionalFixtures){
+    public Definition(BodyDef bodyDef, FixtureDef interactionFixture, FixtureDef... additionalFixtures){
         this.bodyDef = bodyDef;
         this.interactionFixture = interactionFixture;
         this.additionalFixtures = additionalFixtures;
-        this.shape = shape;
     }
 
     public BodyDef getBodyDef(){
@@ -32,10 +31,6 @@ public class Definition {
 
     public FixtureDef[] getAdditionalFixtures() {
         return additionalFixtures;
-    }
-
-    public void disposeShape(){
-        shape.dispose();
     }
 
 }

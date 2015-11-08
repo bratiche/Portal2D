@@ -13,17 +13,16 @@ public abstract class Projectile extends DynamicEntity {
     // Constant velocity
     protected Vector2 velocity;
 
-    public Projectile(Level level, Body body, Vector2 velocity) {
-        super(level, body);
+    public Projectile(Level level, Body body, Vector2 velocity, EntityType type) {
+        super(level, body, type);
         this.velocity = velocity;
         body.setBullet(true);
-        body.getFixtureList().get(0).setSensor(true);
-        body.setLinearVelocity(velocity);
+        this.setSensor(true);
     }
 
     @Override
     public void update() {
-        body.setLinearVelocity(velocity);
+        setLinearVelocity(velocity);
     }
 
 }

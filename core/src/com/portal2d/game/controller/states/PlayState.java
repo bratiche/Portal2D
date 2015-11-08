@@ -5,18 +5,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import com.portal2d.game.Portal2D;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.LevelLoader;
 import com.portal2d.game.controller.PlayerController;
 import com.portal2d.game.controller.save.GameSlot;
-import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.*;
+import com.portal2d.game.model.entities.enemies.Bullet;
+import com.portal2d.game.model.entities.enemies.Turret;
+import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
+import com.portal2d.game.model.weapons.PortalGun;
+import com.portal2d.game.view.entities.*;
 import com.portal2d.game.view.scenes.PlayScene;
+import com.portal2d.game.view.weapons.PortalGunView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.portal2d.game.model.ModelConstants.Box2D.*;
 
@@ -29,38 +37,52 @@ public class PlayState extends GameState {
     private Level level;
     private LevelLoader levelLoader;
 
+    private GameSlot slot;
     private PlayScene scene;
     private PlayerController playerController;
-    private GameSlot slot;
 
+    private Map<Entity, EntityView> entities; // Map for having easy access to the models and their views
+
+    //debugging stuff
+    private boolean debug = true;
+    private Box2DDebugRenderer box2DDebugRenderer;
+
+    /**
+     * Starts a new game.
+     * @param levelName the Level to start the game.
+     * @param slot the GameSlot to save the game.
+     */
     public PlayState(GameStateManager gsm, LevelName levelName, GameSlot slot) {
         super(gsm);
         this.slot = slot;
+
+        entities = new HashMap<Entity, EntityView>();
 
         // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader(world, this);
 
-        // Load level
-        level = levelLoader.loadLevel(levelName);
+        // Create view and controller
+        scene = new PlayScene();
+        playerController = new PlayerController(this);
 
+        // Create debug renderer
+        box2DDebugRenderer = new Box2DDebugRenderer();
+
+        goToLevel(levelName);
     }
 
     @Override
     public void entered() {
-
-        // Setup view
-        scene = new PlayScene(world, level);
-
-        // Setup controller
-        playerController = new PlayerController(this, level);
+        Gdx.input.setCursorCatched(true);
     }
 
     @Override
     public void handleInput() {
 
         unproject(scene.getCamera());
-        //pause the game
+
+        // Pause the game
         if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             gsm.push(new PauseState(gsm, this));
         }
@@ -68,91 +90,154 @@ public class PlayState extends GameState {
         // Back to menu
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             slot.save();
+            level.removeAllEntities();
             gsm.set(new MenuState(gsm));
         }
 
         // Restart the level
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            //change level to the same level, which makes sense
-            changeLevel(level.getLevelName());
+            restartLevel();
         }
 
-        //Update player input events
+        // Update player input events
         playerController.handleInput();
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            debug = !debug;
+            Gdx.input.setCursorCatched(!debug);
+        }
 
     }
 
     @Override
     public void update(float dt) {
 
-        //Physics update
+        // Physics update
         world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
-        //States/interactions update
+        // States/interactions update
         level.update();
 
-        if(level.isFinished()) {
-            changeLevel(level.getNextLevel());
+        if(level.getPlayer().isDead()) {
+            restartLevel();
+        }
+        else if(level.isFinished()){
+            level.removeAllEntities();
+            goToLevel(level.getNextLevel());
         }
 
     }
 
-    // TESTEO
+    private void restartLevel() {
+        level.removeAllEntities();
+        goToLevel(level.getLevelName());
+    }
+
+    // TEST
     private ShapeRenderer debugRenderer = new ShapeRenderer();
+
+    // TEST
+    public ShapeRenderer getDebugRenderer() {
+        return debugRenderer;
+    }
 
     @Override
     public void render(SpriteBatch batch) {
         scene.render(batch, mouse.x, mouse.y);
 
-        //TESTEO
+        // TEST
         playerController.drawPortalGunRayCast();
         playerController.drawGrabRange();
+
+        //draw box2d world (debug)
+        if (debug) {
+            box2DDebugRenderer.render(world, scene.getBox2DCamera().combined);
+        }
 
     }
 
     @Override
     public void leaving() {
+        Gdx.input.setCursorCatched(false);
         //world.dispose(); // -> this crashes the game
     }
 
-    public void changeLevel(LevelName nextLevel) {
+    private void goToLevel(LevelName nextLevel) {
 
-        // Unlock nextLevel and save the game
+        // Unlock the level and save the game
         nextLevel.setLocked(false);
         slot.save();
 
-        // Remove all bodies
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-
-        for(int i = 0; i < bodies.size; i++) {
-            Body body = bodies.get(i);
-            world.destroyBody(body);
-        }
-
         // Set new level
+        scene.clearViews();
         level = levelLoader.loadLevel(nextLevel);
-        scene.setLevel(level);
+        scene.setTiledMap(Portal2D.assets.getTiledMap(level.getLevelName()));
         playerController.setLevel(level);
-        world.setGravity(DEFAULT_GRAVITY);
     }
+
+
 
     public OrthographicCamera getBox2DCamera() {
         return scene.getBox2DCamera();
     }
 
-    public void add(Entity entity) {
-        scene.addView(entity);
+    public void add(Box box) {
+        BoxView boxView = new BoxView(box);
+        scene.addView(boxView);
+        entities.put(box, boxView);
     }
 
-    //TODO remove entity views
+    public void add(Exit exit) {
+        ExitView exitView = new ExitView(exit);
+        scene.addView(exitView);
+        entities.put(exit, exitView);
+    }
+
+    public void add(Gate gate) {
+        GateView gateView = new GateView(gate);
+        scene.addView(gateView);
+        entities.put(gate, gateView);
+    }
+
+    public void add(Portal portal) {
+        PortalView portalView = new PortalView(portal);
+        scene.addView(portalView);
+        entities.put(portal, portalView);
+    }
+
+    public void add(Player player) {
+        PlayerView playerView = new PlayerView(player);
+        PortalGunView portalGunView = new PortalGunView(player.getPortalGun());
+        scene.addView(playerView, portalGunView);
+        entities.put(player, playerView);
+    }
+
+    public void add(Button button) {
+        ButtonView buttonView = new ButtonView(button);
+        scene.addView(new ButtonView(button));
+        entities.put(button, buttonView);
+    }
+
+    public void add(Bullet bullet) {
+        BulletView bulletView = new BulletView(bullet);
+        scene.addView(bulletView);
+        entities.put(bullet, bulletView);
+    }
+
+    public void add(Turret turret) {
+        TurretView turretView = new TurretView(turret);
+        scene.addView(turretView);
+        entities.put(turret, turretView);
+    }
+
+    public void add(Acid acid) {
+        AcidView acidView = new AcidView(acid);
+        scene.addView(new AcidView(acid));
+        entities.put(acid, acidView);
+    }
+
     public void remove(Entity entity) {
-        scene.removeView(entity);
-    }
-
-    //TESTEO
-    public ShapeRenderer getDebugRenderer() {
-        return debugRenderer;
+        scene.removeView(entities.get(entity));
     }
 
 }

@@ -35,7 +35,7 @@ public class GravityGunQuery implements QueryCallback {
 
         Entity entity = (Entity) fixture.getBody().getUserData();
 
-        //TODO make gravity gun know which entities can be grabbed
+        //Only grab dynamic entities
         if(entity.getType().equals(EntityType.BOX) && gravityGun.canGrabEntity()) {
             gravityGun.grabEntity(entity);
             return false; //terminates the query

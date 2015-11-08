@@ -1,6 +1,8 @@
 package com.portal2d.game.model.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.entities.enemies.Turret;
@@ -19,25 +21,74 @@ public abstract class Entity {
 
     protected EntityType type;
 
-    protected Entity(Level level, Body body) {
+    protected Entity(Level level, BodyDef bodyDef, EntityType type) {
+        this(level, level.getWorld().createBody(bodyDef), type);
+    }
+
+    /** Constructs an Entity with the given body */
+    protected Entity(Level level, Body body, EntityType type) {
+        this.type = type;
+        this.body = body;
         this.level = level;
         this.world = level.getWorld();
-        this.body = body;
         body.setUserData(this);
     }
 
-    /**
-     * Called by the level each frame.
-     */
+    /** Constructs an entity with no shape at the specified position */
+    protected Entity(Level level, Vector2 position, EntityType type) {
+        this.type = type;
+        this.level = level;
+        this.world = level.getWorld();
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(position);
+        body = world.createBody(bodyDef);
+    }
+
+    /** Called by the level each frame. */
     public abstract void update();
 
-    /**
-     * If we don't make these two methods abstract we get StackOverflowError. (infinite recursion)
-     * TODO: remove javadoc
-     */
     public abstract void beginInteraction(Entity entity);
 
     public abstract void endInteraction(Entity entity);
+
+    ////////////////////////////////////////////////// TODO use
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
+
+    public void setPosition(Vector2 position) {
+        body.setTransform(position, body.getAngle());
+    }
+
+    public float getAngle() {
+        return body.getAngle();
+    }
+
+    public void setAngle(float radians) {
+        body.setTransform(body.getPosition(), radians);
+    }
+
+    public void setTransform(Vector2 position, float radians) {
+        body.setTransform(position, radians);
+    }
+
+    public Vector2 getLinearVelocity() {
+        return body.getLinearVelocity();
+    }
+
+    public void setLinearVelocity(Vector2 velocity) {
+        body.setLinearVelocity(velocity);
+    }
+
+    public void setLinearVelocity(float x, float y) {
+        body.setLinearVelocity(x, y);
+    }
+
+    public void setSensor(boolean sensor) {
+        body.getFixtureList().get(0).setSensor(sensor);
+    }
+    ////////////////////////////////////////////////// TODO use
+
 
     public Body getBody() {
         return body;

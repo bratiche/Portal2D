@@ -5,26 +5,17 @@ import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  *
  */
 public class Gate extends StaticEntity implements Linkable {
 
     private boolean open;
-    private Set<Button> buttons;
+    private int locks;
 
-    public Gate(Level level, Body body, Button...locks) {
-        super(level, body);
-        type = EntityType.GATE;
-
-        //TODO implement this
-        buttons = new HashSet<Button>();
-
-        Collections.addAll(buttons, locks);
+    public Gate(Level level, Body body, int locks) {
+        super(level, body, EntityType.GATE);
+        this.locks = locks;
     }
 
     @Override
@@ -37,9 +28,7 @@ public class Gate extends StaticEntity implements Linkable {
         entity.endInteraction(this);
     }
 
-    /**
-     * The projectile is destroyed only if this gate is closed.
-     */
+    /** The bullet is destroyed only if this gate is closed. */
     @Override
     public void beginInteraction(Bullet bullet) {
         if(!open)
@@ -48,21 +37,24 @@ public class Gate extends StaticEntity implements Linkable {
 
     @Override
     public void update() {
-        for(Button button : buttons) {
-            open &= button.isPressed();
+        if(locks == 0 && !open) {
+            open = true;
+            this.setSensor(true);
+        }
+        else if (locks > 0 && open) {
+            open = false;
+            this.setSensor(false);
         }
     }
 
     @Override
-    public void link() {
-        open = true;
-        body.getFixtureList().get(0).setSensor(true);
+    public void buttonPressed() {
+        locks--;
     }
 
     @Override
-    public void unlink() {
-        open = false;
-        body.getFixtureList().get(0).setSensor(false);
+    public void buttonReleased() {
+        locks++;
     }
 
     public boolean isOpen() {

@@ -3,6 +3,7 @@ package com.portal2d.game.model.entities.enemies;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.entities.Projectile;
 import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
@@ -13,8 +14,7 @@ import com.portal2d.game.model.level.Level;
 public class Bullet extends Projectile {
 
     public Bullet(Level level, Body body, Vector2 velocity) {
-        super(level, body, velocity);
-        type = EntityType.BULLET;
+        super(level, body, velocity, EntityType.BULLET);
     }
 
     @Override
@@ -27,12 +27,15 @@ public class Bullet extends Projectile {
         entity.endInteraction(this);
     }
 
-    /**
-     * Overridden so bullets don't destroy each other on collision.
-     */
+    /** Overridden so bullets don't destroy each other on collision. */
     @Override
     public void beginInteraction(Bullet projectile) {
 
+    }
+
+    @Override
+    public void beginInteraction(Player player) {
+        player.die();
     }
 
 }

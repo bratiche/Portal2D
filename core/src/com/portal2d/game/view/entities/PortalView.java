@@ -3,6 +3,7 @@ package com.portal2d.game.view.entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.entities.portals.PortalColor;
@@ -44,12 +45,12 @@ public class PortalView extends EntityView<Portal> {
 
     @Override
     public void render(SpriteBatch batch, float deltaTime) {
-        float x = body.getPosition().x * PPM - width / 2;
-        float y = body.getPosition().y * PPM - height / 2;
+        float x = model.getBody().getPosition().x * PPM;
+        float y = model.getBody().getPosition().y * PPM;
 
-        //TODO calculate normal
         batch.begin();
-        sprite.setPosition(x, y);
+        sprite.setCenter(x, y);
+        sprite.setRotation(model.getNormal().angle() - MathUtils.radiansToDegrees * MathUtils.PI / 2);
         sprite.draw(batch);
         batch.end();
     }

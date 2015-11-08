@@ -30,6 +30,7 @@ public class GravityGun implements Weapon {
         query = new GravityGunQuery(this);
     }
 
+    // Speed for throwing away objects
     public final float SPEED = 10f;
 
     @Override
@@ -57,7 +58,6 @@ public class GravityGun implements Weapon {
     }
 
     public void grabEntity(Entity entity) {
-        System.out.println("ENTITY GRABBED");
         spring.setBodies(owner.getBody(), entity.getBody());
 
         grabbedEntity = entity;
@@ -66,7 +66,6 @@ public class GravityGun implements Weapon {
     }
 
     public void dropEntity() {
-        System.out.println("ENTITY DROPPED");
         spring.destroy();
 
         grabbedEntity.getBody().setGravityScale(1); // gravity back to normal
@@ -76,6 +75,10 @@ public class GravityGun implements Weapon {
 
     public boolean canGrabEntity() {
         return grabbedEntity == null;
+    }
+
+    public boolean hasEntityGrabbed() {
+        return !canGrabEntity();
     }
 
     protected Entity getOwner() {

@@ -43,6 +43,7 @@ public class SelectLevelScene extends Scene {
             levelButtons.put(button, LevelName.values()[i]);
             if(levelButtons.get(button).isLocked()) {
                 button.appendText("     -LOCKED");
+                button.setColors(Color.DARK_GRAY);
             }
             else {
                 button.appendText("     -" + levelName.toString());

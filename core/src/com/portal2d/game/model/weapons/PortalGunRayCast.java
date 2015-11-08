@@ -34,10 +34,9 @@ public class PortalGunRayCast extends RayCast {
         Entity entity = (Entity)fixture.getBody().getUserData();
         EntityType type = entity.getType();
 
-        // return 0 terminates the raycast
-        if(type == EntityType.SURFACE || type == EntityType.BUTTON) {
-            hit = true;
-            return 0;
+        // ignore boxes and sensors
+        if(type == EntityType.BOX || fixture.isSensor()) {
+            return -1;
         }
 
         if(entity.getType() == EntityType.PORTABLE_SURFACE){
@@ -48,8 +47,8 @@ public class PortalGunRayCast extends RayCast {
             return 0;
         }
 
-        //-1 ignores the fixture and continues
-        return -1;
+        hit = true;
+        return 0;
     }
 
     public void createPortal(Vector2 position, Vector2 portalNormal) {
@@ -60,6 +59,7 @@ public class PortalGunRayCast extends RayCast {
             BodyDef bodyDef = new BodyDef();
             bodyDef.position.set(position);
             bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.angle = portalNormal.angleRad();
 
             Body body = world.createBody(bodyDef);
 
@@ -82,7 +82,7 @@ public class PortalGunRayCast extends RayCast {
         }
         else{
             portal.setNormal(portalNormal);
-            portal.getBody().setTransform(position, 0);
+            portal.getBody().setTransform(position, portalNormal.angleRad());
         }
     }
 

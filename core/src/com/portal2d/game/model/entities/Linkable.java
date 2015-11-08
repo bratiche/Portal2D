@@ -6,8 +6,8 @@ package com.portal2d.game.model.entities;
 public interface Linkable {
 
     /** Called when a button linked to this is pressed */
-    public void link();
+    public void buttonPressed();
 
     /** Called when a button linked to this is released. */
-    public void unlink();
+    public void buttonReleased();
 }

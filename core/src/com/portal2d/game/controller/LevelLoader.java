@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.controller.states.PlayState;
@@ -28,23 +27,22 @@ public class LevelLoader {
     private World world;
     private PlayState playState;
 
-    //map for linking Gates with Buttons
-    private Map<Integer, Gate> gatesID;
+    // Map for linking Gates with Buttons
+    private Map<Integer, Gate> gatesIDs;
 
     public LevelLoader(World world, PlayState playState) {
         this.world = world;
         this.playState = playState;
-        gatesID = new HashMap<Integer, Gate>();
+        gatesIDs = new HashMap<Integer, Gate>();
     }
 
     /**
-     *
      * @param levelName the name of the level to load
      * @return the specified level
      */
     public Level loadLevel(LevelName levelName) {
         TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
-        Level level = new Level(world, tiledMap, levelName, playState);
+        Level level = new Level(world, levelName, playState);
         createLevel(tiledMap, level);
         return level;
     }
@@ -74,6 +72,9 @@ public class LevelLoader {
 
         layer = tiledMap.getLayers().get("turrets");
         createTurrets(level, layer);
+
+        layer = tiledMap.getLayers().get("acid");
+        createAcid(level, layer);
     }
 
     private void createPlayer(Level level, MapLayer layer) {
@@ -93,7 +94,7 @@ public class LevelLoader {
         body.createFixture(fixtureDef);
         body.setFixedRotation(true);
 
-        level.addPlayer(new Player(level, body));
+        level.add(new Player(level, body));
 
         shape.dispose();
     }
@@ -217,10 +218,14 @@ public class LevelLoader {
             /**
              * Put all the gates in a map with their respective ids
              */
-            String string = (String) mapObject.getProperties().get("ID");
-            int gateID = Integer.parseInt(string);
-            Gate gate = new Gate(level, body);
-            gatesID.put(gateID, gate);
+            String ID = (String) mapObject.getProperties().get("ID");
+            int gateID = Integer.parseInt(ID);
+
+            String locks = (String) mapObject.getProperties().get("locks");
+            int locksNumber = Integer.parseInt(locks);
+
+            Gate gate = new Gate(level, body, locksNumber);
+            gatesIDs.put(gateID, gate);
 
             level.add(gate);
         }
@@ -254,7 +259,6 @@ public class LevelLoader {
             shape.set(vertices);
 
             fixtureDef.shape = shape;
-            //fixtureDef.isSensor = true;
 
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
@@ -264,9 +268,9 @@ public class LevelLoader {
              */
             String linkedEntity = (String) mapObject.getProperties().get("LinkedEntityID");
             Integer gateID = Integer.parseInt(linkedEntity);
-            for(Integer ID : gatesID.keySet()) {
+            for(Integer ID : gatesIDs.keySet()) {
                 if(ID.equals(gateID)) {
-                    Button button = new Button(level, body, gatesID.get(ID));
+                    Button button = new Button(level, body, gatesIDs.get(ID));
                     level.add(button);
                 }
             }
@@ -300,7 +304,7 @@ public class LevelLoader {
             fixtureDef.shape = shape;
             fixtureDef.restitution = 0.2f;
             fixtureDef.friction = 1f;
-            //fixtureDef.density = 4f; // uncomment this to make the boxes rotate
+            fixtureDef.density = 4f; // uncomment this to make the boxes rotate
             body.createFixture(fixtureDef);
             Box box = new Box(level, body);
             level.add(box);
@@ -339,6 +343,38 @@ public class LevelLoader {
         shape.dispose();
     }
 
+    private void createAcid(Level level, MapLayer layer) {
+        BodyDef bodyDef = new BodyDef();
+        RectangleMapObject rectangleMapObject;
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixtureDef = new FixtureDef();
+        float x;
+        float y;
+        float width;
+        float height;
+
+        for(MapObject mapObject : layer.getObjects()) {
+            rectangleMapObject = (RectangleMapObject)mapObject;
+            x = rectangleMapObject.getRectangle().getX();
+            y = rectangleMapObject.getRectangle().getY();
+            width = rectangleMapObject.getRectangle().getWidth();
+            height = rectangleMapObject.getRectangle().getHeight();
+
+            bodyDef.position.set((x + width / 2) / PPM, (y + height / 2) / PPM);
+
+            Body body = world.createBody(bodyDef);
+
+            shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
+            fixtureDef.shape = shape;
+            fixtureDef.friction = 0.6f;
+            body.createFixture(fixtureDef);
+
+            level.add(new Acid(level, body));
+        }
+
+        shape.dispose();
+    }
+
     private void createExits(Level level, MapLayer layer) {
         BodyDef bodyDef = new BodyDef();
         RectangleMapObject rectangleMapObject;
@@ -349,11 +385,7 @@ public class LevelLoader {
         float width;
         float height;
 
-        //remove, test variable
-        int i = 0;
-
         for(MapObject mapObject : layer.getObjects()) {
-
             rectangleMapObject = (RectangleMapObject)mapObject;
             x = rectangleMapObject.getRectangle().getX();
             y = rectangleMapObject.getRectangle().getY();
@@ -371,12 +403,8 @@ public class LevelLoader {
 
             int nextLevel = Integer.parseInt(nextLevelString);
 
-            //System.out.println("Exit " + (i + 1)  + ": takes to level " + nextLevel);
-
             Exit exit = new Exit(level, body, LevelName.values()[nextLevel]);
             level.add(exit);
-            i++;
-
         }
 
         shape.dispose();

@@ -1,6 +1,7 @@
 package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
@@ -80,7 +81,7 @@ public class PortalGun extends GravityGun {
             case ORANGE:
                 return orangePortal;
             default:
-                throw new NoSuchElementException(); //TODO: Add own exception
+                throw new NoSuchElementException(color + " ïs not a valid PortalColor");
         }
     }
 
@@ -89,6 +90,30 @@ public class PortalGun extends GravityGun {
             bluePortal.setOppositePortal(orangePortal);
             orangePortal.setOppositePortal(bluePortal);
         }
+    }
+
+    /**
+     * Destroy both portals.
+     */
+    public void destroyPortals() {
+
+        if(bluePortal != null) {
+            level.addToRemove(bluePortal);
+            bluePortal = null;
+        }
+
+        if(orangePortal != null) {
+            level.addToRemove(orangePortal);
+            orangePortal = null;
+        }
+    }
+
+    public boolean isBluePortalCreated() {
+        return bluePortal != null;
+    }
+
+    public boolean isOrangePortalCreated() {
+        return orangePortal != null;
     }
 
     //TESTEO

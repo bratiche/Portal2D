@@ -30,12 +30,7 @@ public enum GameSlot {
         StringBuilder sb = new StringBuilder();
 
         for(LevelName level : LevelName.values()) {
-            if(level.isLocked()) {
-                sb.append(true);
-            }
-            else {
-                sb.append(false);
-            }
+            sb.append(level.isLocked());
             sb.append("\n");
         }
 

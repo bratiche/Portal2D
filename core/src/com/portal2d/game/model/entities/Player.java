@@ -5,6 +5,8 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 
+import static com.portal2d.game.model.entities.Player.PlayerState.*;
+
 /**
  * The main entity in the game, the user controls this entity.
  */
@@ -12,16 +14,22 @@ public class Player extends DynamicEntity {
 
     private PortalGun portalGun;
 
-    private boolean walking;
-    private boolean falling;
-    private boolean jumping;
-    private boolean standing;
+    public enum PlayerState {
+        WALKING,
+        JUMPING,
+        FALLING,
+        STANDING,
+        DEAD
+    }
+
+    private PlayerState state;
     private boolean facingRight;
 
     public Player(Level level, Body body) {
-        super(level, body);
-        type = EntityType.PLAYER;
+        super(level, body, EntityType.PLAYER);
         portalGun = new PortalGun(level, this);
+        state = PlayerState.STANDING;
+        facingRight = true;
     }
 
     @Override
@@ -38,20 +46,28 @@ public class Player extends DynamicEntity {
         return portalGun;
     }
 
-    public boolean isJumping() {
-        return jumping;
-    }
-
     public boolean isWalking() {
-        return walking;
+        return state == WALKING;
     }
 
-    public void setWalking(boolean walking) {
-        this.walking = walking;
+    public boolean isJumping() {
+        return state == JUMPING;
     }
 
-    public void setJumping(boolean jumping) {
-        this.jumping = jumping;
+    public boolean isFalling() {
+        return state == FALLING;
+    }
+
+    public boolean isStanding() {
+        return state == STANDING;
+    }
+
+    public boolean isDead() {
+        return state == DEAD;
+    }
+
+    public void die() {
+        state = DEAD;
     }
 
     public boolean isFacingRight() {
@@ -62,20 +78,8 @@ public class Player extends DynamicEntity {
         this.facingRight = facingRight;
     }
 
-    public boolean isFalling() {
-        return falling;
-    }
-
-    public void setFalling(boolean falling) {
-        this.falling = falling;
-    }
-
-    public boolean isStanding() {
-        return standing;
-    }
-
-    public void setStanding(boolean standing) {
-        this.standing = standing;
+    public void setState(PlayerState state) {
+        this.state = state;
     }
 
 }

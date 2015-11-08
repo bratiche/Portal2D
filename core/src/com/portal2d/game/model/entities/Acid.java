@@ -1,21 +1,22 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.level.Level;
 
 /**
- * An entity that doesn't do anything. Basically dead weight to solve puzzles.
+ * Entity that destroys anything that touches it.
  */
-public class Box extends DynamicEntity {
+public class Acid extends StaticEntity {
 
-    public Box(Level level, Body body) {
-        super(level, body, EntityType.BOX);
+    public Acid(Level level, Body body) {
+        super(level, body, EntityType.ACID);
     }
 
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
+        level.addToRemove(entity);
     }
 
     @Override
@@ -23,4 +24,8 @@ public class Box extends DynamicEntity {
         entity.endInteraction(this);
     }
 
+    @Override
+    public void beginInteraction(Player player) {
+        player.die();
+    }
 }

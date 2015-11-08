@@ -15,6 +15,8 @@ public class TextButton extends UIComponent {
 
     private String text;
     private BitmapFont font;
+    private Color color1 = Color.GRAY;
+    private Color color2 = Color.WHITE;
 
     /**
      * Creates a Button with the dimensions of the text and font.
@@ -39,12 +41,10 @@ public class TextButton extends UIComponent {
     public void render(SpriteBatch batch, float mouseX, float mouseY) {
         batch.begin();
         if(contains(mouseX, mouseY)) {
-            font.setColor(Color.WHITE);
-            //font.setColor(BLUE_PORTAL_COLOR);
+            font.setColor(color2);
         }
         else {
-            font.setColor(Color.GRAY);
-            //font.setColor(ORANGE_PORTAL_COLOR);
+            font.setColor(color1);
         }
 
         font.draw(batch, text, x, y);
@@ -68,6 +68,31 @@ public class TextButton extends UIComponent {
 
     public void appendText(String text) {
         setText(this.text + text);
+    }
+
+    public void setColors(Color color) {
+        setColors(color, color);
+    }
+
+    public void setColors(Color color1, Color color2) {
+        setColor1(color1);
+        setColor2(color2);
+    }
+
+    public void setColor1(Color color) {
+        this.color1 = color;
+    }
+
+    public void setColor2(Color color) {
+        this.color2 = color;
+    }
+
+    public Color getColor1() {
+        return color1;
+    }
+
+    public Color getColor2() {
+        return color2;
     }
 
 }
