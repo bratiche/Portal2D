@@ -9,7 +9,7 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**
- *
+ * Projectiles fired by {@link Turret}s.
  */
 public class Bullet extends Projectile {
 

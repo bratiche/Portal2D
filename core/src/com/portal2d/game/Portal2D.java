@@ -12,12 +12,11 @@ public class Portal2D extends ApplicationAdapter {
 
 	private SpriteBatch batch;
 	private GameStateManager gsm;
-	public static Assets assets;
+	public static final Assets assets = new Assets();
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		assets = new Assets();
 
 		assets.loadTextures();
 		assets.loadTiledMaps();
@@ -45,6 +44,7 @@ public class Portal2D extends ApplicationAdapter {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		assets.dispose();
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.portal2d.game.model.level;
 
-import java.util.NoSuchElementException;
-
 /**
  *
  */
@@ -28,18 +26,6 @@ public enum LevelName {
 
     public boolean isLocked() {
         return locked;
-    }
-
-    /**
-     * @deprecated
-     */
-    public static LevelName getLevelName(int levelNumber) {
-        for(LevelName levelName : values()) {
-            if(levelName.ordinal() == levelNumber)
-                return levelName;
-        }
-
-        throw new NoSuchElementException();
     }
 
 }

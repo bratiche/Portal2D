@@ -7,8 +7,9 @@ import com.portal2d.game.model.level.Level;
 import static com.badlogic.gdx.physics.box2d.BodyDef.BodyType.KinematicBody;
 
 /**
- * An entity that has a constant velocity.
+ * An entity that has infinite mass and constant velocity. e.g moving platforms
  */
+@SuppressWarnings("unused")
 public abstract class KinematicEntity extends Entity {
 
     protected KinematicEntity(Level level, Body body, EntityType type) {
@@ -16,8 +17,4 @@ public abstract class KinematicEntity extends Entity {
         body.setType(KinematicBody);
     }
 
-    @Override
-    public void update() {
-
-    }
 }

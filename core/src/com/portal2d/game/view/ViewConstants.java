@@ -62,16 +62,11 @@ public interface ViewConstants {
     float ANIM_GATE_DELAY =  1 / 12f;
     float ANIM_PLAYER_DELAY = 1 / 12f;
 
-    //TODO remove
-    //menu buttons
-    int FIRST_BUTTON_START_MENU = 600;
+    /* Menus */
     int SPACE_BETWEEN_BUTTONS = 125;
-    int FIRST_BUTTON_START_PAUSE = 500;
 
-    int FIRST_BUTTON_INSTRUCTIONS_X = 100;
-    int FIRST_BUTTON_INSTRUCTIONS_Y = 100;
-    int INSTRUCTION_TEXT_POSITION_X = 325;
-    int INSTRUCTION_TEXT_POSITION_Y = 650;
+    int BACK_BUTTON_X = 100;
+    int BACK_BUTTON_Y = 100;
 
 //    String INSTRUCTIONS_TEXT = "Welcome to POrtal2D!\n\nThis game is a puzzle style game\nwhere you will have " +
 //                                "to find your\nway through the map using portals.\nOnly two portals can be active\n" +

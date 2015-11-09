@@ -3,6 +3,7 @@ package com.portal2d.game.model.weapons;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.portals.PortableSurface;
 import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.interactions.EntityType;
@@ -19,13 +20,11 @@ public class PortalGunRayCast extends RayCast {
     private PortalGun portalGun;
     private PortalColor color;
     private Level level;
-    private World world;
 
     public PortalGunRayCast(PortalGun portalGun, Level level){
         super(level.getWorld());
         this.portalGun = portalGun;
         this.level = level;
-        this.world = level.getWorld();
     }
 
     @Override
@@ -51,6 +50,11 @@ public class PortalGunRayCast extends RayCast {
         return 0;
     }
 
+    /**
+     * Creates a {@link Portal}, or changes it's position and normal if it is already created.
+     * @param position the new position of the portal.
+     * @param portalNormal the normal of the {@link PortableSurface} the portal will be on.
+     */
     public void createPortal(Vector2 position, Vector2 portalNormal) {
 
         Portal portal = portalGun.getPortal(color);
@@ -86,6 +90,7 @@ public class PortalGunRayCast extends RayCast {
         }
     }
 
+    /** Sets the color of the {@link Portal} to create */
     public void setPortalColor(PortalColor color) {
         this.color = color;
     }

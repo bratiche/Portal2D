@@ -34,6 +34,10 @@ public abstract class RayCast implements RayCastCallback {
         hit = false;
     }
 
+    /**
+     * Ray-cast the world in constant steps specified in {@link #setRay(Vector2, Vector2, float)}
+     * @see World#rayCast(RayCastCallback, Vector2, Vector2)
+     */
     public void process() {
         Vector2 step = new Vector2(endPoint);
         step.sub(beginPoint);

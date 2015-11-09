@@ -7,11 +7,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.interactions.EntityType;
 
-import static com.portal2d.game.model.ModelConstants.GRAVITY_GUN_RADIUS;
+import static com.portal2d.game.model.ModelConstants.GRAVITY_GUN_RANGE;
 
 /**
- * Query callback for the GravityGun to find out which bodies are around it's owner and can be grabbed.
- * @see World#QueryAABB(QueryCallback, float, float, float, float)
+ * Query callback for the GravityGun to find out which objects are around it's owner and can be grabbed.
  * @see QueryCallback
  */
 public class GravityGunQuery implements QueryCallback {
@@ -25,9 +24,9 @@ public class GravityGunQuery implements QueryCallback {
     private float upperX;
     private float upperY;
 
-    public GravityGunQuery(GravityGun gravityGun) {
+    public GravityGunQuery(World world, GravityGun gravityGun) {
+        this.world = world;
         this.gravityGun = gravityGun;
-        world = gravityGun.level.getWorld();
     }
 
     @Override
@@ -35,7 +34,7 @@ public class GravityGunQuery implements QueryCallback {
 
         Entity entity = (Entity) fixture.getBody().getUserData();
 
-        //Only grab dynamic entities
+        // Only grab boxes
         if(entity.getType().equals(EntityType.BOX) && gravityGun.canGrabEntity()) {
             gravityGun.grabEntity(entity);
             return false; //terminates the query
@@ -44,16 +43,21 @@ public class GravityGunQuery implements QueryCallback {
         return true;
     }
 
+    /** Updates the area in which objects can be grabbed */
     public void updateAABB() {
         Entity owner = gravityGun.getOwner();
         Body ownerBody = owner.getBody();
 
-        lowerX = ownerBody.getPosition().x - owner.getType().getWidth() / 2 - GRAVITY_GUN_RADIUS;
-        lowerY = ownerBody.getPosition().y - owner.getType().getHeight() / 2 - GRAVITY_GUN_RADIUS;
-        upperX = ownerBody.getPosition().x + owner.getType().getWidth() / 2 + GRAVITY_GUN_RADIUS;
-        upperY = ownerBody.getPosition().y + owner.getType().getHeight() / 2 + GRAVITY_GUN_RADIUS;
+        lowerX = ownerBody.getPosition().x - owner.getType().getWidth() / 2 - GRAVITY_GUN_RANGE;
+        lowerY = ownerBody.getPosition().y - owner.getType().getHeight() / 2 - GRAVITY_GUN_RANGE;
+        upperX = ownerBody.getPosition().x + owner.getType().getWidth() / 2 + GRAVITY_GUN_RANGE;
+        upperY = ownerBody.getPosition().y + owner.getType().getHeight() / 2 + GRAVITY_GUN_RANGE;
     }
 
+    /**
+     * Attempt to grab an object if it is in range
+     * @see World#QueryAABB(QueryCallback, float, float, float, float)
+     */
     public void queryAABB() {
         updateAABB();
         world.QueryAABB(this, lowerX, lowerY, upperX, upperY);

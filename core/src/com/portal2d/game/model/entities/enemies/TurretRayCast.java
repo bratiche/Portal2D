@@ -8,13 +8,13 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.interactions.RayCast;
 
 /**
- * {@link RayCast} used by a Turret to to shoot at it's target.
+ * {@link RayCast} used by a Turret to know when to shoot at it's target.
  */
 public class TurretRayCast extends RayCast {
 
     private Turret turret;
 
-    public TurretRayCast(World world, Turret turret) {
+    protected TurretRayCast(World world, Turret turret) {
         super(world);
         this.turret = turret;
     }

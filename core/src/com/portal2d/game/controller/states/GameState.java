@@ -22,14 +22,10 @@ public abstract class GameState {
         mouse = new Vector3();
     }
 
-    /**
-     * Called right after this state is pushed into the game.
-     */
+    /** Called right after this state is pushed into the game. */
     public abstract void entered();
 
-    /**
-     * Handles this state's input events.
-     */
+    /** Handles this state's input events. */
     public abstract void handleInput();
 
     /**
@@ -46,14 +42,10 @@ public abstract class GameState {
      */
     public abstract void render(SpriteBatch batch);
 
-    /**
-     * Called right before this state is finished.
-     */
+    /** Called right before this state is finished. */
     public abstract void leaving();
 
-    /**
-     * @see Camera#unproject(Vector3)
-     */
+    /** @see Camera#unproject(Vector3) */
     protected void unproject(OrthographicCamera camera) {
         mouse.x = Gdx.input.getX();
         mouse.y = Gdx.input.getY();

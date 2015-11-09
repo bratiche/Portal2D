@@ -4,20 +4,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.controller.states.MenuState;
 import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.ui.TextButton;
 
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- *
+ * Visual representation of the {@link MenuState}
  */
 public class MenuScene extends Scene {
 
     private Texture background;
     private TextButton title;
 
-    //Buttons
+    // Buttons
     private TextButton playButton;
     private TextButton instructionsButton;
     private TextButton exitButton;
@@ -32,10 +33,10 @@ public class MenuScene extends Scene {
         title = new TextButton(VIEWPORT_HEIGHT - 100, "PORTAL 2D", font);
         title.setColors(BLUE_PORTAL_COLOR, ORANGE_PORTAL_COLOR);
 
-        BitmapFont font2 = Portal2D.assets.getFont(FontName.DINB);
+        BitmapFont font2 = Portal2D.assets.getFont(FontName.PORTAL);
         playButton = new TextButton(450, "PLAY", font2);
-        exitButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS * 2, "QUIT", font2);
         instructionsButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS, "INSTRUCTIONS", font2);
+        exitButton = new TextButton(450 - SPACE_BETWEEN_BUTTONS * 2, "QUIT", font2);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class Player extends DynamicEntity {
     }
 
     public void die() {
-        state = DEAD;
+        setState(DEAD);
     }
 
     public boolean isFacingRight() {

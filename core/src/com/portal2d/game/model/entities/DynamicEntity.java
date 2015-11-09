@@ -11,7 +11,7 @@ import static com.portal2d.game.model.ModelConstants.TERMINAL_VELOCITY;
 /**
  * An entity that moves and is affected by all forces applied to it.
  */
-public abstract class DynamicEntity extends Entity{
+public abstract class DynamicEntity extends Entity {
 
     public DynamicEntity(Level level, Body body, EntityType type) {
         super(level, body, type);

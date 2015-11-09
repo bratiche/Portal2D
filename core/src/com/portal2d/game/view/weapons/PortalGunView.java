@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.weapons.PortalGun;
 import com.portal2d.game.view.ViewConstants;
 import com.portal2d.game.view.ui.CursorView;
@@ -36,13 +37,13 @@ public class PortalGunView extends WeaponView<PortalGun> {
             //shoot orange portal anim
         }
 
-        if(weapon.isBluePortalCreated() && weapon.isOrangePortalCreated()) {
+        if(weapon.arePortalsLinked()) {
             cursor.setTexture(regions[0][3]);
         }
-        else if(weapon.isBluePortalCreated()) {
+        else if(weapon.isPortalCreated(PortalColor.BLUE)) {
             cursor.setTexture(regions[0][1]);
         }
-        else if(weapon.isOrangePortalCreated()) {
+        else if(weapon.isPortalCreated(PortalColor.ORANGE)) {
             cursor.setTexture(regions[0][2]);
         }
         else {

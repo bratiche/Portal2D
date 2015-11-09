@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.controller.states.SelectLevelState;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.ui.Text;
@@ -17,7 +18,7 @@ import java.util.Set;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- *
+ * Visual representation of the {@link SelectLevelState}
  */
 public class SelectLevelScene extends Scene {
 
@@ -34,12 +35,14 @@ public class SelectLevelScene extends Scene {
 
         BitmapFont font = Portal2D.assets.getFont(FontName.DINB_33);
 
+        title = new Text(650, "LEVELS", font, Color.GRAY);
+
         // Create buttons for each level
         levelButtons = new HashMap<TextButton, LevelName>();
 
         for(int i = 0; i < LevelName.values().length; i++) {
             LevelName levelName = LevelName.values()[i];
-            TextButton button = new TextButton(400, FIRST_BUTTON_START_MENU - 50 * i, "0" + (i + 1), font);
+            TextButton button = new TextButton(400, 575 - 50 * i, "0" + (i + 1), font);
             levelButtons.put(button, LevelName.values()[i]);
             if(levelButtons.get(button).isLocked()) {
                 button.appendText("     -LOCKED");
@@ -51,8 +54,7 @@ public class SelectLevelScene extends Scene {
         }
 
         font = Portal2D.assets.getFont(FontName.PORTAL_33);
-        backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X, FIRST_BUTTON_INSTRUCTIONS_Y, "Back", font);
-        title = new Text(INSTRUCTION_TEXT_POSITION_Y, "Levels", font, Color.GRAY);
+        backButton = new TextButton(100, 100, "Back", font);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class SelectLevelScene extends Scene {
         for(TextButton button : levelButtons.keySet()) {
             button.render(batch, mouseX, mouseY);
         }
-        //title.render(batch, mouseX, mouseY);
+        title.render(batch, mouseX, mouseY);
     }
 
     public TextButton getBackButton() {

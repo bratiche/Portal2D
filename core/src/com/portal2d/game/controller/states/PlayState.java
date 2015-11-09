@@ -18,7 +18,6 @@ import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
-import com.portal2d.game.model.weapons.PortalGun;
 import com.portal2d.game.view.entities.*;
 import com.portal2d.game.view.scenes.PlayScene;
 import com.portal2d.game.view.weapons.PortalGunView;
@@ -88,14 +87,14 @@ public class PlayState extends GameState {
         }
 
         // Back to menu
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             slot.save();
             level.removeAllEntities();
             gsm.set(new MenuState(gsm));
         }
 
         // Restart the level
-        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             restartLevel();
         }
 

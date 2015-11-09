@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
+import com.portal2d.game.controller.states.PauseState;
 import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.ui.TextButton;
 
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- *
+ * Visual representation of the {@link PauseState}
  */
 public class PauseScene extends Scene {
 
@@ -24,11 +25,13 @@ public class PauseScene extends Scene {
 
         BitmapFont font = Portal2D.assets.getFont(FontName.PORTAL);
 
-        continueButton = new TextButton(FIRST_BUTTON_START_PAUSE, "Continue", font);
+        int startY = 500;
+
+        continueButton = new TextButton(startY, "Continue", font);
         continueButton.setColors(Color.DARK_GRAY, Color.LIGHT_GRAY);
-        instructionsButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS, "Instructions", font);
+        instructionsButton = new TextButton(startY - SPACE_BETWEEN_BUTTONS, "Instructions", font);
         instructionsButton.setColors(Color.DARK_GRAY, Color.LIGHT_GRAY);
-        exitButton = new TextButton(FIRST_BUTTON_START_PAUSE - SPACE_BETWEEN_BUTTONS*2, "Exit", font);
+        exitButton = new TextButton(startY - SPACE_BETWEEN_BUTTONS * 2, "Exit", font);
         exitButton.setColors(Color.DARK_GRAY, Color.LIGHT_GRAY);
     }
 

@@ -13,9 +13,7 @@ public class Spring {
     private DistanceJoint joint;
     private World world;
 
-    // Main body
     private Body bodyA;
-    // Secondary body
     private Body bodyB;
 
     private float maxLength;
@@ -43,6 +41,11 @@ public class Spring {
 
     }
 
+    /**
+     * Creates a new distance joint between the two bodies.
+     * @param bodyA main body
+     * @param bodyB secondary body
+     */
     public void setBodies(Body bodyA, Body bodyB) {
         DistanceJointDef jointDef = new DistanceJointDef();
         jointDef.bodyA = this.bodyA = bodyA;

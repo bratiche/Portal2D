@@ -27,13 +27,13 @@ public class LevelLoader {
     private World world;
     private PlayState playState;
 
-    // Map for linking Gates with Buttons
-    private Map<Integer, Gate> gatesIDs;
+    /** Map for linking Switches with Switchables */
+    private Map<Integer, Switchable> IDs;
 
     public LevelLoader(World world, PlayState playState) {
         this.world = world;
         this.playState = playState;
-        gatesIDs = new HashMap<Integer, Gate>();
+        IDs = new HashMap<Integer, Switchable>();
     }
 
     /**
@@ -189,6 +189,9 @@ public class LevelLoader {
         shape.dispose();
     }
 
+    /**
+     * Puts all the gates in {@link #IDs} so they can later be retrieved by {@link #createButtons(Level, MapLayer)}
+     */
     private void createGates(Level level, MapLayer layer) {
         BodyDef bodyDef = new BodyDef();
         RectangleMapObject rectangleMapObject;
@@ -214,18 +217,14 @@ public class LevelLoader {
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
 
-
-            /**
-             * Put all the gates in a map with their respective ids
-             */
             String ID = (String) mapObject.getProperties().get("ID");
             int gateID = Integer.parseInt(ID);
 
-            String locks = (String) mapObject.getProperties().get("locks");
-            int locksNumber = Integer.parseInt(locks);
+            String number = (String) mapObject.getProperties().get("locks");
+            int switches = Integer.parseInt(number);
 
-            Gate gate = new Gate(level, body, locksNumber);
-            gatesIDs.put(gateID, gate);
+            Gate gate = new Gate(level, body, switches);
+            IDs.put(gateID, gate);
 
             level.add(gate);
         }
@@ -233,6 +232,10 @@ public class LevelLoader {
         shape.dispose();
     }
 
+
+    /**
+     * Creates all the buttons by retrieving their corresponding switchable from {@link #IDs}
+     */
     private void createButtons(Level level, MapLayer layer) {
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -263,17 +266,11 @@ public class LevelLoader {
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
 
-            /**
-             * Retrieve the corresponding gate linked to this button
-             */
-            String linkedEntity = (String) mapObject.getProperties().get("LinkedEntityID");
-            Integer gateID = Integer.parseInt(linkedEntity);
-            for(Integer ID : gatesIDs.keySet()) {
-                if(ID.equals(gateID)) {
-                    Button button = new Button(level, body, gatesIDs.get(ID));
-                    level.add(button);
-                }
-            }
+            String ID = (String) mapObject.getProperties().get("LinkedEntityID");
+            Integer linkedEntityID = Integer.parseInt(ID);
+
+            Button button = new Button(level, body, IDs.get(linkedEntityID));
+            level.add(button);
         }
 
         shape.dispose();
@@ -304,7 +301,7 @@ public class LevelLoader {
             fixtureDef.shape = shape;
             fixtureDef.restitution = 0.2f;
             fixtureDef.friction = 1f;
-            fixtureDef.density = 4f; // uncomment this to make the boxes rotate
+            //fixtureDef.density = 4f; // uncomment this to make the boxes rotate
             body.createFixture(fixtureDef);
             Box box = new Box(level, body);
             level.add(box);

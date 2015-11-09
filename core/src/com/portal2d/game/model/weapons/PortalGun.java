@@ -1,20 +1,18 @@
 package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.entities.portals.PortalColor;
+import com.portal2d.game.model.interactions.RayCast;
 import com.portal2d.game.model.level.Level;
-
-import static com.portal2d.game.model.ModelConstants.*;
 
 import java.util.NoSuchElementException;
 
+import static com.portal2d.game.model.ModelConstants.RAY_CAST_STEP_LENGTH;
+
 /**
- *
+ * Weapon that manages the creation and destruction of {@link Portal}s.
  */
 public class PortalGun extends GravityGun {
 
@@ -29,12 +27,12 @@ public class PortalGun extends GravityGun {
     }
 
     /**
-     * If this gun has an entity grabbed, throw it away.
-     * Else shoot a blue portal.
+     * Shoots a blue portal if the gun has no entity grabbed,
+     * otherwise throws the entity at the specified position.
      */
     @Override
     public void actionLeftClick(Vector2 position) {
-        if(grabbedEntity != null) {
+        if(hasEntityGrabbed()) {
             super.actionLeftClick(position);
         }
         else {
@@ -43,12 +41,10 @@ public class PortalGun extends GravityGun {
         }
     }
 
-    /**
-     * Only shoot an orange portal if the gun has no entity grabbed.
-     */
+    /** Shoots an orange portal if the gun has no entity grabbed. */
     @Override
     public void actionRightClick(Vector2 position) {
-        if(grabbedEntity == null) {
+        if(!hasEntityGrabbed()) {
             raycast.setPortalColor(PortalColor.ORANGE);
             shoot(position);
         }
@@ -56,14 +52,15 @@ public class PortalGun extends GravityGun {
 
     /**
      * Ray-cast the world using the {@link PortalGunRayCast} callback.
-     * @see World#rayCast(RayCastCallback, Vector2, Vector2)
+     * @see RayCast#process()
      */
     private void shoot(Vector2 position) {
         raycast.setRay(owner.getBody().getPosition(), position, RAY_CAST_STEP_LENGTH);
         raycast.process();
     }
 
-    public void setPortal(Portal portal) {
+    /** @see PortalGunRayCast#createPortal(Vector2, Vector2) */
+    protected void setPortal(Portal portal) {
         switch(portal.getColor()){
             case BLUE:
                 bluePortal = portal;
@@ -74,7 +71,12 @@ public class PortalGun extends GravityGun {
         }
     }
 
-    public Portal getPortal(PortalColor color) {
+    /**
+     * Returns the portal of the specified color.
+     * It may return {@code null} if the portal is not created yet.
+     * @see PortalGunRayCast#createPortal(Vector2, Vector2)
+     */
+    protected Portal getPortal(PortalColor color) {
         switch(color) {
             case BLUE:
                 return bluePortal;
@@ -85,16 +87,14 @@ public class PortalGun extends GravityGun {
         }
     }
 
-    public void linkPortals() {
+    protected void linkPortals() {
         if(orangePortal != null && bluePortal != null){
             bluePortal.setOppositePortal(orangePortal);
             orangePortal.setOppositePortal(bluePortal);
         }
     }
 
-    /**
-     * Destroy both portals.
-     */
+    /** Destroys both portals. */
     public void destroyPortals() {
 
         if(bluePortal != null) {
@@ -108,12 +108,21 @@ public class PortalGun extends GravityGun {
         }
     }
 
-    public boolean isBluePortalCreated() {
-        return bluePortal != null;
+
+    /** Returns whether the portal of the specified color is created */
+    public boolean isPortalCreated(PortalColor color) {
+        switch (color) {
+            case BLUE:
+                return bluePortal != null;
+            case ORANGE:
+                return orangePortal != null;
+            default:
+                throw new NoSuchElementException(color + " ïs not a valid PortalColor");
+        }
     }
 
-    public boolean isOrangePortalCreated() {
-        return orangePortal != null;
+    public boolean arePortalsLinked() {
+        return orangePortal != null && bluePortal != null;
     }
 
     //TESTEO

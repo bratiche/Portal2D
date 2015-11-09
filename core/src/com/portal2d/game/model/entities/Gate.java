@@ -6,16 +6,18 @@ import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**
- *
+ * An obstacle that can be overcome by pressing all it's {@link Switch}es.
  */
-public class Gate extends StaticEntity implements Linkable {
+public class Gate extends StaticEntity implements Switchable {
 
     private boolean open;
-    private int locks;
 
-    public Gate(Level level, Body body, int locks) {
+    /** The number of switches this gate has */
+    private int switches;
+
+    public Gate(Level level, Body body, int switches) {
         super(level, body, EntityType.GATE);
-        this.locks = locks;
+        this.switches = switches;
     }
 
     @Override
@@ -37,24 +39,24 @@ public class Gate extends StaticEntity implements Linkable {
 
     @Override
     public void update() {
-        if(locks == 0 && !open) {
+        if(switches == 0 && !open) {
             open = true;
             this.setSensor(true);
         }
-        else if (locks > 0 && open) {
+        else if (switches > 0 && open) {
             open = false;
             this.setSensor(false);
         }
     }
 
     @Override
-    public void buttonPressed() {
-        locks--;
+    public void switchOn() {
+        switches--;
     }
 
     @Override
-    public void buttonReleased() {
-        locks++;
+    public void switchOff() {
+        switches++;
     }
 
     public boolean isOpen() {

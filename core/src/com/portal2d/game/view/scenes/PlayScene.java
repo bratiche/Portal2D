@@ -17,7 +17,7 @@ import java.util.Set;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- * Visual representation of the {@link Level}.
+ * Visual representation of the {@link PlayState}.
  */
 public class PlayScene extends Scene {
 
@@ -86,9 +86,7 @@ public class PlayScene extends Scene {
         box2DCamera.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
     }
 
-    /**
-     * Called by the {@link PlayState} whenever an entity is added to the level.
-     */
+    /** Called by the {@link PlayState} whenever an entity is added to the {@@link Level}. */
     public void addView(EntityView entityView) {
         entityViews.add(entityView);
     }

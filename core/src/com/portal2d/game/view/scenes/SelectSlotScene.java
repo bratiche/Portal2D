@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.controller.save.GameSlot;
+import com.portal2d.game.controller.states.SelectSlotState;
 import com.portal2d.game.view.BoundedCamera;
 import com.portal2d.game.view.ViewConstants;
 import com.portal2d.game.view.ui.Text;
@@ -18,7 +19,7 @@ import java.util.Set;
 import static com.portal2d.game.view.ViewConstants.*;
 
 /**
- *
+ * Visual representation of the {@link SelectSlotState}
  */
 public class SelectSlotScene extends Scene {
 
@@ -37,15 +38,14 @@ public class SelectSlotScene extends Scene {
         BitmapFont font = Portal2D.assets.getFont(ViewConstants.FontName.PORTAL);
 
         for(int i = 0; i < GameSlot.values().length; i++) {
-            TextButton button = new TextButton(FIRST_BUTTON_START_MENU - 100 - SPACE_BETWEEN_BUTTONS * i,
-                    GameSlot.values()[i].name, font);
+            TextButton button = new TextButton(500 - 100 * i, GameSlot.values()[i].name, font);
             slotButtons.put(button, GameSlot.values()[i]);
         }
 
         title = new Text(650, "Select a slot", font, Color.GRAY);
 
         font = Portal2D.assets.getFont(FontName.PORTAL_33);
-        backButton = new TextButton(FIRST_BUTTON_INSTRUCTIONS_X,FIRST_BUTTON_INSTRUCTIONS_Y, "Back", font);
+        backButton = new TextButton(BACK_BUTTON_X, BACK_BUTTON_Y, "Back", font);
     }
 
     @Override

@@ -15,18 +15,15 @@ import com.portal2d.game.model.level.Level;
 import static com.portal2d.game.model.ModelConstants.*;
 
 /**
- *
+ * Entity that shoots {@link Bullet}s at the {@link Player} if it is in range.
  */
 public class Turret extends StaticEntity {
 
     private TurretRayCast raycast;
-    private Vector2 pointToShoot;
-    private boolean targetLockedOn;
     private Entity target;
 
     public Turret(Level level, Body body) {
         super(level, body, EntityType.TURRET);
-        pointToShoot = new Vector2();
         raycast = new TurretRayCast(world, this);
 
         // Add vision fixture
@@ -53,12 +50,11 @@ public class Turret extends StaticEntity {
     @Override
     public void beginInteraction(Player player) {
         target = player;
-        targetLockedOn = true;
     }
 
     @Override
     public void endInteraction(Player player) {
-        targetLockedOn = false;
+        target = null;
     }
 
     private float time = 0;
@@ -66,14 +62,18 @@ public class Turret extends StaticEntity {
     @Override
     public void update() {
         time += Gdx.graphics.getDeltaTime();
-        if(targetLockedOn && time >= TURRET_RATE_OF_FIRE) {
-            pointToShoot.set(target.getBody().getPosition());
-            raycast.setRay(body.getPosition(), pointToShoot, RAY_CAST_STEP_LENGTH);
+        if(targetLockedOn() && time >= TURRET_RATE_OF_FIRE) {
+            raycast.setRay(this.getPosition(), target.getPosition(), RAY_CAST_STEP_LENGTH);
             raycast.process();
             time = 0;
         }
     }
 
+    public boolean targetLockedOn() {
+        return target != null;
+    }
+
+    /** Shoots a {@link Bullet} at the specified position */
     public void shoot(Vector2 position) {
 
         Vector2 direction = new Vector2(position);

@@ -5,29 +5,26 @@ import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.interactions.EntityType;
 
 /**
- * An entity that sends an order to it's linked Entity whenever it's pressed.
+ * Sends an order to it's {@link #switchable} whenever it's pressed or released.
  */
-public class Button extends StaticEntity {
+public class Button extends Switch {
 
     private boolean pressed;
     private int interactions;
 
-    private Linkable linkedEntity;
-
-    public Button(Level level, Body body, Linkable linkedEntity) {
-        super(level, body, EntityType.BUTTON);
-        this.linkedEntity = linkedEntity;
+    public Button(Level level, Body body, Switchable linkedEntity) {
+        super(level, body, EntityType.BUTTON, linkedEntity);
     }
 
     @Override
     public void update() {
         if(interactions > 0 && !pressed) {
             pressed = true;
-            linkedEntity.buttonPressed();
+            switchable.switchOn();
         }
         else if(interactions == 0 && pressed) {
             pressed = false;
-            linkedEntity.buttonReleased();
+            switchable.switchOff();
         }
     }
 

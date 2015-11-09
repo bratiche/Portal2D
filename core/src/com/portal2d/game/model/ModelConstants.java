@@ -21,7 +21,7 @@ public interface ModelConstants {
     float BOX_HEIGHT = 0.6f;
 
     /* Gravity gun */
-    float GRAVITY_GUN_RADIUS = 0.7f; // Radius for grabbing objects with the gravity gun
+    float GRAVITY_GUN_RANGE = 0.7f; // Range for grabbing objects with the gravity gun
 
     /* Turret */
     float TURRET_WIDTH = 0.6f;
