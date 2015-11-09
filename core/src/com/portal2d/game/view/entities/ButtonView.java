@@ -29,7 +29,7 @@ public class ButtonView extends EntityView<Button> {
     public void render(SpriteBatch batch, float deltaTime) {
 
         float x = model.getBody().getPosition().x * PPM;
-        float y = model.getBody().getPosition().y * PPM;
+        float y = model.getBody().getPosition().y * PPM - 2;
 
         batch.begin();
         if(model.isPressed()) {

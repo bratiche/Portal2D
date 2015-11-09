@@ -24,7 +24,6 @@ public class PauseState extends GameState {
     @Override
     public void entered() {
         scene = new PauseScene();
-        Gdx.input.setCursorCatched(false);
     }
 
     @Override
@@ -53,7 +52,6 @@ public class PauseState extends GameState {
 
     @Override
     public void leaving() {
-        Gdx.input.setCursorCatched(true);
     }
 
 }

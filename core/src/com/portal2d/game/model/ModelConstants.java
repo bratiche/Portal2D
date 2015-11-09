@@ -17,8 +17,8 @@ public interface ModelConstants {
     float PLAYER_MAX_VELOCITY = 2.0f;
 
     /* Box */
-    float BOX_WIDTH = 0.6f;
-    float BOX_HEIGHT = 0.6f;
+    float BOX_WIDTH = 0.65f;
+    float BOX_HEIGHT = 0.65f;
 
     /* Gravity gun */
     float GRAVITY_GUN_RANGE = 0.7f; // Range for grabbing objects with the gravity gun

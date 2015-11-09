@@ -52,6 +52,8 @@ public class PlayerView extends EntityView<Player> {
         animations.put(FALLING, fall);
     }
 
+    private Sprite sprite = new Sprite();
+
     @Override
     public void render(SpriteBatch batch, float deltaTime) {
 
@@ -81,7 +83,6 @@ public class PlayerView extends EntityView<Player> {
             keyFrame = animations.get(FALLING).getKeyFrame(stateTime);
         }
 
-        //standing case
         else {
             stateTime = 0;
             keyFrame = animations.get(STANDING).getKeyFrame(stateTime);
@@ -89,7 +90,7 @@ public class PlayerView extends EntityView<Player> {
 
         batch.begin();
         if(!model.isFacingRight()) {
-            Sprite sprite = new Sprite(keyFrame);
+            sprite.setRegion(keyFrame);
             sprite.flip(true, false);
 
             batch.draw(sprite, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);

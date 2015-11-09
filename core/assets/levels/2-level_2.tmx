@@ -3,9 +3,6 @@
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
- <imagelayer name="acidview" x="1834" y="611">
-  <image source="acid.png"/>
- </imagelayer>
  <layer name="non-portal-able" width="50" height="12">
   <data encoding="base64" compression="zlib">
    eJxjZWBgYB3mmBgw0G4kx82k+IveYDj5g9rmDSV/DHT6xeYeegFS7BpMYUQJGGzxTS4Y6f4gxW/0qLNoXV/SI5zI8QcAr8YE7Q==
@@ -22,7 +19,7 @@
   <object id="208" x="513.5" y="476.5" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
-  <object id="46" name="player" x="224" y="158" width="60" height="120"/>
+  <object id="46" name="player" x="520" y="182" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
   <object id="192" x="1241" y="600" width="120" height="10">
@@ -71,8 +68,8 @@
   <object id="98" x="420" y="60" width="540" height="60"/>
   <object id="102" x="420" y="600" width="360" height="60"/>
   <object id="103" x="60" y="240" width="60" height="240"/>
-  <object id="204" x="120" y="600">
-   <polygon points="0,0 180,0 0,-180"/>
+  <object id="204" x="120" y="120">
+   <polygon points="0,120 120,0 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="gates">

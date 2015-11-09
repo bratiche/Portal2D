@@ -73,7 +73,6 @@ public class PlayState extends GameState {
 
     @Override
     public void entered() {
-        Gdx.input.setCursorCatched(true);
     }
 
     @Override
@@ -103,7 +102,6 @@ public class PlayState extends GameState {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             debug = !debug;
-            Gdx.input.setCursorCatched(!debug);
         }
 
     }
@@ -157,7 +155,6 @@ public class PlayState extends GameState {
 
     @Override
     public void leaving() {
-        Gdx.input.setCursorCatched(false);
         //world.dispose(); // -> this crashes the game
     }
 

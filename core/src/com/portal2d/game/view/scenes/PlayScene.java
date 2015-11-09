@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.view.BoundedCamera;
@@ -34,6 +35,10 @@ public class PlayScene extends Scene {
         entityViews = new HashSet<EntityView>();
     }
 
+
+    // To draw the cursor
+    private final Vector3 tmp = new Vector3();
+
     @Override
     public void render(SpriteBatch batch, float mouseX, float mouseY) {
 
@@ -58,10 +63,13 @@ public class PlayScene extends Scene {
             entityView.render(batch, deltaTime);
         }
 
-        weaponView.render(batch, mouseX, mouseY);
-
         box2DCamera.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT / 4) / PPM);
         box2DCamera.update();
+
+        // Draw the cursor
+        tmp.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.unproject(tmp);
+        weaponView.render(batch, tmp.x, tmp.y);
     }
 
     public void setTiledMap(TiledMap tiledMap) {
@@ -86,7 +94,7 @@ public class PlayScene extends Scene {
         box2DCamera.setToOrtho(false, VIEWPORT_WIDTH / PPM, VIEWPORT_HEIGHT / PPM);
     }
 
-    /** Called by the {@link PlayState} whenever an entity is added to the {@@link Level}. */
+    /** Called by the {@link PlayState} whenever an entity is added to the {@link Level}. */
     public void addView(EntityView entityView) {
         entityViews.add(entityView);
     }

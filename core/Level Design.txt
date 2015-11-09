@@ -1,0 +1,24 @@
+Layers:
+ - turrets
+ - acid
+ - gates
+ - portable-surfaces
+ - surfaces
+ - exits
+ - buttons
+ - player
+ - boxes
+ - portal-able
+ - non-portal-able
+
+Gates and Buttons:
+ - Each Gate has 2 attributes:
+	- ID : the id of this gate.
+        - locks : the number of locks to open this gate.
+
+ - Each Button has 1 attribute:
+	- LinkedEntityID : the ID of the entity linked to this button.
+
+Exits:
+ - Each exit has 1 attibute:
+	- NextLevel : the NUMBER of the level the exit takes to.
