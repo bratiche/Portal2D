@@ -30,11 +30,11 @@ public class BoxView extends EntityView<Box> {
 
         batch.begin();
 
-        float x = model.getBody().getPosition().x * PPM;
-        float y = model.getBody().getPosition().y * PPM;
+        float x = model.getPosition().x * PPM;
+        float y = model.getPosition().y * PPM;
 
         sprite.setCenter(x, y);
-        sprite.setRotation(model.getBody().getAngle() * MathUtils.radiansToDegrees);
+        sprite.setRotation(model.getAngle() * MathUtils.radiansToDegrees);
         sprite.draw(batch);
 
         batch.end();

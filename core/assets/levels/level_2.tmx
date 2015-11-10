@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="45" height="12" tilewidth="60" tileheight="60" nextobjectid="222">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="45" height="12" tilewidth="60" tileheight="60" nextobjectid="224">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
+ <imagelayer name="exit2view" x="2460" y="150">
+  <image source="exit.png"/>
+ </imagelayer>
+ <imagelayer name="exit1view" x="1320" y="150">
+  <image source="exit.png"/>
+ </imagelayer>
  <layer name="non-portal-able" width="45" height="12">
   <data encoding="base64" compression="zlib">
    eJxjZWBgYGUgHrBSEZMDKNU/EGDUzfQBI83N1Mh3A5GHSQVD0c3oYNTN9AED7eaByINDCQMA3B0D6Q==
@@ -75,10 +81,4 @@
  </objectgroup>
  <objectgroup name="acid"/>
  <objectgroup name="turrets"/>
- <imagelayer name="exit1view" x="1320" y="120">
-  <image source="exit.png"/>
- </imagelayer>
- <imagelayer name="exit2view" x="2460" y="117">
-  <image source="exit.png"/>
- </imagelayer>
 </map>

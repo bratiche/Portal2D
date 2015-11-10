@@ -26,8 +26,8 @@ public class ExitView extends EntityView<Exit> {
     @Override
     public void render(SpriteBatch batch, float deltaTime) {
 
-        float x = model.getBody().getPosition().x * PPM - width;
-        float y = model.getBody().getPosition().y * PPM - height / 2;
+        float x = model.getPosition().x * PPM - width;
+        float y = model.getPosition().y * PPM - height / 2;
 
         batch.begin();
 

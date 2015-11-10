@@ -49,7 +49,7 @@ public class GateView extends EntityView<Gate> {
 
         keyFrame = open.getKeyFrame(stateTime);
         batch.begin();
-        batch.draw(keyFrame, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);
+        batch.draw(keyFrame, model.getPosition().x * PPM - width / 2, model.getPosition().y * PPM - height / 2);
         batch.end();
     }
 

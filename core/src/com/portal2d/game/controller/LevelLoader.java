@@ -49,8 +49,8 @@ public class LevelLoader {
 
     //TODO fix gapes between portable and non-portable surfaces
     private void createLevel(TiledMap tiledMap, Level level) {
-        MapLayer layer = tiledMap.getLayers().get("player");
-        createPlayer(level, layer);
+        MapLayer layer = tiledMap.getLayers().get("turrets");
+        createTurrets(level, layer);
 
         layer = tiledMap.getLayers().get("surfaces");
         createSurfaces(level, layer);
@@ -70,11 +70,11 @@ public class LevelLoader {
         layer = tiledMap.getLayers().get("exits");
         createExits(level, layer);
 
-        layer = tiledMap.getLayers().get("turrets");
-        createTurrets(level, layer);
-
         layer = tiledMap.getLayers().get("acid");
         createAcid(level, layer);
+
+        layer = tiledMap.getLayers().get("player");
+        createPlayer(level, layer);
     }
 
     private void createPlayer(Level level, MapLayer layer) {

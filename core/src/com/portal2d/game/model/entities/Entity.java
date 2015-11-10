@@ -40,7 +40,6 @@ public abstract class Entity {
 
     public abstract void endInteraction(Entity entity);
 
-    ////////////////////////////////////////////////// TODO use
     public Vector2 getPosition() {
         return body.getPosition();
     }
@@ -66,7 +65,7 @@ public abstract class Entity {
     }
 
     public void setLinearVelocity(Vector2 velocity) {
-        body.setLinearVelocity(velocity);
+        setLinearVelocity(velocity.x, velocity.y);
     }
 
     public void setLinearVelocity(float x, float y) {
@@ -76,8 +75,6 @@ public abstract class Entity {
     public void setSensor(boolean sensor) {
         body.getFixtureList().get(0).setSensor(sensor);
     }
-    ////////////////////////////////////////////////// TODO use
-
 
     public Body getBody() {
         return body;

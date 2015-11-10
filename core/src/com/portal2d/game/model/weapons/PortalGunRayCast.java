@@ -95,7 +95,7 @@ public class PortalGunRayCast extends RayCast {
         }
         else{
             portal.setNormal(portalNormal);
-            portal.getBody().setTransform(position, portalNormal.angleRad());
+            portal.setTransform(position, portalNormal.angleRad());
         }
     }
 

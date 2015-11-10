@@ -109,4 +109,9 @@ public class Turret extends StaticEntity {
     public void beginInteraction(Bullet bullet) {
 
     }
+
+    public Vector2 getTargetPosition() {
+        return target.getPosition();
+    }
+
 }

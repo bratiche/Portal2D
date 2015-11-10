@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
+ <imagelayer name="exitview" x="900" y="450">
+  <image source="exit.png"/>
+ </imagelayer>
  <layer name="non-portal-able" width="20" height="12">
   <data encoding="base64" compression="zlib">
    eJxjZWBgYB0CmFIwat6oeZSYN1gxACJcAjE=

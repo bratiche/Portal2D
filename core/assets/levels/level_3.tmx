@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
+ <imagelayer name="exitview" x="910" y="450">
+  <image source="exit.png"/>
+ </imagelayer>
  <layer name="non-portal-able" width="20" height="12">
   <data encoding="base64" compression="zlib">
    eJxjZWBgYB0CmFIwat6oeZSYN1gxACJcAjE=
@@ -14,15 +17,12 @@
   </data>
  </layer>
  <objectgroup name="boxes">
-  <object id="216" x="715.167" y="505.833" width="55" height="55"/>
+  <object id="216" x="352.5" y="460.5" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
   <object id="46" name="player" x="172.666" y="374.667" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons"/>
- <imagelayer name="exitview" x="900" y="420">
-  <image source="exit.png"/>
- </imagelayer>
  <objectgroup name="exits">
   <object id="109" name="exit 1" x="1050" y="420" width="30" height="180">
    <properties>
@@ -40,6 +40,6 @@
  <objectgroup name="gates"/>
  <objectgroup name="acid"/>
  <objectgroup name="turrets">
-  <object id="215" x="542" y="262" width="60" height="60"/>
+  <object id="215" x="491.333" y="491.333" width="60" height="60"/>
  </objectgroup>
 </map>

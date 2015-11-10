@@ -35,7 +35,8 @@ public class Bullet extends Projectile {
 
     @Override
     public void beginInteraction(Player player) {
-        player.die();
+
+        //player.die();
     }
 
 }

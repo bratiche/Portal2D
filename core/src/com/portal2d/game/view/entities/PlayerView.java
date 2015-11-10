@@ -93,11 +93,11 @@ public class PlayerView extends EntityView<Player> {
             sprite.setRegion(keyFrame);
             sprite.flip(true, false);
 
-            batch.draw(sprite, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);
+            batch.draw(sprite, model.getPosition().x * PPM - width / 2, model.getPosition().y * PPM - height / 2);
         }
 
         else {
-            batch.draw(keyFrame, model.getBody().getPosition().x * PPM - width / 2, model.getBody().getPosition().y * PPM - height / 2);
+            batch.draw(keyFrame, model.getPosition().x * PPM - width / 2, model.getPosition().y * PPM - height / 2);
         }
         batch.end();
 

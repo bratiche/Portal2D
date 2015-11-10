@@ -57,15 +57,11 @@ public class PortalView extends EntityView<Portal> {
 
     @Override
     public void render(SpriteBatch batch, float deltaTime) {
-        float x = model.getBody().getPosition().x * PPM;
-        float y = model.getBody().getPosition().y * PPM;
+        float x = model.getPosition().x * PPM;
+        float y = model.getPosition().y * PPM;
 
 
         stateTime += deltaTime;
-
-//        if(stateTime > animation.getAnimationDuration()) {
-//            stateTime = 0;
-//        }
 
         Sprite sprite = (Sprite) animation.getKeyFrame(stateTime, true);
 
