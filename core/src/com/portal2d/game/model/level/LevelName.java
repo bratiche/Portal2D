@@ -1,23 +1,23 @@
 package com.portal2d.game.model.level;
 
 /**
- *
+ * Enum for all the levels.
  */
 public enum LevelName {
 
-    TEST_LEVEL(false),
-    MOMENTUM_TEST(true),
-
-    //names will be funnier
-    LEVEL_2(true),
-    LEVEL_3(true),
-    LEVEL_4(true),
-    LEVEL_5(true);
+    LEVEL_0(false, "TEST"),
+    LEVEL_1(true, "MOMENTUM"),
+    LEVEL_2(true, "BOXES AND BUTTONS"),
+    LEVEL_3(true, ""),
+    LEVEL_4(true, ""),
+    LEVEL_5(true, "");
 
     private boolean locked;
+    private String name;
 
-    LevelName(boolean locked) {
+    LevelName(boolean locked, String name) {
         this.locked = locked;
+        this.name = name;
     }
 
     public void setLocked(boolean locked) {
@@ -26,6 +26,10 @@ public enum LevelName {
 
     public boolean isLocked() {
         return locked;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

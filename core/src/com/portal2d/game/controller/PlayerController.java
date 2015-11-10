@@ -3,7 +3,6 @@ package com.portal2d.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.weapons.GravityGunQuery;
 
 import static com.portal2d.game.model.ModelConstants.PLAYER_MAX_VELOCITY;
 import static com.portal2d.game.model.entities.Player.PlayerState.*;
@@ -242,48 +240,6 @@ public class PlayerController extends InputAdapter {
         }
     }
 
-    //TESTEO
-    public void drawPortalGunRayCast() {
-
-        playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
-        playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
-
-//        RayCast rayCast = player.getPortalGun().getRayCast();
-//        rayCast.setRay(playerBody.getPosition(), new Vector2(mouse.x / PPM, mouse.y / PPM), 1);
-//        rayCast.process();
-//        Vector2 beginPoint = rayCast.getBeginPoint();
-//        Vector2 endPoint = rayCast.getEndPoint();
-
-        Vector2 beginPoint = new Vector2(playerBody.getPosition());
-
-        Vector2 distance = new Vector2(mouse.x / PPM, mouse.y / 100f);
-        distance.sub(beginPoint);
-        distance.nor();
-        distance.scl(5f);
-
-        Vector2 endPoint = new Vector2(beginPoint);
-        endPoint.add(distance);
-
-        //playState.getDebugRenderer().line(beginPoint, endPoint);
-        playState.getDebugRenderer().end();
-    }
-
-    //TESTEO
-    public void drawGrabRange() {
-        GravityGunQuery query = player.getPortalGun().getQuery();
-        query.updateAABB();
-
-        float lowerX = query.getLowerX();
-        float lowerY = query.getLowerY();
-        float upperX = query.getUpperX();
-        float upperY = query.getUpperY();
-
-        playState.getDebugRenderer().setProjectionMatrix(playState.getBox2DCamera().combined);
-        playState.getDebugRenderer().begin(ShapeRenderer.ShapeType.Line);
-        //playState.getDebugRenderer().rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
-        playState.getDebugRenderer().end();
-    }
-
     @Override
     public boolean keyDown (int keycode) {
         if(keycode == Input.Keys.W) {
@@ -306,11 +262,6 @@ public class PlayerController extends InputAdapter {
         playerBody = player.getBody();
         playerPhysicsFixture = playerBody.getFixtureList().get(0);
         player.setFacingRight(true);
-    }
-
-    //TESTEO
-    public Vector3 getMouse() {
-        return mouse;
     }
 
 }

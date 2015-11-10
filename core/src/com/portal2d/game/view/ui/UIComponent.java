@@ -23,6 +23,10 @@ public abstract class UIComponent {
         this.height = height;
     }
 
+    protected boolean contains(float x, float y) {
+        return x >= this.x && x <= this.x + width && y >= this.y - height && y <= this.y;
+    }
+
     public abstract void render(SpriteBatch batch, float mouseX, float mouseY);
 
 }

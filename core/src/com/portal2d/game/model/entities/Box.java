@@ -2,7 +2,6 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.interactions.EntityType;
 
 /**
  * An entity that doesn't do anything. Basically dead weight to solve puzzles.

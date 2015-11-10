@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.entities.StaticEntity;
-import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.entities.EntityType;
 import com.portal2d.game.model.level.Level;
 
 import static com.portal2d.game.model.ModelConstants.*;

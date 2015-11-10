@@ -31,10 +31,6 @@ public class ExitView extends EntityView<Exit> {
 
         batch.begin();
 
-//        if(model.isReached()) {
-//            //cut scene
-//        }
-//        else
 //            batch.draw(texture, x, y);
 
         batch.end();

@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.entities.Projectile;
-import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.entities.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**

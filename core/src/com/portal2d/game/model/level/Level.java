@@ -52,7 +52,7 @@ public class Level {
         entitiesToRemove = new HashSet<Entity>();
         projectilesToRemove = new HashSet<Projectile>();
 
-        world.setContactListener(new GameContactListener());
+        world.setContactListener(GameContactListener.getInstance());
     }
 
     public void update() {

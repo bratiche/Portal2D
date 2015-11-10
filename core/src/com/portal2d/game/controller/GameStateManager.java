@@ -6,7 +6,7 @@ import com.portal2d.game.controller.states.GameState;
 import java.util.Stack;
 
 /**
- *
+ * Manages {@link GameState}s in a stack structure.
  */
 public class GameStateManager {
 

@@ -3,7 +3,6 @@ package com.portal2d.game.model.entities;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
-import com.portal2d.game.model.interactions.EntityType;
 
 /**
  * An entity the player has to get to to change the current level.
@@ -11,7 +10,6 @@ import com.portal2d.game.model.interactions.EntityType;
 public class Exit extends StaticEntity {
 
     private LevelName destinyLevel;
-    private boolean reached;
 
     public Exit(Level level, Body body, LevelName destinyLevel) {
         super(level, body, EntityType.EXIT);
@@ -30,12 +28,7 @@ public class Exit extends StaticEntity {
 
     @Override
     public void beginInteraction(Player player) {
-        reached = true;
         level.setNextLevel(this);
-    }
-
-    public boolean isReached() {
-        return reached;
     }
 
     public LevelName getDestinyLevel() {

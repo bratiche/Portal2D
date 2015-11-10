@@ -56,23 +56,12 @@ public abstract class RayCast implements RayCastCallback {
     @Override
     public abstract float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction);
 
+    public Vector2 getBeginPoint() {
+        return beginPoint;
+    }
 
-    //TESTEO
+    public Vector2 getEndPoint() {
+        return endPoint;
+    }
 
-//    public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-//        if(fixture.isSensor()) {
-//            return -1;
-//        }
-//        hit = true;
-//        endPoint.set(point);
-//        return fraction;
-//    }
-//
-//    public Vector2 getBeginPoint() {
-//        return beginPoint;
-//    }
-//
-//    public Vector2 getEndPoint() {
-//        return endPoint;
-//    }
 }

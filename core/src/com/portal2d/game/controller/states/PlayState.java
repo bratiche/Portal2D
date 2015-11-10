@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.Portal2D;
@@ -16,8 +17,10 @@ import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.interactions.RayCast;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
+import com.portal2d.game.model.weapons.GravityGunQuery;
 import com.portal2d.game.view.entities.*;
 import com.portal2d.game.view.scenes.PlayScene;
 import com.portal2d.game.view.weapons.PortalGunView;
@@ -88,7 +91,7 @@ public class PlayState extends GameState {
         // Back to menu
         else if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             slot.save();
-            level.removeAllEntities();
+            //level.removeAllEntities(); //->crashes
             gsm.set(new MenuState(gsm));
         }
 
@@ -130,24 +133,14 @@ public class PlayState extends GameState {
         goToLevel(level.getLevelName());
     }
 
-    // TEST
-    private ShapeRenderer debugRenderer = new ShapeRenderer();
-
-    // TEST
-    public ShapeRenderer getDebugRenderer() {
-        return debugRenderer;
-    }
-
     @Override
     public void render(SpriteBatch batch) {
         scene.render(batch, mouse.x, mouse.y);
 
-        // TEST
-        playerController.drawPortalGunRayCast();
-        playerController.drawGrabRange();
-
         //draw box2d world (debug)
         if (debug) {
+            //drawGrabRange();
+            drawPortalGunRayCast();
             box2DDebugRenderer.render(world, scene.getBox2DCamera().combined);
         }
 
@@ -170,8 +163,6 @@ public class PlayState extends GameState {
         scene.setTiledMap(Portal2D.assets.getTiledMap(level.getLevelName()));
         playerController.setLevel(level);
     }
-
-
 
     public OrthographicCamera getBox2DCamera() {
         return scene.getBox2DCamera();
@@ -234,6 +225,39 @@ public class PlayState extends GameState {
 
     public void remove(Entity entity) {
         scene.removeView(entities.get(entity));
+    }
+
+    //TESTEO
+    private ShapeRenderer debugRenderer = new ShapeRenderer();
+
+    //TESTEO
+    public void drawPortalGunRayCast() {
+
+        debugRenderer.setProjectionMatrix(getBox2DCamera().combined);
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+        RayCast rayCast = level.getPlayer().getPortalGun().getRayCast();
+        Vector2 beginPoint = rayCast.getBeginPoint();
+        Vector2 endPoint = rayCast.getEndPoint();
+
+        debugRenderer.line(beginPoint, endPoint);
+        debugRenderer.end();
+    }
+
+    //TESTEO
+    public void drawGrabRange() {
+        GravityGunQuery query = level.getPlayer().getPortalGun().getQuery();
+        query.updateAABB();
+
+        float lowerX = query.getLowerX();
+        float lowerY = query.getLowerY();
+        float upperX = query.getUpperX();
+        float upperY = query.getUpperY();
+
+        debugRenderer.setProjectionMatrix(getBox2DCamera().combined);
+        debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+        debugRenderer.rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
+        debugRenderer.end();
     }
 
 }

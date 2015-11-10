@@ -1,6 +1,7 @@
 package com.portal2d.game.view.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -52,13 +53,9 @@ public class TextButton extends UIComponent {
     }
 
     public boolean isClicked(float x, float y) {
-        return Gdx.input.justTouched() && contains(x, y);
+        return Gdx.input.justTouched() && Gdx.input.isButtonPressed(Input.Buttons.LEFT) && contains(x, y);
     }
 
-    private boolean contains(float x, float y) {
-        return x >= this.x && x <= this.x + width && y >= this.y - height && y <= this.y;
-    }
-    
     public void setText(String text) {
         this.text = text;
         GlyphLayout layout = new GlyphLayout(font, text);

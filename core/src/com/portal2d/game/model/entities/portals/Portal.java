@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.StaticEntity;
-import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.entities.EntityType;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 
@@ -15,10 +15,11 @@ import static com.portal2d.game.model.ModelConstants.PORTAL_RADIUS;
 
 /**
  * Entity that allows to connect two points of the world.
- * Portals are created, moved, and destroyed by a {@link PortalGun}
+ * Portals are managed by the {@link PortalGun}
  */
 public class Portal extends StaticEntity {
 
+    /** The portal that is linked to this */
     private Portal oppositePortal;
     private PortalColor color;
 
@@ -37,13 +38,6 @@ public class Portal extends StaticEntity {
 
         entityVelocity = new Vector2();
         entitiesToSend = new HashSet<Entity>();
-
-//        Filter filter = new Filter();
-//        filter.categoryBits = CollisionFilters.PORTAL_BITS;
-//        filter.maskBits &= ~CollisionFilters.PORTAL_BITS;
-//        body.getFixtureList().get(0).setFilterData(filter);
-//
-//        //System.out.println(Integer.toBinaryString(filter.maskBits));
     }
 
     /** This is an implicit "send" method. */
@@ -68,6 +62,10 @@ public class Portal extends StaticEntity {
         }
     }
 
+    /**
+     * Changes the position and velocity of an Entity.
+     * @param entity the entity received.
+     */
     public void receive(Entity entity) {
 
         EntityType entityType = entity.getType();
@@ -104,10 +102,6 @@ public class Portal extends StaticEntity {
         this.normal.y = normal.y;
     }
 
-    public Portal getOppositePortal(){
-        return oppositePortal;
-    }
-
     public void setOppositePortal(Portal portal){
         this.oppositePortal = portal;
 
@@ -123,6 +117,7 @@ public class Portal extends StaticEntity {
         return color;
     }
 
+    /** Returns true if this portal is linked to another portal. */
     public boolean isLinked() {
         return oppositePortal != null;
     }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.entities.EntityType;
 import com.portal2d.game.model.interactions.RayCast;
 
 /**

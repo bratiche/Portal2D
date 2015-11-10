@@ -9,6 +9,19 @@ import com.portal2d.game.model.entities.Entity;
  */
 public class GameContactListener implements ContactListener {
 
+    private static GameContactListener instance;
+
+    private GameContactListener() {
+
+    }
+
+    public static GameContactListener getInstance() {
+        if(instance == null) {
+            instance = new GameContactListener();
+        }
+        return instance;
+    }
+
     @Override
     public void beginContact(Contact contact) {
         Body bodyA = contact.getFixtureA().getBody();

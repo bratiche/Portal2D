@@ -2,7 +2,6 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.portal2d.game.model.interactions.EntityType;
 import com.portal2d.game.model.level.Level;
 
 /**

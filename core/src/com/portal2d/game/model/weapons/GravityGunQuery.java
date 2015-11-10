@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.interactions.EntityType;
+import com.portal2d.game.model.entities.EntityType;
 
 import static com.portal2d.game.model.ModelConstants.GRAVITY_GUN_RANGE;
 

@@ -3,7 +3,6 @@ package com.portal2d.game.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -39,9 +38,10 @@ public class Assets implements Disposable {
     public void loadTiledMaps() {
         TmxMapLoader tmxMapLoader = new TmxMapLoader();
 
-        tiledMaps.put(LevelName.TEST_LEVEL, tmxMapLoader.load("core/assets/levels/0-test_level.tmx"));
-        tiledMaps.put(LevelName.MOMENTUM_TEST, tmxMapLoader.load("core/assets/levels/1-momentum_test.tmx"));
-        tiledMaps.put(LevelName.LEVEL_2, tmxMapLoader.load("core/assets/levels/2-level_2.tmx"));
+        tiledMaps.put(LevelName.LEVEL_0, tmxMapLoader.load("core/assets/levels/level_0.tmx"));
+        tiledMaps.put(LevelName.LEVEL_1, tmxMapLoader.load("core/assets/levels/level_1.tmx"));
+        tiledMaps.put(LevelName.LEVEL_2, tmxMapLoader.load("core/assets/levels/level_2.tmx"));
+        tiledMaps.put(LevelName.LEVEL_3, tmxMapLoader.load("core/assets/levels/level_3.tmx"));
     }
 
     public void loadTextures() {
@@ -51,7 +51,7 @@ public class Assets implements Disposable {
         textures.put(TextureName.ANIM_GATE, new Texture(Gdx.files.internal("core/assets/sprites/gate.png")));
         textures.put(TextureName.SPRITE_BUTTON, new Texture(Gdx.files.internal("core/assets/sprites/button.png")));
         textures.put(TextureName.ANIM_PLAYER, new Texture(Gdx.files.internal("core/assets/sprites/player.png")));
-        textures.put(TextureName.BG1, new Texture(Gdx.files.internal("core/assets/backgrounds/bg1.jpg")));
+        //textures.put(TextureName.BG1, new Texture(Gdx.files.internal("core/assets/backgrounds/bg1.jpg")));
         textures.put(TextureName.GAME_CURSOR, new Texture(Gdx.files.internal("core/assets/sprites/cursor.png")));
         textures.put(TextureName.BLUE_PORTAL, new Texture(Gdx.files.internal("core/assets/sprites/blue_portal.png")));
         textures.put(TextureName.ORANGE_PORTAL, new Texture(Gdx.files.internal("core/assets/sprites/orange_portal.png")));

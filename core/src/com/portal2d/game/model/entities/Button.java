@@ -2,7 +2,6 @@ package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.interactions.EntityType;
 
 /**
  * Sends an order to it's {@link #switchable} whenever it's pressed or released.

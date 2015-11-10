@@ -13,11 +13,9 @@
    eJxjYKA94CISj4JRMBTAYErPAHxfAMk=
   </data>
  </layer>
- <objectgroup name="boxes">
-  <object id="236" x="456.5" y="250.5" width="55" height="55"/>
- </objectgroup>
+ <objectgroup name="boxes"/>
  <objectgroup name="player">
-  <object id="46" name="player" x="217.333" y="122.667" width="60" height="120"/>
+  <object id="46" name="player" x="167.333" y="155.667" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons"/>
  <objectgroup name="exits">
@@ -43,7 +41,5 @@
  </objectgroup>
  <objectgroup name="gates"/>
  <objectgroup name="acid"/>
- <objectgroup name="turrets">
-  <object id="234" x="563" y="319" width="60" height="60"/>
- </objectgroup>
+ <objectgroup name="turrets"/>
 </map>

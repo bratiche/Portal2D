@@ -35,31 +35,31 @@ public class PortalGun extends GravityGun {
         if(hasEntityGrabbed()) {
             super.actionLeftClick(position);
         }
-        else {
-            raycast.setPortalColor(PortalColor.BLUE);
-            shoot(position);
+        else if(raycast.hitPortableSurface()) {
+            raycast.createPortal(PortalColor.BLUE);
         }
     }
 
     /** Shoots an orange portal if the gun has no entity grabbed. */
     @Override
     public void actionRightClick(Vector2 position) {
-        if(!hasEntityGrabbed()) {
-            raycast.setPortalColor(PortalColor.ORANGE);
-            shoot(position);
+        if(!hasEntityGrabbed() && raycast.hitPortableSurface()) {
+            raycast.createPortal(PortalColor.ORANGE);
         }
     }
 
     /**
-     * Ray-cast the world using the {@link PortalGunRayCast} callback.
+     * Ray-cast the world every frame using the {@link PortalGunRayCast} callback.
      * @see RayCast#process()
      */
-    private void shoot(Vector2 position) {
-        raycast.setRay(owner.getBody().getPosition(), position, RAY_CAST_STEP_LENGTH);
+    @Override
+    public void update(Vector2 position) {
+        super.update(position);
+        raycast.setRay(owner.getPosition(), position, RAY_CAST_STEP_LENGTH);
         raycast.process();
     }
 
-    /** @see PortalGunRayCast#createPortal(Vector2, Vector2) */
+    /** @see PortalGunRayCast#createPortal(PortalColor) */
     protected void setPortal(Portal portal) {
         switch(portal.getColor()){
             case BLUE:
@@ -68,13 +68,15 @@ public class PortalGun extends GravityGun {
             case ORANGE:
                 orangePortal = portal;
                 break;
+            default:
+                throw new NoSuchElementException(portal.getColor() + " is not a valid PortalColor");
         }
     }
 
     /**
      * Returns the portal of the specified color.
      * It may return {@code null} if the portal is not created yet.
-     * @see PortalGunRayCast#createPortal(Vector2, Vector2)
+     * @see PortalGunRayCast#createPortal(PortalColor)
      */
     protected Portal getPortal(PortalColor color) {
         switch(color) {
@@ -83,10 +85,14 @@ public class PortalGun extends GravityGun {
             case ORANGE:
                 return orangePortal;
             default:
-                throw new NoSuchElementException(color + " ïs not a valid PortalColor");
+                throw new NoSuchElementException(color + " is not a valid PortalColor");
         }
     }
 
+    /**
+     * Sets the opposite portal of both portals.
+     * @see Portal#oppositePortal
+     */
     protected void linkPortals() {
         if(orangePortal != null && bluePortal != null){
             bluePortal.setOppositePortal(orangePortal);
@@ -96,7 +102,6 @@ public class PortalGun extends GravityGun {
 
     /** Destroys both portals. */
     public void destroyPortals() {
-
         if(bluePortal != null) {
             level.addToRemove(bluePortal);
             bluePortal = null;
@@ -108,7 +113,6 @@ public class PortalGun extends GravityGun {
         }
     }
 
-
     /** Returns whether the portal of the specified color is created */
     public boolean isPortalCreated(PortalColor color) {
         switch (color) {
@@ -117,12 +121,12 @@ public class PortalGun extends GravityGun {
             case ORANGE:
                 return orangePortal != null;
             default:
-                throw new NoSuchElementException(color + " ïs not a valid PortalColor");
+                throw new NoSuchElementException(color + " is not a valid PortalColor");
         }
     }
 
     public boolean arePortalsLinked() {
-        return orangePortal != null && bluePortal != null;
+        return orangePortal != null && orangePortal.isLinked() && bluePortal != null && bluePortal.isLinked();
     }
 
     //TESTEO

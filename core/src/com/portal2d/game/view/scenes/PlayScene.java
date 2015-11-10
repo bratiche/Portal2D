@@ -12,8 +12,8 @@ import com.portal2d.game.view.entities.EntityView;
 import com.portal2d.game.view.entities.PlayerView;
 import com.portal2d.game.view.weapons.WeaponView;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.portal2d.game.view.ViewConstants.*;
 
@@ -25,14 +25,14 @@ public class PlayScene extends Scene {
     private OrthogonalTiledMapRenderer tmr;
 
     // Views
-    private Set<EntityView> entityViews;
+    private List<EntityView> entityViews;
     private PlayerView playerView;
     private WeaponView weaponView;
 
     private BoundedCamera box2DCamera;
 
     public PlayScene() {
-        entityViews = new HashSet<EntityView>();
+        entityViews = new ArrayList<EntityView>();
     }
 
 

@@ -8,7 +8,6 @@ import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.*;
 import com.portal2d.game.model.level.Level;
-import com.portal2d.game.model.interactions.EntityType;
 
 /**
  * Base class for all game entities.
@@ -32,16 +31,6 @@ public abstract class Entity {
         this.level = level;
         this.world = level.getWorld();
         body.setUserData(this);
-    }
-
-    /** Constructs an entity with no shape at the specified position */
-    protected Entity(Level level, Vector2 position, EntityType type) {
-        this.type = type;
-        this.level = level;
-        this.world = level.getWorld();
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(position);
-        body = world.createBody(bodyDef);
     }
 
     /** Called by the level each frame. */

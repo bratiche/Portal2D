@@ -56,6 +56,8 @@ public class Spring {
     }
 
     public void destroy() {
-        world.destroyJoint(joint);
+        if(joint != null) {
+            world.destroyJoint(joint);
+        }
     }
 }
