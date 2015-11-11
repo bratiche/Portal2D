@@ -15,9 +15,19 @@ public class Surface extends StaticEntity {
     protected float width;
     protected float height;
 
+    public Surface(Level level, Vector2 position, float width, float height, EntityType type) {
+        super(level, position, type);
+        createBounds(width, height);
+    }
+
     public Surface(Level level, Vector2 position, float width, float height) {
         super(level, position, EntityType.SURFACE);
+        createBounds(width, height);
+    }
 
+    private void createBounds(float width, float height) {
+        this.width = width;
+        this.height = height;
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
 

@@ -10,9 +10,7 @@ import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static com.portal2d.game.model.ModelConstants.PORTAL_RADIUS;
 
@@ -24,9 +22,9 @@ public class Portal extends StaticEntity {
 
     /** The portal that is linked to this */
     private Portal oppositePortal;
-    private PortalColor color;
 
     private Vector2 normal;
+    private PortalColor color;
 
     /** Entities to send / Their velocities when they touch a portal*/
     private Map<Entity, Vector2> entities;
@@ -37,7 +35,7 @@ public class Portal extends StaticEntity {
         this.normal = new Vector2();
         setNormal(normal);
 
-        entities = new HashMap<>();
+        entities = new HashMap<Entity, Vector2>();
 
         CircleShape shape = new CircleShape();
         shape.setRadius(PORTAL_RADIUS);

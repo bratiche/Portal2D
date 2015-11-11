@@ -1,4 +1,4 @@
-package com.portal2d.game.model.weapons;
+ package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
 import com.portal2d.game.model.entities.Entity;
@@ -14,10 +14,10 @@ public class GravityGun implements Weapon {
 
     protected Entity owner;
     protected Level level;
-    protected GravityGunQuery query;
 
-    protected Spring spring;
-    protected Entity grabbedEntity;
+    private Spring spring;
+    private Entity grabbedEntity;
+    private GravityGunQuery query;
 
     public GravityGun(Level level, Entity owner) {
         this.owner = owner;

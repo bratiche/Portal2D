@@ -9,11 +9,10 @@ import com.portal2d.game.model.level.Level;
 /**
  * Special surface able to create portals on it.
  */
-public class PortableSurface extends Surface {
+public  class PortableSurface extends Surface {
 
     public PortableSurface(Level level, Vector2 position, float width, float height) {
-        super(level, position, width, height);
-        type = EntityType.PORTABLE_SURFACE; //Overrides superclass type
+        super(level, position, width, height, EntityType.PORTABLE_SURFACE);
     }
 
     @Override

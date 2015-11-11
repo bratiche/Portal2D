@@ -14,11 +14,11 @@ import com.portal2d.game.model.level.Level;
  */
 public abstract class Entity {
 
-    protected Body body;
     protected Level level;
     protected World world;
 
-    protected EntityType type;
+    protected Body body;
+    private EntityType type;
 
     /**
      * Constructs an Entity with the given body
