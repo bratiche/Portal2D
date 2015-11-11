@@ -1,10 +1,11 @@
 package com.portal2d.game.model.entities.portals;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.entities.StaticEntity;
 import com.portal2d.game.model.entities.EntityType;
+import com.portal2d.game.model.entities.StaticEntity;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 
@@ -31,13 +32,24 @@ public class Portal extends StaticEntity {
     // This set is used to store entities when the portals are not linked
     private Set<Entity> entitiesToSend;
 
-    public Portal(Level level, Body body, PortalColor color) {
-        super(level, body, EntityType.PORTAL);
+    public Portal(Level level, Vector2 position, PortalColor color, Vector2 normal) {
+        super(level, position, EntityType.PORTAL);
         this.color = color;
         this.normal = new Vector2();
+        setNormal(normal);
 
         entityVelocity = new Vector2();
         entitiesToSend = new HashSet<Entity>();
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(PORTAL_RADIUS);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.isSensor = true;
+
+        body.createFixture(fixtureDef);
+
+        shape.dispose();
     }
 
     /** This is an implicit "send" method. */
@@ -100,6 +112,7 @@ public class Portal extends StaticEntity {
     public void setNormal(Vector2 normal) {
         this.normal.x = normal.x;
         this.normal.y = normal.y;
+        setAngle(normal.angleRad());
     }
 
     public void setOppositePortal(Portal portal){

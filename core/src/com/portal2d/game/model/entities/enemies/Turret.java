@@ -2,14 +2,12 @@ package com.portal2d.game.model.entities.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.EntityType;
 import com.portal2d.game.model.entities.Player;
 import com.portal2d.game.model.entities.StaticEntity;
-import com.portal2d.game.model.entities.EntityType;
 import com.portal2d.game.model.level.Level;
 
 import static com.portal2d.game.model.ModelConstants.*;
@@ -22,18 +20,22 @@ public class Turret extends StaticEntity {
     private TurretRayCast raycast;
     private Entity target;
 
-    public Turret(Level level, Body body) {
-        super(level, body, EntityType.TURRET);
-        raycast = new TurretRayCast(world, this);
+    public Turret(Level level, Vector2 position) {
+        super(level, position, EntityType.TURRET);
 
-        // Add vision fixture
+        createVisionFixture();
+
+        raycast = new TurretRayCast(world, this);
+    }
+
+    private void createVisionFixture() {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(TURRET_VISION_RADIUS);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.isSensor = true;
         fixtureDef.shape = circleShape;
 
-        this.body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef);
         circleShape.dispose();
     }
 
@@ -81,27 +83,13 @@ public class Turret extends StaticEntity {
         direction.nor();
         this.setAngle(direction.angleRad());
 
-        body.setTransform(body.getPosition(), direction.angleRad());
+        this.setTransform(body.getPosition(), direction.angleRad());
 
         Vector2 velocity = new Vector2(direction.x * BULLET_SPEED, direction.y * BULLET_SPEED);
 
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(this.body.getPosition());
-        bodyDef.linearVelocity.set(velocity);
-        bodyDef.angle = direction.angleRad();
-        bodyDef.gravityScale = 0;
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(BULLET_RADIUS);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
-
-        Body body = world.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-
-        level.add(new Bullet(level, body, velocity));
+        Bullet bullet = new Bullet(level, this.getPosition(), velocity);
+        bullet.setAngle(direction.angleRad());
+        level.add(bullet);
     }
 
     /** Overridden so the turret doesn't destroy it's own bullets. */

@@ -18,7 +18,7 @@
  </layer>
  <objectgroup name="boxes"/>
  <objectgroup name="player">
-  <object id="46" name="player" x="167.333" y="155.667" width="60" height="120"/>
+  <object id="46" name="player" x="171.333" y="194.667" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons"/>
  <objectgroup name="exits">

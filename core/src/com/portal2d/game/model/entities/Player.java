@@ -1,10 +1,15 @@
 package com.portal2d.game.model.entities;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 
+import static com.portal2d.game.model.ModelConstants.PLAYER_HEIGHT;
+import static com.portal2d.game.model.ModelConstants.PLAYER_WIDTH;
 import static com.portal2d.game.model.entities.Player.PlayerState.*;
+
 
 /**
  * The main entity in the game, the user controls this entity.
@@ -24,10 +29,21 @@ public class Player extends DynamicEntity {
     private PlayerState state;
     private boolean facingRight;
 
-    public Player(Level level, Body body) {
-        super(level, body, EntityType.PLAYER);
+    public Player(Level level, Vector2 position) {
+        super(level, position, EntityType.PLAYER);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(PLAYER_WIDTH / 2, PLAYER_HEIGHT / 2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+        body.setFixedRotation(true);
+
+        shape.dispose();
+
         portalGun = new PortalGun(level, this);
-        state = PlayerState.STANDING;
+        state = STANDING;
         facingRight = true;
     }
 

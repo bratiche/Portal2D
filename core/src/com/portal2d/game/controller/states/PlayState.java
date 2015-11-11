@@ -62,7 +62,7 @@ public class PlayState extends GameState {
 
         // Create world and level loader
         world = new World(DEFAULT_GRAVITY, true);
-        levelLoader = new LevelLoader(world, this);
+        levelLoader = new LevelLoader();
 
         // Create view and controller
         scene = new PlayScene();
@@ -159,7 +159,7 @@ public class PlayState extends GameState {
 
         // Set new level
         scene.clearViews();
-        level = levelLoader.loadLevel(nextLevel);
+        level = levelLoader.loadLevel(nextLevel, world, this);
         scene.setTiledMap(Portal2D.assets.getTiledMap(level.getLevelName()));
         playerController.setLevel(level);
     }

@@ -1,9 +1,9 @@
 package com.portal2d.game.model.entities.portals;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
 import com.portal2d.game.model.entities.Entity;
-import com.portal2d.game.model.entities.Surface;
 import com.portal2d.game.model.entities.EntityType;
+import com.portal2d.game.model.entities.Surface;
 import com.portal2d.game.model.level.Level;
 
 /**
@@ -11,9 +11,9 @@ import com.portal2d.game.model.level.Level;
  */
 public class PortableSurface extends Surface {
 
-    public PortableSurface(Level level, Body body) {
-        super(level, body);
-        type = EntityType.PORTABLE_SURFACE;
+    public PortableSurface(Level level, Vector2 position, float width, float height) {
+        super(level, position, width, height);
+        type = EntityType.PORTABLE_SURFACE; //Overrides superclass type
     }
 
     @Override

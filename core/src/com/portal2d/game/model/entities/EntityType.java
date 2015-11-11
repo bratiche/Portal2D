@@ -37,12 +37,4 @@ public enum EntityType {
         return height;
     }
 
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
 }

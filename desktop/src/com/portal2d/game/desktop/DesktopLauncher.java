@@ -12,7 +12,6 @@ public class DesktopLauncher {
 		config.title = TITLE;
 		config.width = VIEWPORT_WIDTH;
 		config.height = VIEWPORT_HEIGHT;
-		//config.fullscreen = true;
 		config.resizable = false;
 		new LwjglApplication(new Portal2D(), config);
 	}

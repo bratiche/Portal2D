@@ -30,7 +30,7 @@ public class TurretRayCast extends RayCast {
         }
 
         if(type == EntityType.PLAYER){
-            turret.shoot(fixture.getBody().getPosition());
+            turret.shoot(entity.getPosition());
         }
 
         hit = true;

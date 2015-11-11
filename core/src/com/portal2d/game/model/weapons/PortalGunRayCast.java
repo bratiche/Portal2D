@@ -69,33 +69,15 @@ public class PortalGunRayCast extends RayCast {
         Portal portal = portalGun.getPortal(color);
 
         if(portal == null) {
-            BodyDef bodyDef = new BodyDef();
-            bodyDef.position.set(position);
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.angle = portalNormal.angleRad();
-
-            Body body = world.createBody(bodyDef);
-
-            CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(PORTAL_RADIUS);
-
-            FixtureDef fixtureDef = new FixtureDef();
-            fixtureDef.shape = circleShape;
-            fixtureDef.isSensor = true;
-
-            body.createFixture(fixtureDef);
-
-            portal = new Portal(level, body, color);
-            portal.setNormal(portalNormal);
+            portal = new Portal(level, position, color, portalNormal);
 
             level.add(portal);
-
             portalGun.setPortal(portal);
             portalGun.linkPortals();
         }
         else{
+            portal.setPosition(position);
             portal.setNormal(portalNormal);
-            portal.setTransform(position, portalNormal.angleRad());
         }
     }
 

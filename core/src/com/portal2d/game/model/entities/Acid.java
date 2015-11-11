@@ -1,6 +1,8 @@
 package com.portal2d.game.model.entities;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.portal2d.game.model.level.Level;
 
 /**
@@ -8,8 +10,17 @@ import com.portal2d.game.model.level.Level;
  */
 public class Acid extends StaticEntity {
 
-    public Acid(Level level, Body body) {
-        super(level, body, EntityType.ACID);
+    public Acid(Level level, Vector2 position, float width, float height) {
+        super(level, position, EntityType.ACID);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2 , height / 2 );
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        body.createFixture(fixtureDef);
+
+        shape.dispose();
     }
 
     @Override

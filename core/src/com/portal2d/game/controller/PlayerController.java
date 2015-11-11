@@ -50,7 +50,6 @@ public class PlayerController extends InputAdapter {
     public void handleInput() {
 
         if(player.isDead()) {
-            System.out.println("GG WP"); //
             return;
         }
 
@@ -153,7 +152,7 @@ public class PlayerController extends InputAdapter {
 
         // jump, but only when grounded
         if (jump) {
-            //jump = false; //-> to jump like a rabbit!!
+            jump = false;
             if (grounded) {
                 playerBody.setLinearVelocity(velocity.x, 0);
                 playerBody.setTransform(position.x, position.y + 0.01f, 0);
@@ -261,7 +260,6 @@ public class PlayerController extends InputAdapter {
 
         playerBody = player.getBody();
         playerPhysicsFixture = playerBody.getFixtureList().get(0);
-        player.setFacingRight(true);
     }
 
 }

@@ -41,7 +41,7 @@ public class Level {
     // To add and remove entities
     private PlayState playState;
 
-    public Level(World world, LevelName levelName, PlayState playState) {
+    public Level(LevelName levelName, World world, PlayState playState) {
         this.world = world;
         this.levelName = levelName;
         this.playState = playState;

@@ -1,10 +1,9 @@
 package com.portal2d.game.model.entities;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.portal2d.game.model.level.Level;
 
-import static com.badlogic.gdx.physics.box2d.BodyDef.BodyType.*;
+import static com.badlogic.gdx.physics.box2d.BodyDef.BodyType.DynamicBody;
 import static com.portal2d.game.model.ModelConstants.TERMINAL_VELOCITY;
 
 /**
@@ -12,8 +11,8 @@ import static com.portal2d.game.model.ModelConstants.TERMINAL_VELOCITY;
  */
 public abstract class DynamicEntity extends Entity {
 
-    public DynamicEntity(Level level, Body body, EntityType type) {
-        super(level, body, type);
+    public DynamicEntity(Level level, Vector2 position, EntityType type) {
+        super(level, position, type);
         body.setType(DynamicBody);
     }
 

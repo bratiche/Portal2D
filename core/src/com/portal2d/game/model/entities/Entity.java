@@ -20,16 +20,30 @@ public abstract class Entity {
 
     protected EntityType type;
 
-    protected Entity(Level level, BodyDef bodyDef, EntityType type) {
-        this(level, level.getWorld().createBody(bodyDef), type);
-    }
-
-    /** Constructs an Entity with the given body */
+    /**
+     * Constructs an Entity with the given body
+     * @deprecated
+     */
     protected Entity(Level level, Body body, EntityType type) {
         this.type = type;
         this.body = body;
         this.level = level;
         this.world = level.getWorld();
+        body.setUserData(this);
+    }
+
+    /** Creates an Entity at the specified position */
+    protected Entity(Level level, Vector2 position, EntityType type) {
+        this.level = level;
+        this.world = level.getWorld();
+        this.type = type;
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(position);
+
+        body = world.createBody(bodyDef);
+
+        //TODO fixtures as user data
         body.setUserData(this);
     }
 
