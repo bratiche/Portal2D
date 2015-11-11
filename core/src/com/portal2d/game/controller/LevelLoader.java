@@ -6,20 +6,19 @@ import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
 import com.portal2d.game.Portal2D;
-import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.PortableSurface;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
+import com.portal2d.game.model.level.LevelObserver;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.portal2d.game.view.ViewConstants.PPM;
 import static com.portal2d.game.model.ModelConstants.*;
+import static com.portal2d.game.view.ViewConstants.PPM;
 
 /**
  * Helper class for loading levels and creating entities from tmx files (TiledMaps).
@@ -37,9 +36,9 @@ public class LevelLoader {
      * @param levelName the name of the level to load
      * @return the specified level
      */
-    public Level loadLevel(LevelName levelName, World world, PlayState playState) {
+    public Level loadLevel(LevelName levelName, LevelObserver...observers) {
         TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
-        Level level = new Level(levelName, world, playState);
+        Level level = new Level(levelName, observers);
         createLevel(tiledMap, level);
         return level;
     }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.Portal2D;
 import com.portal2d.game.controller.GameStateManager;
 import com.portal2d.game.controller.LevelLoader;
@@ -20,6 +19,7 @@ import com.portal2d.game.model.entities.portals.Portal;
 import com.portal2d.game.model.interactions.RayCast;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
+import com.portal2d.game.model.level.LevelObserver;
 import com.portal2d.game.model.weapons.GravityGunQuery;
 import com.portal2d.game.view.entities.*;
 import com.portal2d.game.view.scenes.PlayScene;
@@ -28,14 +28,11 @@ import com.portal2d.game.view.weapons.PortalGunView;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.portal2d.game.model.ModelConstants.Box2D.*;
-
 /**
  * Main state of the game.
  */
-public class PlayState extends GameState {
+public class PlayState extends GameState implements LevelObserver {
 
-    private World world;
     private Level level;
     private LevelLoader levelLoader;
 
@@ -61,7 +58,6 @@ public class PlayState extends GameState {
         entities = new HashMap<Entity, EntityView>();
 
         // Create world and level loader
-        world = new World(DEFAULT_GRAVITY, true);
         levelLoader = new LevelLoader();
 
         // Create view and controller
@@ -112,11 +108,8 @@ public class PlayState extends GameState {
     @Override
     public void update(float dt) {
 
-        // Physics update
-        world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
         // States/interactions update
-        level.update();
+        level.update(dt);
 
         if(level.getPlayer().isDead()) {
             restartLevel();
@@ -141,7 +134,7 @@ public class PlayState extends GameState {
         if (debug) {
             //drawGrabRange();
             drawPortalGunRayCast();
-            box2DDebugRenderer.render(world, scene.getBox2DCamera().combined);
+            box2DDebugRenderer.render(level.getWorld(), scene.getBox2DCamera().combined);
         }
 
     }
@@ -159,72 +152,13 @@ public class PlayState extends GameState {
 
         // Set new level
         scene.clearViews();
-        level = levelLoader.loadLevel(nextLevel, world, this);
+        level = levelLoader.loadLevel(nextLevel, this);
         scene.setTiledMap(Portal2D.assets.getTiledMap(level.getLevelName()));
         playerController.setLevel(level);
     }
 
     public OrthographicCamera getBox2DCamera() {
         return scene.getBox2DCamera();
-    }
-
-    public void add(Box box) {
-        BoxView boxView = new BoxView(box);
-        scene.addView(boxView);
-        entities.put(box, boxView);
-    }
-
-    public void add(Exit exit) {
-        ExitView exitView = new ExitView(exit);
-        scene.addView(exitView);
-        entities.put(exit, exitView);
-    }
-
-    public void add(Gate gate) {
-        GateView gateView = new GateView(gate);
-        scene.addView(gateView);
-        entities.put(gate, gateView);
-    }
-
-    public void add(Portal portal) {
-        PortalView portalView = new PortalView(portal);
-        scene.addView(portalView);
-        entities.put(portal, portalView);
-    }
-
-    public void add(Player player) {
-        PlayerView playerView = new PlayerView(player);
-        PortalGunView portalGunView = new PortalGunView(player.getPortalGun());
-        scene.addView(playerView, portalGunView);
-        entities.put(player, playerView);
-    }
-
-    public void add(Button button) {
-        ButtonView buttonView = new ButtonView(button);
-        scene.addView(new ButtonView(button));
-        entities.put(button, buttonView);
-    }
-
-    public void add(Bullet bullet) {
-        BulletView bulletView = new BulletView(bullet);
-        scene.addView(bulletView);
-        entities.put(bullet, bulletView);
-    }
-
-    public void add(Turret turret) {
-        TurretView turretView = new TurretView(turret);
-        scene.addView(turretView);
-        entities.put(turret, turretView);
-    }
-
-    public void add(Acid acid) {
-        AcidView acidView = new AcidView(acid);
-        scene.addView(new AcidView(acid));
-        entities.put(acid, acidView);
-    }
-
-    public void remove(Entity entity) {
-        scene.removeView(entities.get(entity));
     }
 
     //TESTEO
@@ -258,6 +192,87 @@ public class PlayState extends GameState {
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
         debugRenderer.rect(lowerX, lowerY, upperX - lowerX, upperY - lowerY);
         debugRenderer.end();
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+
+        switch (entity.getType()) {
+            case PLAYER:
+                PlayerView playerView = new PlayerView((Player) entity);
+                PortalGunView portalGunView = new PortalGunView(((Player)entity).getPortalGun());
+                entities.put(entity, playerView);
+                scene.addView(playerView, portalGunView);
+                break;
+            case PORTAL:
+                PortalView portalView = new PortalView((Portal) entity);
+                entities.put(entity, portalView);
+                scene.addView(portalView);
+                break;
+            case BOX:
+                BoxView boxView = new BoxView((Box) entity);
+                scene.addView(boxView);
+                entities.put(entity, boxView);
+                break;
+            case EXIT:
+                ExitView exitView = new ExitView((Exit) entity);
+                scene.addView(exitView);
+                entities.put(entity, exitView);
+                break;
+            case GATE:
+                GateView gateView = new GateView((Gate) entity);
+                scene.addView(gateView);
+                entities.put(entity, gateView);
+                break;
+            case BUTTON:
+                ButtonView buttonView = new ButtonView((Button) entity);
+                scene.addView(buttonView);
+                entities.put(entity, buttonView);
+                break;
+            case BULLET:
+                BulletView bulletView = new BulletView((Bullet) entity);
+                scene.addView(bulletView);
+                entities.put(entity, bulletView);
+                break;
+            case TURRET:
+                TurretView turretView = new TurretView((Turret) entity);
+                scene.addView(turretView);
+                entities.put(entity, turretView);
+                break;
+            case ACID:
+                AcidView acidView = new AcidView((Acid) entity);
+                scene.addView(acidView);
+                entities.put(entity, acidView);
+                break;
+            case SURFACE:
+                //System.out.println("No surface view");
+                break;
+            case PORTABLE_SURFACE:
+                //System.out.println("No portable surface view");
+                break;
+            default:
+                throw new NoSuchEntityException("Unknown type: " + entity.getType());
+        }
+
+        System.out.println("Entity added: " + entity.getType());
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+        scene.removeView(entities.get(entity));
+        entities.remove(entity);
+
+        System.out.println("Entity removed: " + entity.getType());
+    }
+
+    //TODO: move to it's own class
+    public class NoSuchEntityException extends RuntimeException {
+        public NoSuchEntityException() {
+            super();
+        }
+        public NoSuchEntityException(String message) {
+            super(message);
+        }
     }
 
 }

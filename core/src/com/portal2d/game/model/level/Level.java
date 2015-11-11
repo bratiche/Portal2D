@@ -2,24 +2,23 @@ package com.portal2d.game.model.level;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import com.portal2d.game.controller.states.PlayState;
-import com.portal2d.game.model.entities.*;
-import com.portal2d.game.model.entities.enemies.Bullet;
-import com.portal2d.game.model.entities.enemies.Turret;
-import com.portal2d.game.model.entities.portals.PortableSurface;
-import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.ModelConstants;
+import com.portal2d.game.model.entities.Entity;
+import com.portal2d.game.model.entities.Exit;
+import com.portal2d.game.model.entities.Player;
+import com.portal2d.game.model.entities.Projectile;
 import com.portal2d.game.model.interactions.GameContactListener;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+
+import static com.portal2d.game.model.ModelConstants.Box2D.POSITION_ITERATIONS;
+import static com.portal2d.game.model.ModelConstants.Box2D.VELOCITY_ITERATIONS;
 
 /**
  * Container for all game objects.
  */
-public class Level {
+public class Level extends Observable {
 
     // Level properties
     private LevelName levelName;
@@ -33,31 +32,31 @@ public class Level {
     private Set<Entity> entities;
     private Set<Projectile> projectiles;
 
-    // Queues
-    private Map<Entity, Portal> teleportQueue;
     private Set<Entity> entitiesToRemove;
     private Set<Projectile> projectilesToRemove;
 
-    // To add and remove entities
-    private PlayState playState;
-
-    public Level(LevelName levelName, World world, PlayState playState) {
-        this.world = world;
+    public Level(LevelName levelName, LevelObserver...observers) {
+        super(observers);
         this.levelName = levelName;
-        this.playState = playState;
 
         entities = new HashSet<Entity>();
         projectiles = new HashSet<Projectile>();
-        teleportQueue = new HashMap<Entity, Portal>();
         entitiesToRemove = new HashSet<Entity>();
         projectilesToRemove = new HashSet<Projectile>();
+
+        world = new World(ModelConstants.Box2D.DEFAULT_GRAVITY, true);
 
         world.setContactListener(GameContactListener.getInstance());
     }
 
-    public void update() {
+    public void update(float dt) {
 
-        // Update player
+        // Physics update
+        world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+        // States/Interactions update
+
+        //Update player
         player.update();
 
         // Update all other entities
@@ -69,41 +68,27 @@ public class Level {
             projectile.update();
         }
 
-        // Queue processing
-        for(Map.Entry<Entity,Portal> entry : teleportQueue.entrySet()) {
-            Entity entity = entry.getKey();
-            Portal portal = entry.getValue();
-            portal.receive(entity);
+        if(!entitiesToRemove.isEmpty() || !projectilesToRemove.isEmpty()) {
+            removeEntities();
         }
 
-        removeEntities();
-
         // Queue clearing
-        teleportQueue.clear();
         entitiesToRemove.clear();
         projectilesToRemove.clear();
 
     }
 
     public void removeAllEntities() {
-        // Destroy all bodies
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
+        System.out.println("removing all");
 
-        System.out.println(bodies.size);
-
-        for(int i = 0; i < bodies.size; i++) {
-            Body body = bodies.get(i);
-            world.destroyBody(body);
-        }
-
-        // Remove entities
+        // Remove all entities
+        entitiesToRemove.addAll(entities);
         entities.clear();
-        projectiles.clear();
-    }
 
-    public void addTeleportQueue(Entity entity, Portal portal){
-        teleportQueue.put(entity, portal);
+        projectilesToRemove.addAll(projectiles);
+        projectiles.clear();
+
+        removeEntities();
     }
 
     public void addToRemove(Entity entity) {
@@ -114,72 +99,36 @@ public class Level {
         projectilesToRemove.add(projectile);
     }
 
+    public void add(Entity entity) {
+        entities.add(entity);
+        notifyObservers(entity, true);
+    }
+
+    public void add(Projectile projectile) {
+        projectiles.add(projectile);
+        notifyObservers(projectile, true);
+    }
+
     public void add(Player player) {
         this.player = player;
-        playState.add(player);
-    }
-
-    public void add(Box box) {
-        entities.add(box);
-        playState.add(box);
-    }
-
-    public void add(Exit exit) {
-        entities.add(exit);
-        playState.add(exit);
-    }
-
-    public void add(Gate gate) {
-        entities.add(gate);
-        playState.add(gate);
-    }
-
-    public void add(Portal portal) {
-        entities.add(portal);
-        playState.add(portal);
-    }
-
-    public void add(Button button) {
-        entities.add(button);
-        playState.add(button);
-    }
-
-    public void add(Bullet bullet) {
-        projectiles.add(bullet);
-        playState.add(bullet);
-    }
-
-    public void add(Turret turret) {
-        entities.add(turret);
-        playState.add(turret);
-    }
-
-    public void add(Acid acid) {
-        entities.add(acid);
-        playState.add(acid);
-    }
-
-    public void add(Surface surface) {
-        entities.add(surface);
-    }
-
-    public void add(PortableSurface surface) {
-        entities.add(surface);
+        notifyObservers(player, true);
     }
 
     private void removeEntities() {
         for(Entity entity : entitiesToRemove) {
-            playState.remove(entity);
             Body body = entity.getBody();
             world.destroyBody(body);
             entities.remove(entity);
+            notifyObservers(entity, false);
         }
+        entitiesToRemove.clear();
         for(Projectile projectile : projectilesToRemove) {
-            playState.remove(projectile);
             Body body = projectile.getBody();
             world.destroyBody(body);
             projectiles.remove(projectile);
+            notifyObservers(projectile, false);
         }
+        projectilesToRemove.clear();
     }
 
     public Player getPlayer() {

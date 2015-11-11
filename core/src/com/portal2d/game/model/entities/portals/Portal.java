@@ -9,7 +9,9 @@ import com.portal2d.game.model.entities.StaticEntity;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.weapons.PortalGun;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static com.portal2d.game.model.ModelConstants.PORTAL_RADIUS;
@@ -26,11 +28,8 @@ public class Portal extends StaticEntity {
 
     private Vector2 normal;
 
-    // Velocity when the entity enters the portal.
-    private Vector2 entityVelocity;
-
-    // This set is used to store entities when the portals are not linked
-    private Set<Entity> entitiesToSend;
+    /** Entities to send / Their velocities when they touch a portal*/
+    private Map<Entity, Vector2> entities;
 
     public Portal(Level level, Vector2 position, PortalColor color, Vector2 normal) {
         super(level, position, EntityType.PORTAL);
@@ -38,8 +37,7 @@ public class Portal extends StaticEntity {
         this.normal = new Vector2();
         setNormal(normal);
 
-        entityVelocity = new Vector2();
-        entitiesToSend = new HashSet<Entity>();
+        entities = new HashMap<>();
 
         CircleShape shape = new CircleShape();
         shape.setRadius(PORTAL_RADIUS);
@@ -56,13 +54,7 @@ public class Portal extends StaticEntity {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        if(isLinked()) {
-            entityVelocity.set(entity.getLinearVelocity());
-            level.addTeleportQueue(entity, oppositePortal);
-        }
-        else {
-            entitiesToSend.add(entity); // The entity will be sent when this portal gets linked to another portal
-        }
+        entities.put(entity, new Vector2(entity.getLinearVelocity()));
     }
 
     @Override
@@ -70,15 +62,33 @@ public class Portal extends StaticEntity {
         entity.endInteraction(this);
 
         if(!isLinked()) {
-            entitiesToSend.remove(entity);
+            System.out.println("removed: " + entity.getType());
+            entities.remove(entity);
         }
+    }
+
+    @Override
+    public void update() {
+        if(isLinked()) {
+            sendAll();
+        }
+    }
+
+    private void sendAll() {
+        for(Map.Entry<Entity, Vector2> entry : entities.entrySet()) {
+            Entity entity = entry.getKey();
+            Vector2 velocity = entry.getValue();
+            oppositePortal.receive(entity, velocity);
+        }
+
+        entities.clear();
     }
 
     /**
      * Changes the position and velocity of an Entity.
      * @param entity the entity received.
      */
-    public void receive(Entity entity) {
+    private void receive(Entity entity, Vector2 velocity) {
 
         EntityType entityType = entity.getType();
 
@@ -89,7 +99,7 @@ public class Portal extends StaticEntity {
         entity.setPosition(position);
 
         // Calculate the new velocity
-        Vector2 currentVelocity = oppositePortal.entityVelocity;
+        Vector2 currentVelocity = new Vector2(velocity);  // TODO: remove
 
         // This is to avoid the player gaining momentum by increasing it's velocity. (cheating)
         currentVelocity.scl(Math.abs(oppositePortal.normal.x), Math.abs(oppositePortal.normal.y));
@@ -115,15 +125,9 @@ public class Portal extends StaticEntity {
         setAngle(normal.angleRad());
     }
 
+    /** "Link portals"*/
     public void setOppositePortal(Portal portal){
         this.oppositePortal = portal;
-
-        // Sends all the entities that were touching this portal before it was linked
-        for(Entity entity : entitiesToSend) {
-            level.addTeleportQueue(entity, oppositePortal);
-        }
-
-        entitiesToSend.clear();
     }
 
     public PortalColor getColor(){
