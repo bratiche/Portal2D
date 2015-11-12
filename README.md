@@ -1,6 +1,6 @@
 # Portal2D
 
-#Para ejecutar este programma es necesario :
+#Para ejecutar este programa es necesario :
   Tener instalado el gestor de dependencias Gradle.
   Una vez construido el proyecto con Gradle, ejecutar el archivo DesktopLauncher.java ubicado en el paquete desktop\src\com\portal2d\game\desktop
   
