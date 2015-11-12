@@ -57,8 +57,6 @@ public class PortalGunRayCast extends RayCast {
             hitPortableSurface = false;
         }
 
-        System.out.println("HIT ON: " + type );
-
         return fraction; // terminates the ray cast on the closest hit
     }
 

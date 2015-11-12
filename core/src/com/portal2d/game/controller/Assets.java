@@ -56,6 +56,7 @@ public class Assets implements Disposable {
         textures.put(TextureName.BLUE_PORTAL, new Texture(Gdx.files.internal("core/assets/sprites/blue_portal.png")));
         textures.put(TextureName.ORANGE_PORTAL, new Texture(Gdx.files.internal("core/assets/sprites/orange_portal.png")));
         textures.put(TextureName.SPRITE_TURRET, new Texture(Gdx.files.internal("core/assets/sprites/turret.png")));
+        textures.put(TextureName.SPRITE_BULLET, new Texture(Gdx.files.internal("core/assets/sprites/potato_bullet.png")));
     }
 
     public void createFonts() {

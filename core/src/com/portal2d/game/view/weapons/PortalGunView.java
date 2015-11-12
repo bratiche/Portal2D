@@ -29,7 +29,7 @@ public class PortalGunView extends WeaponView<PortalGun> {
         width = regions[0][0].getRegionWidth();
         height = regions[0][0].getRegionHeight();
 
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("core/assets/sprites/empty-cursor.png"));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("core/assets/sprites/empty_cursor.png"));
         Cursor empty = Gdx.graphics.newCursor(pixmap, width / 2, height / 2);
         pixmap.dispose();
         Gdx.graphics.setCursor(empty);

@@ -15,7 +15,6 @@ public interface ViewConstants {
     enum TextureName {
         PORTAL2D_LOGO,
         MENU_BG,
-        BG1,
         SPRITE_BOX,
         SPRITE_BUTTON,
         SPRITE_EXIT,

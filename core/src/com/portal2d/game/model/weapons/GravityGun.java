@@ -83,6 +83,11 @@ public class GravityGun implements Weapon {
         return grabbedEntity != null;
     }
 
+    /** Returns true if the given entity is the same as the {@link #grabbedEntity} */
+    public boolean hasEntityGrabbed(Entity entity) {
+        return hasEntityGrabbed() && grabbedEntity == entity;
+    }
+
     /** @see GravityGunQuery#queryAABB() */
     public void queryAABB() {
         query.queryAABB();

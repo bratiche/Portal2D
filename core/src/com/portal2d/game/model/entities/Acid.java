@@ -3,6 +3,7 @@ package com.portal2d.game.model.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.level.Level;
 
 /**
@@ -26,7 +27,7 @@ public class Acid extends StaticEntity {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        level.addToRemove(entity);
+        //System.out.println(entity.getType() + " touched Acid");
     }
 
     @Override
@@ -34,8 +35,22 @@ public class Acid extends StaticEntity {
         entity.endInteraction(this);
     }
 
+    /**
+     * Override for every entity that can be removed
+     */
+
     @Override
     public void beginInteraction(Player player) {
         player.die();
+    }
+
+    @Override
+    public void beginInteraction(Box box) {
+        level.addToRemove(box);
+    }
+
+    @Override
+    public void beginInteraction(Bullet bullet) {
+        level.addToRemove(bullet);
     }
 }

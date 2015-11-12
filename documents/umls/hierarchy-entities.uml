@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.portal2d.game.model.entities</OriginalElement>
+  <nodes>
+    <node x="2578.5" y="1503.5">com.portal2d.game.model.entities.portals.PortableSurface</node>
+    <node x="1424.5" y="1159.0">com.portal2d.game.model.entities.Exit</node>
+    <node x="0.0" y="1049.0">com.portal2d.game.model.entities.Player</node>
+    <node x="2595.5" y="1159.0">com.portal2d.game.model.entities.Surface</node>
+    <node x="826.75" y="0.0">com.portal2d.game.model.entities.Entity</node>
+    <node x="706.0" y="1192.0">com.portal2d.game.model.entities.Projectile</node>
+    <node x="1160.5" y="1181.5">com.portal2d.game.model.entities.Acid</node>
+    <node x="2941.5" y="916.0">com.portal2d.game.model.entities.Switchable</node>
+    <node x="512.0" y="927.0">com.portal2d.game.model.entities.DynamicEntity</node>
+    <node x="1704.5" y="1049.0">com.portal2d.game.model.entities.portals.Portal</node>
+    <node x="652.5" y="1481.5">com.portal2d.game.model.entities.enemies.Bullet</node>
+    <node x="462.0" y="1192.5">com.portal2d.game.model.entities.Box</node>
+    <node x="2805.5" y="1115.0">com.portal2d.game.model.entities.Gate</node>
+    <node x="971.5" y="1203.5">com.portal2d.game.model.entities.Switch</node>
+    <node x="2168.5" y="1071.0">com.portal2d.game.model.entities.enemies.Turret</node>
+    <node x="936.5" y="1459.0">com.portal2d.game.model.entities.Button</node>
+    <node x="1864.5" y="927.0">com.portal2d.game.model.entities.StaticEntity</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.portal2d.game.model.entities.StaticEntity" target="com.portal2d.game.model.entities.Entity">
+      <point x="0.0" y="-25.5" />
+      <point x="1926.5" y="891.0" />
+      <point x="1462.0" y="891.0" />
+      <point x="211.75" y="433.0" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Player" target="com.portal2d.game.model.entities.DynamicEntity">
+      <point x="0.0" y="-180.0" />
+      <point x="221.0" y="1029.0" />
+      <point x="532.6666666666665" y="1029.0" />
+      <point x="-41.333333333333485" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Button" target="com.portal2d.game.model.entities.Switch">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.DynamicEntity" target="com.portal2d.game.model.entities.Entity">
+      <point x="0.0" y="-25.5" />
+      <point x="574.0" y="891.0" />
+      <point x="1038.5" y="891.0" />
+      <point x="-211.75" y="433.0" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.portals.Portal" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="0.0" y="-180.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Surface" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="0.0" y="-70.0" />
+      <point x="2690.5" y="1019.0" />
+      <point x="1961.9285714285713" y="1019.0" />
+      <point x="35.42857142857133" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Acid" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="0.0" y="-47.5" />
+      <point x="1282.5" y="1019.0" />
+      <point x="1891.0714285714287" y="1019.0" />
+      <point x="-35.42857142857133" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Gate" target="com.portal2d.game.model.entities.Switchable">
+      <point x="71.5" y="-114.0" />
+      <point x="0.0" y="36.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.enemies.Bullet" target="com.portal2d.game.model.entities.Projectile">
+      <point x="0.0" y="-58.5" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Box" target="com.portal2d.game.model.entities.DynamicEntity">
+      <point x="0.0" y="-36.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Exit" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="0.0" y="-70.0" />
+      <point x="1554.5" y="1029.0" />
+      <point x="1908.7857142857142" y="1029.0" />
+      <point x="-17.71428571428578" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Gate" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="-71.5" y="-114.0" />
+      <point x="2877.0" y="1009.0" />
+      <point x="1979.642857142857" y="1009.0" />
+      <point x="53.14285714285711" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Projectile" target="com.portal2d.game.model.entities.DynamicEntity">
+      <point x="0.0" y="-37.0" />
+      <point x="784.5" y="1029.0" />
+      <point x="615.3333333333335" y="1029.0" />
+      <point x="41.333333333333485" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.enemies.Turret" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="0.0" y="-158.0" />
+      <point x="2372.0" y="1029.0" />
+      <point x="1944.2142857142858" y="1029.0" />
+      <point x="17.71428571428578" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.Switch" target="com.portal2d.game.model.entities.StaticEntity">
+      <point x="0.0" y="-25.5" />
+      <point x="1056.0" y="1009.0" />
+      <point x="1873.357142857143" y="1009.0" />
+      <point x="-53.14285714285711" y="25.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.entities.portals.PortableSurface" target="com.portal2d.game.model.entities.Surface">
+      <point x="0.0" y="-36.5" />
+      <point x="0.0" y="70.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.49663353638986857" x="1549.5" y="690.8837959974177" />
+  <SelectedNodes>
+    <node>com.portal2d.game.model.entities.StaticEntity</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

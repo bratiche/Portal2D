@@ -22,6 +22,7 @@ import static com.portal2d.game.model.ModelConstants.Box2D.VELOCITY_ITERATIONS;
 public class Level extends Observable {
 
     private World world;
+    private GameContactListener contactListener = GameContactListener.getInstance();
 
     // Level properties
     private LevelName levelName;
@@ -47,7 +48,7 @@ public class Level extends Observable {
 
         world = new World(ModelConstants.Box2D.DEFAULT_GRAVITY, true);
 
-        world.setContactListener(GameContactListener.getInstance());
+        world.setContactListener(contactListener);
     }
 
     public void update(float dt) {
@@ -56,11 +57,8 @@ public class Level extends Observable {
         world.step(dt, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
         // States/Interactions update
-
-        //Update player
         player.update();
 
-        // Update all other entities
         for(Entity entity : entities) {
             entity.update();
         }
@@ -72,10 +70,6 @@ public class Level extends Observable {
         if(!entitiesToRemove.isEmpty() || !projectilesToRemove.isEmpty()) {
             removeEntities();
         }
-
-        // Queue clearing
-        entitiesToRemove.clear();
-        projectilesToRemove.clear();
 
     }
 
@@ -91,10 +85,15 @@ public class Level extends Observable {
     }
 
     public void addToRemove(Entity entity) {
-        if(!entities.contains(entity)) {
-            throw new NoSuchElementException("The entity is not contained in this level");
+        if(entity == player) {
+            player.die();
         }
-        entitiesToRemove.add(entity);
+        else if(!entities.contains(entity)) {
+            throw new NoSuchElementException("The entity is not contained in this level " + entity.getType());
+        }
+        else {
+            entitiesToRemove.add(entity);
+        }
     }
 
     public void addToRemove(Projectile projectile) {
@@ -124,6 +123,11 @@ public class Level extends Observable {
 
     private void removeEntities() {
         for(Entity entity : entitiesToRemove) {
+            //if the entity to remove was grabbed by the player, destroy the joint first.
+            if(player.getPortalGun().hasEntityGrabbed(entity)) {
+                System.out.println(entity.getType() + " DROPPED before removal");
+                player.getPortalGun().dropEntity();
+            }
             Body body = entity.getBody();
             world.destroyBody(body);
             entities.remove(entity);

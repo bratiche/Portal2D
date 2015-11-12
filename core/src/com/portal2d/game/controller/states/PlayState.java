@@ -129,6 +129,12 @@ public class PlayState extends GameState implements LevelObserver {
         }
     }
 
+    @Override
+    public void leaving() {
+        // Sets back the new cursor
+        Gdx.graphics.setCursor(null);
+    }
+
     private void restartLevel() {
         level.removeAllEntities();
         goToLevel(level.getLevelName());

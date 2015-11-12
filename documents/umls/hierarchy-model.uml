@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.portal2d.game.model.interactions</OriginalElement>
+  <nodes>
+    <node x="-62.66832594750315" y="621.4732924194495">com.portal2d.game.model.weapons.PortalGun</node>
+    <node x="-1491.769098366876" y="-14.50150893508075">com.portal2d.game.model.interactions.GameContactListener</node>
+    <node x="-1083.6815847354692" y="-14.453526383281343">com.portal2d.game.model.interactions.RayCast</node>
+    <node x="-957.9315847354691" y="241.5464736167186">com.portal2d.game.model.weapons.PortalGunRayCast</node>
+    <node x="1331.6947935368044" y="5.456612806702424">com.portal2d.game.model.level.LevelName</node>
+    <node x="464.0" y="0.0">com.portal2d.game.model.level.Level</node>
+    <node x="-1114.9315847354692" y="285.5464736167187">com.portal2d.game.model.entities.enemies.TurretRayCast</node>
+    <node x="-534.9738008002269" y="153.76367050805797">com.portal2d.game.model.weapons.GravityGunQuery</node>
+    <node x="-81.88084112149545" y="146.90420560747665">com.portal2d.game.model.weapons.GravityGun</node>
+    <node x="0.6191588785045496" y="1.904205607476655">com.portal2d.game.model.weapons.Weapon</node>
+    <node x="-1474.8521463461648" y="187.97861352079786">com.portal2d.game.model.interactions.Spring</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.portal2d.game.model.entities.enemies.TurretRayCast" target="com.portal2d.game.model.interactions.RayCast">
+      <point x="0.0" y="-37.0" />
+      <point x="-1046.4315847354692" y="216.5464736167186" />
+      <point x="-1010.1815847354691" y="216.5464736167186" />
+      <point x="-73.5" y="103.0" />
+    </edge>
+    <edge source="com.portal2d.game.model.weapons.GravityGun" target="com.portal2d.game.model.weapons.Weapon">
+      <point x="0.0" y="-191.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="com.portal2d.game.model.weapons.PortalGunRayCast" target="com.portal2d.game.model.interactions.RayCast">
+      <point x="0.0" y="-81.0" />
+      <point x="-826.9315847354691" y="216.5464736167186" />
+      <point x="-863.1815847354691" y="216.5464736167186" />
+      <point x="73.5" y="103.0" />
+    </edge>
+    <edge source="com.portal2d.game.model.weapons.PortalGun" target="com.portal2d.game.model.weapons.GravityGun">
+      <point x="0.0" y="-158.0" />
+      <point x="0.0" y="191.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.5251533742331287" x="-43.86331775700887" y="384.7231308411217" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

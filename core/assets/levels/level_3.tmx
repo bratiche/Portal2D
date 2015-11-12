@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="217">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="224">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
  <imagelayer name="exitview" x="910" y="450">
   <image source="exit.png"/>
  </imagelayer>
+ <imagelayer name="acidview" x="-595" y="607">
+  <image source="acid.png"/>
+ </imagelayer>
  <layer name="non-portal-able" width="20" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYB0CmFIwat6oeZSYN1gxACJcAjE=
+   eJxjZWBgYB0CmFIwat6oeZSYR0qapHYax6cHAA8kAfU=
   </data>
  </layer>
  <layer name="portal-able" width="20" height="12">
@@ -18,6 +21,9 @@
  </layer>
  <objectgroup name="boxes">
   <object id="216" x="352.5" y="460.5" width="55" height="55"/>
+  <object id="221" x="355.167" y="369.833" width="55" height="55"/>
+  <object id="222" x="355.167" y="260.5" width="55" height="55"/>
+  <object id="223" x="353.833" y="187.167" width="55" height="55"/>
  </objectgroup>
  <objectgroup name="player">
   <object id="46" name="player" x="191.333" y="437.334" width="60" height="120"/>
@@ -31,14 +37,17 @@
   </object>
  </objectgroup>
  <objectgroup name="surfaces">
-  <object id="81" x="0" y="600" width="1200" height="120"/>
+  <object id="81" x="0" y="600" width="420" height="120"/>
   <object id="82" x="0" y="120" width="120" height="480"/>
   <object id="85" x="0" y="0" width="1200" height="120"/>
   <object id="86" x="1080" y="120" width="120" height="480"/>
+  <object id="220" x="780" y="600" width="420" height="120"/>
  </objectgroup>
  <objectgroup name="portable-surfaces"/>
  <objectgroup name="gates"/>
- <objectgroup name="acid"/>
+ <objectgroup name="acid">
+  <object id="218" x="420" y="620" width="360" height="100"/>
+ </objectgroup>
  <objectgroup name="turrets">
   <object id="215" x="962" y="220.667" width="60" height="60"/>
  </objectgroup>
