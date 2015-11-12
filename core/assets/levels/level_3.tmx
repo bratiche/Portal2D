@@ -40,6 +40,6 @@
  <objectgroup name="gates"/>
  <objectgroup name="acid"/>
  <objectgroup name="turrets">
-  <object id="215" x="119.333" y="118" width="60" height="60"/>
+  <object id="215" x="962" y="220.667" width="60" height="60"/>
  </objectgroup>
 </map>

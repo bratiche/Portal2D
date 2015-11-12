@@ -10,7 +10,10 @@ import com.portal2d.game.model.entities.portals.*;
 import com.portal2d.game.model.level.Level;
 
 /**
- * Base class for all game entities.
+ * Represents an object that can interact with other objects within the {@link Level}.
+ * Each Entity has a Body which is used for the physics simulation.
+ * @see Body
+ * @see World
  */
 public abstract class Entity {
 
@@ -19,18 +22,6 @@ public abstract class Entity {
 
     protected Body body;
     private EntityType type;
-
-    /**
-     * Constructs an Entity with the given body
-     * @deprecated
-     */
-    protected Entity(Level level, Body body, EntityType type) {
-        this.type = type;
-        this.body = body;
-        this.level = level;
-        this.world = level.getWorld();
-        body.setUserData(this);
-    }
 
     /** Creates an Entity at the specified position */
     protected Entity(Level level, Vector2 position, EntityType type) {

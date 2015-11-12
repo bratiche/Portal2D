@@ -25,7 +25,7 @@ public abstract class DynamicEntity extends Entity {
 
         if(Math.abs(velocity.y) > TERMINAL_VELOCITY) {
             velocity.y = Math.signum(velocity.y) * TERMINAL_VELOCITY;
-            body.setLinearVelocity(velocity.x, velocity.y);
+            setLinearVelocity(velocity.x, velocity.y);
         }
     }
 

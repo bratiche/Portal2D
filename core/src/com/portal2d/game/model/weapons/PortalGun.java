@@ -36,7 +36,7 @@ public class PortalGun extends GravityGun {
             super.actionLeftClick(position);
         }
         else if(raycast.hitPortableSurface()) {
-            raycast.createPortal(PortalColor.BLUE);
+            createPortal(PortalColor.BLUE);
         }
     }
 
@@ -44,7 +44,7 @@ public class PortalGun extends GravityGun {
     @Override
     public void actionRightClick(Vector2 position) {
         if(!hasEntityGrabbed() && raycast.hitPortableSurface()) {
-            raycast.createPortal(PortalColor.ORANGE);
+            createPortal(PortalColor.ORANGE);
         }
     }
 
@@ -57,6 +57,22 @@ public class PortalGun extends GravityGun {
         super.update(position);
         raycast.setRay(owner.getPosition(), position, RAY_CAST_STEP_LENGTH);
         raycast.process();
+    }
+
+    /**
+     * Returns the portal of the specified color.
+     * It may return {@code null} if the portal is not created yet.
+     * @see PortalGunRayCast#createPortal(PortalColor)
+     */
+    public Portal getPortal(PortalColor color) {
+        switch(color) {
+            case BLUE:
+                return bluePortal;
+            case ORANGE:
+                return orangePortal;
+            default:
+                throw new NoSuchElementException(color + " is not a valid PortalColor");
+        }
     }
 
     /** @see PortalGunRayCast#createPortal(PortalColor) */
@@ -74,19 +90,11 @@ public class PortalGun extends GravityGun {
     }
 
     /**
-     * Returns the portal of the specified color.
-     * It may return {@code null} if the portal is not created yet.
+     * Creates a Portal of the specified color
      * @see PortalGunRayCast#createPortal(PortalColor)
      */
-    protected Portal getPortal(PortalColor color) {
-        switch(color) {
-            case BLUE:
-                return bluePortal;
-            case ORANGE:
-                return orangePortal;
-            default:
-                throw new NoSuchElementException(color + " is not a valid PortalColor");
-        }
+    private void createPortal(PortalColor color) {
+        raycast.createPortal(color);
     }
 
     /**
@@ -129,7 +137,6 @@ public class PortalGun extends GravityGun {
         return orangePortal != null && orangePortal.isLinked() && bluePortal != null && bluePortal.isLinked();
     }
 
-    //TESTEO
     public PortalGunRayCast getRayCast() {
         return raycast;
     }

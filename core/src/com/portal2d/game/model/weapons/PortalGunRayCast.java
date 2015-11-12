@@ -16,15 +16,13 @@ import static com.portal2d.game.model.ModelConstants.PORTAL_RADIUS;
  */
 public class PortalGunRayCast extends RayCast {
 
-    private PortalGun portalGun;
     private Level level;
+    private PortalGun portalGun;
 
     private boolean hitPortableSurface;
 
-    // The position to create the portal
-    private Vector2 position;
-    // The normal of the PortableSurface the portal will be on
-    private Vector2 portalNormal;
+    private Vector2 position; // The position to create the portal
+    private Vector2 portalNormal; // The normal of the PortableSurface the portal will be on
 
     public PortalGunRayCast(PortalGun portalGun, Level level){
         super(level.getWorld());
@@ -59,13 +57,15 @@ public class PortalGunRayCast extends RayCast {
             hitPortableSurface = false;
         }
 
+        System.out.println("HIT ON: " + type );
+
         return fraction; // terminates the ray cast on the closest hit
     }
 
     /**
      * Creates a {@link Portal}, or changes it's position and normal if it is already created.
      */
-    public void createPortal(PortalColor color) {
+    protected void createPortal(PortalColor color) {
         Portal portal = portalGun.getPortal(color);
 
         if(portal == null) {
@@ -75,7 +75,7 @@ public class PortalGunRayCast extends RayCast {
             portalGun.setPortal(portal);
             portalGun.linkPortals();
         }
-        else{
+        else {
             portal.setPosition(position);
             portal.setNormal(portalNormal);
         }

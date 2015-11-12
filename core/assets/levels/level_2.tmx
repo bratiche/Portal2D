@@ -28,7 +28,7 @@
   <object id="46" name="player" x="151" y="373" width="60" height="120"/>
  </objectgroup>
  <objectgroup name="buttons">
-  <object id="192" x="1240" y="600" width="120" height="10">
+  <object id="192" x="1080" y="600" width="120" height="10">
    <properties>
     <property name="LinkedEntityID" value="186"/>
    </properties>

@@ -58,8 +58,4 @@ public class SelectLevelState extends GameState {
         scene.render(batch, mouse.x, mouse.y);
     }
 
-    @Override
-    public void leaving() {
-
-    }
 }

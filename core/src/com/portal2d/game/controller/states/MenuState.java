@@ -41,8 +41,4 @@ public class MenuState extends GameState {
         scene.render(batch, mouse.x, mouse.y);
     }
 
-    @Override
-    public void leaving() {
-
-    }
 }

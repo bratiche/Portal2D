@@ -23,7 +23,9 @@ public abstract class GameState {
     }
 
     /** Called right after this state is pushed into the game. */
-    public abstract void entered();
+    public void entered() {
+
+    }
 
     /** Handles this state's input events. */
     public abstract void handleInput();
@@ -43,7 +45,9 @@ public abstract class GameState {
     public abstract void render(SpriteBatch batch);
 
     /** Called right before this state is finished. */
-    public abstract void leaving();
+    public void leaving() {
+
+    }
 
     /** @see Camera#unproject(Vector3) */
     protected void unproject(OrthographicCamera camera) {

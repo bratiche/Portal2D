@@ -26,8 +26,8 @@ public class Portal extends StaticEntity {
     private Vector2 normal;
     private PortalColor color;
 
-    /** Entities to send / Their velocities when they touch a portal*/
-    private Map<Entity, Vector2> entities;
+    /** Entities to send / Their velocities when they touch this portal */
+    private Map<Entity, Vector2> entitiesToSend;
 
     public Portal(Level level, Vector2 position, PortalColor color, Vector2 normal) {
         super(level, position, EntityType.PORTAL);
@@ -35,7 +35,7 @@ public class Portal extends StaticEntity {
         this.normal = new Vector2();
         setNormal(normal);
 
-        entities = new HashMap<Entity, Vector2>();
+        entitiesToSend = new HashMap<Entity, Vector2>();
 
         CircleShape shape = new CircleShape();
         shape.setRadius(PORTAL_RADIUS);
@@ -52,7 +52,7 @@ public class Portal extends StaticEntity {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        entities.put(entity, new Vector2(entity.getLinearVelocity()));
+        entitiesToSend.put(entity, new Vector2(entity.getLinearVelocity()));
     }
 
     @Override
@@ -60,8 +60,7 @@ public class Portal extends StaticEntity {
         entity.endInteraction(this);
 
         if(!isLinked()) {
-            System.out.println("removed: " + entity.getType());
-            entities.remove(entity);
+            entitiesToSend.remove(entity);
         }
     }
 
@@ -72,19 +71,20 @@ public class Portal extends StaticEntity {
         }
     }
 
+    /** Sends all the entities that touched this portal to the {@link #oppositePortal} */
     private void sendAll() {
-        for(Map.Entry<Entity, Vector2> entry : entities.entrySet()) {
+        for(Map.Entry<Entity, Vector2> entry : entitiesToSend.entrySet()) {
             Entity entity = entry.getKey();
             Vector2 velocity = entry.getValue();
             oppositePortal.receive(entity, velocity);
         }
-
-        entities.clear();
+        entitiesToSend.clear();
     }
 
     /**
      * Changes the position and velocity of an Entity.
      * @param entity the entity received.
+     * @param velocity the previous velocity of the entity.
      */
     private void receive(Entity entity, Vector2 velocity) {
 
@@ -97,7 +97,7 @@ public class Portal extends StaticEntity {
         entity.setPosition(position);
 
         // Calculate the new velocity
-        Vector2 currentVelocity = new Vector2(velocity);  // TODO: remove
+        Vector2 currentVelocity = new Vector2(velocity);
 
         // This is to avoid the player gaining momentum by increasing it's velocity. (cheating)
         currentVelocity.scl(Math.abs(oppositePortal.normal.x), Math.abs(oppositePortal.normal.y));
@@ -105,7 +105,7 @@ public class Portal extends StaticEntity {
         Vector2 newVelocity = new Vector2(normal.x * currentVelocity.len(), normal.y * currentVelocity.len());
 
         // Cap minimum velocity
-        if(Math.abs(newVelocity.x) < normal.x * 2f || Math.abs(newVelocity.y) < normal.y * 2f) {
+        if(Math.abs(newVelocity.x) < normal.x * 2.0f || Math.abs(newVelocity.y) < normal.y * 2.0f) {
             newVelocity.set(normal.x * 2.0f, normal.y * 2.0f);
         }
 
@@ -123,8 +123,11 @@ public class Portal extends StaticEntity {
         setAngle(normal.angleRad());
     }
 
-    /** "Link portals"*/
+    /** Links this portal with the specified portal */
     public void setOppositePortal(Portal portal){
+        if(portal == null) {
+            throw new NullPointerException("Portal cannot be null");
+        }
         this.oppositePortal = portal;
     }
 
@@ -135,6 +138,11 @@ public class Portal extends StaticEntity {
     /** Returns true if this portal is linked to another portal. */
     public boolean isLinked() {
         return oppositePortal != null;
+    }
+
+    /** Returns true if the list of entities to send is not empty. */
+    public boolean hasEntitiesToSend() {
+        return !entitiesToSend.isEmpty();
     }
 
 }

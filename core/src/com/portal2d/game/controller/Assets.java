@@ -10,10 +10,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Disposable;
 import com.portal2d.game.model.level.LevelName;
 
-import static com.portal2d.game.view.ViewConstants.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.portal2d.game.view.ViewConstants.FontName;
+import static com.portal2d.game.view.ViewConstants.TextureName;
 
 /**
  * Class that manages game resources (images, tmx files, etc)
@@ -51,7 +52,6 @@ public class Assets implements Disposable {
         textures.put(TextureName.ANIM_GATE, new Texture(Gdx.files.internal("core/assets/sprites/gate.png")));
         textures.put(TextureName.SPRITE_BUTTON, new Texture(Gdx.files.internal("core/assets/sprites/button.png")));
         textures.put(TextureName.ANIM_PLAYER, new Texture(Gdx.files.internal("core/assets/sprites/player.png")));
-        //textures.put(TextureName.BG1, new Texture(Gdx.files.internal("core/assets/backgrounds/bg1.jpg")));
         textures.put(TextureName.GAME_CURSOR, new Texture(Gdx.files.internal("core/assets/sprites/cursor.png")));
         textures.put(TextureName.BLUE_PORTAL, new Texture(Gdx.files.internal("core/assets/sprites/blue_portal.png")));
         textures.put(TextureName.ORANGE_PORTAL, new Texture(Gdx.files.internal("core/assets/sprites/orange_portal.png")));
@@ -83,13 +83,7 @@ public class Assets implements Disposable {
     }
 
     public TiledMap getTiledMap(LevelName key) {
-        TiledMap tiledMap = tiledMaps.get(key);
-
-        if(tiledMap == null) {
-            throw new NoSuchLevelException(key + " does not exist yet.");
-        }
-
-        return tiledMap;
+        return tiledMaps.get(key);
     }
 
     public Texture getTexture(TextureName key) {

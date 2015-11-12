@@ -10,6 +10,7 @@ import com.portal2d.game.model.entities.Projectile;
 import com.portal2d.game.model.interactions.GameContactListener;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static com.portal2d.game.model.ModelConstants.Box2D.POSITION_ITERATIONS;
@@ -20,12 +21,12 @@ import static com.portal2d.game.model.ModelConstants.Box2D.VELOCITY_ITERATIONS;
  */
 public class Level extends Observable {
 
+    private World world;
+
     // Level properties
     private LevelName levelName;
     private LevelName nextLevel;
     private boolean finished;
-
-    private World world;
 
     // Entities
     private Player player;
@@ -79,8 +80,6 @@ public class Level extends Observable {
     }
 
     public void removeAllEntities() {
-        System.out.println("removing all");
-
         // Remove all entities
         entitiesToRemove.addAll(entities);
         entities.clear();
@@ -92,26 +91,35 @@ public class Level extends Observable {
     }
 
     public void addToRemove(Entity entity) {
+        if(!entities.contains(entity)) {
+            throw new NoSuchElementException("The entity is not contained in this level");
+        }
         entitiesToRemove.add(entity);
     }
 
     public void addToRemove(Projectile projectile) {
+        if(!projectiles.contains(projectile)) {
+            throw new NoSuchElementException("The entity is not contained in this level");
+        }
         projectilesToRemove.add(projectile);
     }
 
-    public void add(Entity entity) {
+    public Entity add(Entity entity) {
         entities.add(entity);
         notifyObservers(entity, true);
+        return entity;
     }
 
-    public void add(Projectile projectile) {
+    public Projectile add(Projectile projectile) {
         projectiles.add(projectile);
         notifyObservers(projectile, true);
+        return projectile;
     }
 
-    public void add(Player player) {
+    public Player add(Player player) {
         this.player = player;
         notifyObservers(player, true);
+        return player;
     }
 
     private void removeEntities() {
@@ -154,6 +162,11 @@ public class Level extends Observable {
 
     public LevelName getLevelName() {
         return levelName;
+    }
+
+    /** Returns the TOTAL amount of entities that are contained in this level */
+    public int containedEntitiesAmount() {
+        return entities.size() + projectiles.size() + (player == null ? 0 : 1);
     }
 
 }

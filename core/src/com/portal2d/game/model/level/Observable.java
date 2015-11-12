@@ -7,17 +7,21 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Level extends this.
+ * Extended by Level, used to notify when an Entity is added or removed.
  */
-public class Observable {
+public abstract class Observable {
 
-    List<LevelObserver> observers;
+    private List<LevelObserver> observers;
 
     public Observable(LevelObserver...observers) {
         this.observers = new ArrayList<LevelObserver>();
         Collections.addAll(this.observers, observers);
     }
 
+    /**
+     * Notify the observers that an Entity was added or removed.
+     * @param added whether the entity was added or removed
+     */
     public void notifyObservers(Entity entity, boolean added) {
         if(added) {
             for (LevelObserver observer : observers) {
@@ -34,8 +38,19 @@ public class Observable {
 
     public void addObserver(LevelObserver observer) {
         if(observer == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Observer cannot be null");
+        }
+        if(observers.contains(observer)) {
+            return;
         }
         observers.add(observer);
     }
+
+    public void removeObserver(LevelObserver observer) {
+        if(!observers.contains(observer)) {
+            return;
+        }
+        observers.remove(observer);
+    }
+
 }

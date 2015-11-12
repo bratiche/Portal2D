@@ -29,6 +29,9 @@ public class GravityGunQuery implements QueryCallback {
         this.gravityGun = gravityGun;
     }
 
+    /**
+     * Checks for every entity that overlaps the AABB. If it is a box, sends a message to the GravityGun to grab it.
+     */
     @Override
     public boolean reportFixture(Fixture fixture) {
 

@@ -16,6 +16,7 @@ import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.entities.enemies.Bullet;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.Portal;
+import com.portal2d.game.model.exceptions.UnknownEntityException;
 import com.portal2d.game.model.interactions.RayCast;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
@@ -43,7 +44,7 @@ public class PlayState extends GameState implements LevelObserver {
     private Map<Entity, EntityView> entities; // Map for having easy access to the models and their views
 
     //debugging stuff
-    private boolean debug = true;
+    private boolean debug = false;
     private Box2DDebugRenderer box2DDebugRenderer;
 
     /**
@@ -68,10 +69,6 @@ public class PlayState extends GameState implements LevelObserver {
         box2DDebugRenderer = new Box2DDebugRenderer();
 
         goToLevel(levelName);
-    }
-
-    @Override
-    public void entered() {
     }
 
     @Override
@@ -108,7 +105,6 @@ public class PlayState extends GameState implements LevelObserver {
     @Override
     public void update(float dt) {
 
-        // States/interactions update
         level.update(dt);
 
         if(level.getPlayer().isDead()) {
@@ -121,11 +117,6 @@ public class PlayState extends GameState implements LevelObserver {
 
     }
 
-    private void restartLevel() {
-        level.removeAllEntities();
-        goToLevel(level.getLevelName());
-    }
-
     @Override
     public void render(SpriteBatch batch) {
         scene.render(batch, mouse.x, mouse.y);
@@ -136,12 +127,11 @@ public class PlayState extends GameState implements LevelObserver {
             drawPortalGunRayCast();
             box2DDebugRenderer.render(level.getWorld(), scene.getBox2DCamera().combined);
         }
-
     }
 
-    @Override
-    public void leaving() {
-        //world.dispose(); // -> this crashes the game
+    private void restartLevel() {
+        level.removeAllEntities();
+        goToLevel(level.getLevelName());
     }
 
     private void goToLevel(LevelName nextLevel) {
@@ -166,7 +156,6 @@ public class PlayState extends GameState implements LevelObserver {
 
     //TESTEO
     public void drawPortalGunRayCast() {
-
         debugRenderer.setProjectionMatrix(getBox2DCamera().combined);
         debugRenderer.begin(ShapeRenderer.ShapeType.Line);
 
@@ -251,7 +240,7 @@ public class PlayState extends GameState implements LevelObserver {
                 //System.out.println("No portable surface view");
                 break;
             default:
-                throw new NoSuchEntityException("Unknown type: " + entity.getType());
+                throw new UnknownEntityException(entity.getType());
         }
 
         System.out.println("Entity added: " + entity.getType());
@@ -263,16 +252,6 @@ public class PlayState extends GameState implements LevelObserver {
         entities.remove(entity);
 
         System.out.println("Entity removed: " + entity.getType());
-    }
-
-    //TODO: move to it's own class
-    public class NoSuchEntityException extends RuntimeException {
-        public NoSuchEntityException() {
-            super();
-        }
-        public NoSuchEntityException(String message) {
-            super(message);
-        }
     }
 
 }

@@ -2,7 +2,7 @@ package com.portal2d.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.portal2d.game.tests.Test;
+import com.portal2d.game.libgdxtests.Test;
 
 import static com.portal2d.game.view.ViewConstants.*;
 

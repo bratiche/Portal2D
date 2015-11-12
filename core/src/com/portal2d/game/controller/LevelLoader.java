@@ -10,6 +10,7 @@ import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.*;
 import com.portal2d.game.model.entities.enemies.Turret;
 import com.portal2d.game.model.entities.portals.PortableSurface;
+import com.portal2d.game.model.exceptions.NoSuchLevelException;
 import com.portal2d.game.model.level.Level;
 import com.portal2d.game.model.level.LevelName;
 import com.portal2d.game.model.level.LevelObserver;
@@ -35,9 +36,15 @@ public class LevelLoader {
     /**
      * @param levelName the name of the level to load
      * @return the specified level
+     * @throws NoSuchLevelException if the level does not exist
      */
     public Level loadLevel(LevelName levelName, LevelObserver...observers) {
         TiledMap tiledMap = Portal2D.assets.getTiledMap(levelName);
+
+        if(tiledMap == null) {
+            throw new NoSuchLevelException(levelName);
+        }
+
         Level level = new Level(levelName, observers);
         createLevel(tiledMap, level);
         return level;
@@ -117,7 +124,6 @@ public class LevelLoader {
         }
     }
 
-    // Surfaces, PortableSurfaces and Acid have variable width and height
     private void createSurfaces(Level level, MapLayer layer) {
         RectangleMapObject rectangleMapObject;
         float x;
