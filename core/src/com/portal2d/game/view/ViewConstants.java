@@ -13,7 +13,6 @@ public interface ViewConstants {
     float PPM = 100.0f; // scale for box2d world, pixels per meter
 
     enum TextureName {
-        PORTAL2D_LOGO,
         MENU_BG,
         SPRITE_BOX,
         SPRITE_BUTTON,

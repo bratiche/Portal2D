@@ -49,7 +49,6 @@ public class Assets implements Disposable {
     }
 
     public void loadTextures() {
-        textures.put(TextureName.PORTAL2D_LOGO, new Texture(Gdx.files.internal("core/assets/backgrounds/logo.png")));
         textures.put(TextureName.MENU_BG, new Texture(Gdx.files.internal("core/assets/backgrounds/menu.png")));
         textures.put(TextureName.SPRITE_BOX, new Texture(Gdx.files.internal("core/assets/sprites/box.png")));
         textures.put(TextureName.ANIM_GATE, new Texture(Gdx.files.internal("core/assets/sprites/gate.png")));
