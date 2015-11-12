@@ -11,7 +11,7 @@
  </imagelayer>
  <layer name="tiles" width="20" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYMWB0QEXkRgbwGYeITDUzSMmTIk1jxwwWMzDFRasZJpHjl3D1TwA4ikBtA==
+   eJxjZWBgYMWB0QEXkRgbwGYeITDUzSMmTIk1jxwwmMzDFR7UdB8+e4areQDbXQGv
   </data>
  </layer>
  <objectgroup name="boxes"/>
@@ -29,7 +29,7 @@
  <objectgroup name="surfaces">
   <object id="81" x="0" y="540" width="360" height="180"/>
   <object id="85" x="0" y="0" width="420" height="60"/>
-  <object id="220" x="780" y="420" width="420" height="60"/>
+  <object id="220" x="840" y="420" width="360" height="60"/>
   <object id="226" x="360" y="60" width="60" height="180"/>
   <object id="227" x="360" y="240" width="360" height="60"/>
   <object id="231" x="1200" y="0" width="60" height="720"/>

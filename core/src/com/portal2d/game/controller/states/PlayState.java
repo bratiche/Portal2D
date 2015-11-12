@@ -248,16 +248,12 @@ public class PlayState extends GameState implements LevelObserver {
             default:
                 throw new UnknownEntityException(entity.getType());
         }
-
-        //System.out.println("Entity added: " + entity.getType());
     }
 
     @Override
     public void entityRemoved(Entity entity) {
         scene.removeView(entities.get(entity));
         entities.remove(entity);
-
-        System.out.println("Entity removed: " + entity.getType());
     }
 
 }

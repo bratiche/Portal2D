@@ -11,7 +11,7 @@
  </imagelayer>
  <layer name="tiles" width="20" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYGWgHLCi4cFuHhcWTG/3oZsxlMJvpJlHSnrBphZfXBNyMz49AKraAcg=
+   eJxjZWBgYGWgHLCi4ZFmHhcWTKoZQ8m/I808UuIXm1p8cU3Izfj0AACbOgHI
   </data>
  </layer>
  <objectgroup name="boxes"/>
@@ -37,7 +37,7 @@
  <objectgroup name="portable-surfaces">
   <object id="226" x="780" y="600" width="300" height="60"/>
   <object id="227" x="120" y="600" width="300" height="60"/>
-  <object id="229" x="120" y="180" width="300" height="60"/>
+  <object id="229" x="120" y="240" width="300" height="60"/>
  </objectgroup>
  <objectgroup name="gates"/>
  <objectgroup name="acid">

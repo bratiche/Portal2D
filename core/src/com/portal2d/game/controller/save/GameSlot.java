@@ -35,15 +35,13 @@ public enum GameSlot {
         }
 
         file.writeString(sb.toString(), false); // false is to overwrite the file
-
-        //System.out.println("Game saved");
     }
 
     public void load() {
         FileHandle file = Gdx.files.internal(path);
 
         if(!file.exists()) {
-            save();
+            create();
             return;
         }
 
@@ -59,8 +57,22 @@ public enum GameSlot {
             }
         }
 
-        //System.out.println("Game loaded");
+    }
 
+    /** Creates a new file for this slot. */
+    private void create() {
+        FileHandle file = Gdx.files.local(path);
+        StringBuilder sb = new StringBuilder();
+
+        // First level is unlocked
+        sb.append(false);
+        sb.append("\n");
+        for(int i = 1; i < LevelName.values().length; i++) {
+            sb.append(true);
+            sb.append("\n");
+        }
+
+        file.writeString(sb.toString(), false);
     }
 
 }
