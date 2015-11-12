@@ -57,6 +57,8 @@ public interface ViewConstants {
     int PORTAL_WIDTH = 120;
     int PORTAL_HEIGHT = 20;
 
+    int TILESIZE = 60;
+
     /* Animations */
     float ANIM_GATE_DELAY =  1 / 12f;
     float ANIM_PLAYER_DELAY = 1 / 12f;
@@ -66,13 +68,6 @@ public interface ViewConstants {
 
     int BACK_BUTTON_X = 100;
     int BACK_BUTTON_Y = 100;
-
-//    String INSTRUCTIONS_TEXT = "Welcome to POrtal2D!\n\nThis game is a puzzle style game\nwhere you will have " +
-//                                "to find your\nway through the map using portals.\nOnly two portals can be active\n" +
-//                                "simultaneously, you can exit and\nentry in both.\nBoxes can be used to activate gates\n" +
-//                                "(both in color RED).\nUse W,A,S,D to move, right and left \nclick to create portals, " +
-//                                "P to pause.\nPortals only can be created \non portable surfaces, distinguished\n" +
-//                                "by color WHITE.\nENJOY!";
 
     // Left click is also used to throw away objects that are grabbed
     String INSTRUCTIONS_TEXT = "Controls:\n\n A - Move left\n D - Move right\n W - Jump\n F - Grab/Drop objects\n\n " +

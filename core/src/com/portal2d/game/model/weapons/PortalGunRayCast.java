@@ -1,33 +1,26 @@
 package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.EntityType;
-import com.portal2d.game.model.entities.portals.Portal;
-import com.portal2d.game.model.entities.portals.PortalColor;
 import com.portal2d.game.model.interactions.RayCast;
-import com.portal2d.game.model.level.Level;
 
 import static com.portal2d.game.model.ModelConstants.PORTAL_RADIUS;
 
 /**
- * {@link RayCast} used to create portals.
+ * {@link RayCast} used by the {@link PortalGun} to determine if a portal can be created or not.
  */
 public class PortalGunRayCast extends RayCast {
-
-    private Level level;
-    private PortalGun portalGun;
 
     private boolean hitPortableSurface;
 
     private Vector2 position; // The position to create the portal
     private Vector2 portalNormal; // The normal of the PortableSurface the portal will be on
 
-    public PortalGunRayCast(PortalGun portalGun, Level level){
-        super(level.getWorld());
-        this.portalGun = portalGun;
-        this.level = level;
+    public PortalGunRayCast(World world){
+        super(world);
 
         position = new Vector2();
         portalNormal = new Vector2();
@@ -60,25 +53,6 @@ public class PortalGunRayCast extends RayCast {
         return fraction; // terminates the ray cast on the closest hit
     }
 
-    /**
-     * Creates a {@link Portal}, or changes it's position and normal if it is already created.
-     */
-    protected void createPortal(PortalColor color) {
-        Portal portal = portalGun.getPortal(color);
-
-        if(portal == null) {
-            portal = new Portal(level, position, color, portalNormal);
-
-            level.add(portal);
-            portalGun.setPortal(portal);
-            portalGun.linkPortals();
-        }
-        else {
-            portal.setPosition(position);
-            portal.setNormal(portalNormal);
-        }
-    }
-
     public boolean hitPortableSurface() {
         return hitPortableSurface;
     }
@@ -88,4 +62,19 @@ public class PortalGunRayCast extends RayCast {
         super.setRay(beginPoint, endPoint, stepLength);
         hitPortableSurface = false;
     }
+
+    private final Vector2 tmp = new Vector2();
+
+    public Vector2 getPosition() {
+        tmp.set(position);
+        return tmp;
+    }
+
+    private final Vector2 tmp2 = new Vector2();
+
+    public Vector2 getPortalNormal() {
+        tmp2.set(portalNormal);
+        return tmp2;
+    }
+
 }

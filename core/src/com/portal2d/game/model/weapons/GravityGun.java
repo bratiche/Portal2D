@@ -1,34 +1,30 @@
  package com.portal2d.game.model.weapons;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.interactions.Spring;
-import com.portal2d.game.model.level.Level;
 
 import static com.portal2d.game.model.ModelConstants.GRAVITY_GUN_RANGE;
+import static com.portal2d.game.model.ModelConstants.GRAVITY_GUN_SPEED;
 
-/**
+ /**
  * Weapon that allows the owner to manipulate an object by grabbing it.
  */
 public class GravityGun implements Weapon {
 
     protected Entity owner;
-    protected Level level;
 
     private Spring spring;
     private Entity grabbedEntity;
     private GravityGunQuery query;
 
-    public GravityGun(Level level, Entity owner) {
+    public GravityGun(World world, Entity owner) {
         this.owner = owner;
-        this.level = level;
 
-        query = new GravityGunQuery(level.getWorld(), this);
-        spring = new Spring(level.getWorld(), GRAVITY_GUN_RANGE);
+        query = new GravityGunQuery(world, this);
+        spring = new Spring(world, GRAVITY_GUN_RANGE);
     }
-
-    // Speed for throwing away objects
-    public final float SPEED = 10f;
 
     /** Shoots the grabbed entity. */
     @Override
@@ -37,7 +33,7 @@ public class GravityGun implements Weapon {
         direction.sub(owner.getPosition());
         direction.nor();
 
-        grabbedEntity.setLinearVelocity(direction.scl(SPEED));
+        grabbedEntity.setLinearVelocity(direction.scl(GRAVITY_GUN_SPEED));
 
         dropEntity();
     }
@@ -75,6 +71,10 @@ public class GravityGun implements Weapon {
         grabbedEntity = null;
     }
 
+    protected Entity getOwner() {
+         return owner;
+     }
+
     public boolean canGrabEntity() {
         return grabbedEntity == null;
     }
@@ -91,10 +91,6 @@ public class GravityGun implements Weapon {
     /** @see GravityGunQuery#queryAABB() */
     public void queryAABB() {
         query.queryAABB();
-    }
-
-    protected Entity getOwner() {
-        return owner;
     }
 
     //TESTEO

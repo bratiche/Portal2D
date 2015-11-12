@@ -22,6 +22,7 @@ public interface ModelConstants {
 
     /* Gravity gun */
     float GRAVITY_GUN_RANGE = 0.7f; // Range for grabbing objects with the gravity gun
+    float GRAVITY_GUN_SPEED = 10.0f; // Speed for throwing away objects
 
     /* Turret */
     float TURRET_WIDTH = 0.6f;
@@ -30,7 +31,7 @@ public interface ModelConstants {
     float TURRET_RATE_OF_FIRE = 0.7f;  // Rate of fire in seconds
 
     /* Bullet */
-    float BULLET_SPEED = 1.0f;
+    float BULLET_SPEED = 2.0f;
     float BULLET_RADIUS = 0.1f;
 
     /* Button */
@@ -50,9 +51,7 @@ public interface ModelConstants {
 
     float TILESIZE = 0.6f;
 
-    /**
-     * Constants for updating the box2d world
-     */
+    /** Constants for updating the box2d world */
     interface Box2D {
         Vector2 DEFAULT_GRAVITY = new Vector2(0, -9.8f);
         int VELOCITY_ITERATIONS = 6; //8

@@ -7,6 +7,8 @@ import com.portal2d.game.Portal2D;
 import com.portal2d.game.model.entities.Box;
 import com.portal2d.game.view.ViewConstants;
 
+import static com.portal2d.game.view.ViewConstants.BOX_HEIGHT;
+import static com.portal2d.game.view.ViewConstants.BOX_WIDTH;
 import static com.portal2d.game.view.ViewConstants.PPM;
 
 /**
@@ -21,8 +23,8 @@ public class BoxView extends EntityView<Box> {
 
         sprite = new Sprite(Portal2D.assets.getTexture(ViewConstants.TextureName.SPRITE_BOX));
 
-        width = sprite.getWidth();
-        height = sprite.getHeight();
+        width = BOX_WIDTH;
+        height = BOX_HEIGHT;
     }
 
     @Override

@@ -27,7 +27,6 @@ public class Acid extends StaticEntity {
     @Override
     public void beginInteraction(Entity entity) {
         entity.beginInteraction(this);
-        //System.out.println(entity.getType() + " touched Acid");
     }
 
     @Override
@@ -49,6 +48,7 @@ public class Acid extends StaticEntity {
         level.addToRemove(box);
     }
 
+    /** Overridden so the Acid destroys the Bullet and not the other way around. */
     @Override
     public void beginInteraction(Bullet bullet) {
         level.addToRemove(bullet);

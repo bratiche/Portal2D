@@ -50,7 +50,6 @@ public class LevelLoader {
         return level;
     }
 
-    //TODO fix gapes between portable and non-portable surfaces
     private void createLevel(TiledMap tiledMap, Level level) {
         MapLayer layer = tiledMap.getLayers().get("turrets");
         createTurrets(level, layer);

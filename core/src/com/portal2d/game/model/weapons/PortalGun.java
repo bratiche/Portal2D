@@ -19,11 +19,13 @@ public class PortalGun extends GravityGun {
     private Portal bluePortal;
     private Portal orangePortal;
 
+    private Level level;
     private PortalGunRayCast raycast;
 
     public PortalGun(Level level, Entity owner) {
-        super(level, owner);
-        this.raycast = new PortalGunRayCast(this, level);
+        super(level.getWorld(), owner);
+        this.level = level;
+        this.raycast = new PortalGunRayCast(level.getWorld());
     }
 
     /**
@@ -59,10 +61,26 @@ public class PortalGun extends GravityGun {
         raycast.process();
     }
 
+    /** Creates a Portal of the specified color */
+    private void createPortal(PortalColor color) {
+        Portal portal = getPortal(color);
+
+        if(portal == null) {
+            portal = new Portal(level, raycast.getPosition(), color, raycast.getPortalNormal());
+
+            level.add(portal);
+            setPortal(portal);
+            linkPortals();
+        }
+        else {
+            portal.setPosition(raycast.getPosition());
+            portal.setNormal(raycast.getPortalNormal());
+        }
+    }
+
     /**
      * Returns the portal of the specified color.
      * It may return {@code null} if the portal is not created yet.
-     * @see PortalGunRayCast#createPortal(PortalColor)
      */
     public Portal getPortal(PortalColor color) {
         switch(color) {
@@ -75,8 +93,7 @@ public class PortalGun extends GravityGun {
         }
     }
 
-    /** @see PortalGunRayCast#createPortal(PortalColor) */
-    protected void setPortal(Portal portal) {
+    private void setPortal(Portal portal) {
         switch(portal.getColor()){
             case BLUE:
                 bluePortal = portal;
@@ -87,14 +104,6 @@ public class PortalGun extends GravityGun {
             default:
                 throw new NoSuchElementException(portal.getColor() + " is not a valid PortalColor");
         }
-    }
-
-    /**
-     * Creates a Portal of the specified color
-     * @see PortalGunRayCast#createPortal(PortalColor)
-     */
-    private void createPortal(PortalColor color) {
-        raycast.createPortal(color);
     }
 
     /**

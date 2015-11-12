@@ -6,14 +6,9 @@
  <imagelayer name="exitview" x="900" y="450">
   <image source="exit.png"/>
  </imagelayer>
- <layer name="non-portal-able" width="20" height="12">
+ <layer name="tiles" width="20" height="12">
   <data encoding="base64" compression="zlib">
    eJxjZWBgYB0CmFIwat6oeZSYN1gxACJcAjE=
-  </data>
- </layer>
- <layer name="portal-able" width="20" height="12">
-  <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUDFUAAAPAAAE=
   </data>
  </layer>
  <objectgroup name="boxes"/>

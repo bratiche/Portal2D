@@ -2,6 +2,7 @@ package com.portal2d.game.model.level;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.portal2d.game.controller.states.PlayState;
 import com.portal2d.game.model.ModelConstants;
 import com.portal2d.game.model.entities.Entity;
 import com.portal2d.game.model.entities.Exit;
@@ -51,6 +52,10 @@ public class Level extends Observable {
         world.setContactListener(contactListener);
     }
 
+    /**
+     * Updates the physics world and the states of all entities.
+     * @param dt the time passed since last frame.
+     */
     public void update(float dt) {
 
         // Physics update
@@ -73,6 +78,10 @@ public class Level extends Observable {
 
     }
 
+    /**
+     * Removes all entities and their bodies.
+     * @see PlayState#restartLevel()
+     */
     public void removeAllEntities() {
         // Remove all entities
         entitiesToRemove.addAll(entities);
@@ -82,6 +91,12 @@ public class Level extends Observable {
         projectiles.clear();
 
         removeEntities();
+
+        // Remove player
+        notifyObservers(player, false);
+        Body body = player.getBody();
+        world.destroyBody(body);
+        player = null;
     }
 
     public void addToRemove(Entity entity) {
@@ -125,7 +140,6 @@ public class Level extends Observable {
         for(Entity entity : entitiesToRemove) {
             //if the entity to remove was grabbed by the player, destroy the joint first.
             if(player.getPortalGun().hasEntityGrabbed(entity)) {
-                System.out.println(entity.getType() + " DROPPED before removal");
                 player.getPortalGun().dropEntity();
             }
             Body body = entity.getBody();

@@ -25,7 +25,7 @@ public class TurretRayCast extends RayCast {
         Entity entity = (Entity)fixture.getBody().getUserData();
         EntityType type = entity.getType();
 
-        if(type == EntityType.BULLET) {
+        if(fixture.isSensor()) {
             return -1;
         }
 

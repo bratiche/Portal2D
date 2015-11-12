@@ -27,7 +27,7 @@ public class PlayerController extends InputAdapter {
     private World world;
     private Player player;
 
-    //player stuff
+    // Player variables
     private Body playerBody;
     private Fixture playerPhysicsFixture;
 
@@ -86,7 +86,7 @@ public class PlayerController extends InputAdapter {
 
                 // Avoid the player to jump when is on a sensor
                 if((contact.getFixtureA().isSensor() || contact.getFixtureB().isSensor())) {
-                    below = false;
+                    continue;
                 }
                 for (int j = 0; j < manifold.getNumberOfContactPoints(); j++) {
                     below &= (manifold.getPoints()[j].y < position.y - 1.5f / PPM);
@@ -97,9 +97,7 @@ public class PlayerController extends InputAdapter {
         return false;
     }
 
-    /**
-     * Moves the player's body.
-     */
+    /** Moves the player's body. */
     private void movePlayer() {
         //calculate stillTime and damp
         if (!Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -161,9 +159,7 @@ public class PlayerController extends InputAdapter {
         }
     }
 
-    /**
-     * Sets the current state of the player.
-     */
+    /** Sets the current state of the player. */
     private void setPlayerState() {
         if(grounded) {
             //walking
@@ -206,7 +202,6 @@ public class PlayerController extends InputAdapter {
         // Set if the player is facing right or left (regardless of whether it is moving or jumping)
         // The player faces right or left according to the position of the mouse
         player.setFacingRight(mouse.x / PPM >= playerBody.getPosition().x);
-
 
         // Shoot
         if(Gdx.input.justTouched()) {

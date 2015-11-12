@@ -43,6 +43,9 @@ public class Assets implements Disposable {
         tiledMaps.put(LevelName.LEVEL_1, tmxMapLoader.load("core/assets/levels/level_1.tmx"));
         tiledMaps.put(LevelName.LEVEL_2, tmxMapLoader.load("core/assets/levels/level_2.tmx"));
         tiledMaps.put(LevelName.LEVEL_3, tmxMapLoader.load("core/assets/levels/level_3.tmx"));
+        tiledMaps.put(LevelName.LEVEL_4, tmxMapLoader.load("core/assets/levels/level_4.tmx"));
+        tiledMaps.put(LevelName.LEVEL_5, tmxMapLoader.load("core/assets/levels/level_5.tmx"));
+        tiledMaps.put(LevelName.LEVEL_6, tmxMapLoader.load("core/assets/levels/level_6.tmx"));
     }
 
     public void loadTextures() {

@@ -249,7 +249,7 @@ public class PlayState extends GameState implements LevelObserver {
                 throw new UnknownEntityException(entity.getType());
         }
 
-        System.out.println("Entity added: " + entity.getType());
+        //System.out.println("Entity added: " + entity.getType());
     }
 
     @Override

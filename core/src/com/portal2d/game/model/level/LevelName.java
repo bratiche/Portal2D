@@ -7,10 +7,11 @@ public enum LevelName {
 
     LEVEL_0(false, "TEST"),
     LEVEL_1(true, "MOMENTUM"),
-    LEVEL_2(true, "BOXES AND BUTTONS"),
-    LEVEL_3(true, ""),
-    LEVEL_4(true, ""),
-    LEVEL_5(true, "");
+    LEVEL_2(true, "ACID"),
+    LEVEL_3(true, "ACID AND TURRETS"),
+    LEVEL_4(true, "MAKE THE RIGHT CHOICE"),
+    LEVEL_5(true, "ALL"),
+    LEVEL_6(true, "GAME OVER");
 
     private boolean locked;
     private String name;

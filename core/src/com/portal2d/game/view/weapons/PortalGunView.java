@@ -40,13 +40,6 @@ public class PortalGunView extends WeaponView<PortalGun> {
 
         TextureRegion region = regions[0][0];
 
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            //shoot blue portal anim
-        }
-        else if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
-            //shoot orange portal anim
-        }
-
         if(weapon.arePortalsLinked()) {
             region = regions[0][3];
         }

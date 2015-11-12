@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="239">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="243">
  <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
   <image source="test-tileset.png" width="240" height="180"/>
  </tileset>
  <imagelayer name="exitview" x="900" y="210">
   <image source="exit.png"/>
  </imagelayer>
- <layer name="non-portal-able" width="20" height="12">
+ <layer name="tiles" width="20" height="12">
   <data encoding="base64" compression="zlib">
-   eJxjZWBgYKUxJhZQwwxizR5p5lE7PkbNo555lGAA/PUCRQ==
-  </data>
- </layer>
- <layer name="portal-able" width="20" height="12">
-  <data encoding="base64" compression="zlib">
-   eJxjYKA94CISj4JRMBTAYErPAHxfAMk=
+   eJxjZWBgYKUx5iIS4zODUjDSzSPHbGLjd6SZR430TC0MAHWjAw0=
   </data>
  </layer>
  <objectgroup name="boxes"/>

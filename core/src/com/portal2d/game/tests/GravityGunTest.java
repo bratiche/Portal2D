@@ -23,7 +23,7 @@ public class GravityGunTest {
         Level level = new Level(LevelName.LEVEL_0);
         Entity owner = new Player(level, new Vector2());
         entityToGrab = new Box(level, new Vector2());
-        gravityGun = new GravityGun(level, owner);
+        gravityGun = new GravityGun(level.getWorld(), owner);
     }
 
     @Test

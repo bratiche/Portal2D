@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="60" tileheight="60" nextobjectid="233">
+ <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
+  <image source="test-tileset.png" width="240" height="180"/>
+ </tileset>
+ <imagelayer name="gameover" x="350" y="160">
+  <image source="gameover.png"/>
+ </imagelayer>
+ <layer name="tiles" width="20" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjZWBgYKUy5qISRjaPUjBq3qh5lJhHzfRMTQwADAIDNQ==
+  </data>
+ </layer>
+ <objectgroup name="boxes">
+  <object id="217" x="572" y="219" width="60" height="60"/>
+  <object id="219" x="773" y="208" width="60" height="60"/>
+  <object id="220" x="725" y="350" width="60" height="60"/>
+  <object id="221" x="352" y="251" width="60" height="60"/>
+  <object id="222" x="649" y="394" width="60" height="60"/>
+  <object id="223" x="388" y="413" width="60" height="60"/>
+  <object id="224" x="182" y="439" width="60" height="60"/>
+  <object id="225" x="956" y="431" width="60" height="60"/>
+  <object id="226" x="804" y="461" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="player">
+  <object id="46" name="player" x="206.333" y="242.667" width="60" height="120"/>
+ </objectgroup>
+ <objectgroup name="buttons"/>
+ <objectgroup name="exits"/>
+ <objectgroup name="surfaces">
+  <object id="81" x="0" y="660" width="1140" height="60"/>
+  <object id="82" x="0" y="0" width="60" height="660"/>
+  <object id="85" x="60" y="0" width="1140" height="60"/>
+  <object id="86" x="1140" y="60" width="60" height="660"/>
+ </objectgroup>
+ <objectgroup name="portable-surfaces">
+  <object id="227" x="60" y="60" width="1080" height="60"/>
+  <object id="228" x="60" y="120" width="60" height="540"/>
+  <object id="229" x="120" y="600" width="960" height="60"/>
+  <object id="230" x="1080" y="120" width="60" height="540"/>
+ </objectgroup>
+ <objectgroup name="gates"/>
+ <objectgroup name="acid"/>
+ <objectgroup name="turrets"/>
+</map>

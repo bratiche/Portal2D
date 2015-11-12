@@ -8,8 +8,7 @@ Layers:
  - buttons
  - player
  - boxes
- - portal-able      --> tiles
- - non-portal-able  --> tiles
+ - tiles  --> all in one layer
 
 Gates and Buttons:
  - Each Gate has 2 attributes:

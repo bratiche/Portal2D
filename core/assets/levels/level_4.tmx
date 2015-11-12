@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="45" height="12" tilewidth="60" tileheight="60" nextobjectid="226">
+ <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
+  <image source="test-tileset.png" width="240" height="180"/>
+ </tileset>
+ <imagelayer name="exit2view" x="2460" y="150">
+  <image source="exit.png"/>
+ </imagelayer>
+ <imagelayer name="exit1view" x="1320" y="150">
+  <image source="exit.png"/>
+ </imagelayer>
+ <layer name="tiles" width="45" height="12">
+  <data encoding="base64" compression="zlib">
+   eJxjZWBgYAViLiIxKxUxsXbisp9aAGY2rcComyFg1M2YgBI3k5vvqGkePcBQdDM+MOpm+gB61Unk1I/0qF8HIwYAKgcFoQ==
+  </data>
+ </layer>
+ <objectgroup name="boxes">
+  <object id="159" x="1561" y="228" width="55" height="55"/>
+  <object id="160" x="2054" y="236" width="55" height="55"/>
+  <object id="208" x="513.5" y="476.5" width="55" height="55"/>
+ </objectgroup>
+ <objectgroup name="player">
+  <object id="46" name="player" x="151" y="373" width="60" height="120"/>
+ </objectgroup>
+ <objectgroup name="buttons">
+  <object id="192" x="1080" y="600" width="120" height="10">
+   <properties>
+    <property name="LinkedEntityID" value="186"/>
+   </properties>
+   <polygon points="0,0 29.8182,-14.3187 91.0909,-14.5 120,0"/>
+  </object>
+  <object id="215" x="872" y="300" width="120" height="10">
+   <properties>
+    <property name="LinkedEntityID" value="186"/>
+   </properties>
+   <polygon points="0,0 29.8182,-14.3187 91.0909,-14.5 120,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="exits">
+  <object id="74" name="exit 1" x="1320" y="120" width="30" height="180">
+   <properties>
+    <property name="NextLevel" value="0"/>
+   </properties>
+  </object>
+  <object id="206" name="exit 2" x="2600" y="120" width="30" height="180">
+   <properties>
+    <property name="NextLevel" value="5"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="surfaces">
+  <object id="81" x="1080" y="600" width="600" height="120"/>
+  <object id="82" x="0" y="0" width="120" height="720"/>
+  <object id="85" x="720" y="0" width="1140" height="60"/>
+  <object id="107" x="840" y="300" width="840" height="60"/>
+  <object id="184" x="2040" y="300" width="600" height="420"/>
+  <object id="198" x="120" y="660" width="960" height="60"/>
+  <object id="211" x="1620" y="360" width="60" height="60"/>
+  <object id="218" x="1680" y="660" width="360" height="60"/>
+  <object id="220" x="2640" y="-2.75335e-14" width="60" height="720"/>
+ </objectgroup>
+ <objectgroup name="portable-surfaces">
+  <object id="98" x="120" y="0" width="600" height="60"/>
+  <object id="102" x="120" y="600" width="960" height="60"/>
+  <object id="216" x="1860" y="0" width="780" height="60"/>
+  <object id="217" x="1200" y="60" width="120" height="240"/>
+  <object id="219" x="1680" y="600" width="360" height="60"/>
+ </objectgroup>
+ <objectgroup name="gates">
+  <object id="186" x="1640" y="420" width="40" height="180">
+   <properties>
+    <property name="ID" value="186"/>
+    <property name="locks" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="acid"/>
+ <objectgroup name="turrets"/>
+</map>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="60" tileheight="60" nextobjectid="331">
+ <tileset firstgid="1" name="test-tileset" tilewidth="60" tileheight="60" tilecount="12">
+  <image source="test-tileset.png" width="240" height="180"/>
+ </tileset>
+ <imagelayer name="exitview" x="51" y="680">
+  <image source="exit.png"/>
+ </imagelayer>
+ <imagelayer name="acidview" x="-108" y="348">
+  <image source="acid.png"/>
+ </imagelayer>
+ <layer name="tiles" width="40" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztljsKACEMBdPIgvc/8LYhmJ8+syl24BWKwiCJOohoNAtHjiuwfOZibTXd/Sw6+GXPz6tRAsxNlkw/RP1OiPar5tvFj5Tx19nxQ4P0u41Xg3JtJ36/MzL1t9uDVX7a/puOKL+HBeUYfT+yfghH6z5E+J04eve1jPXXsPyk4244L+YSBfw=
+  </data>
+ </layer>
+ <objectgroup name="boxes">
+  <object id="268" x="1652.67" y="226" width="60" height="60"/>
+  <object id="330" x="1624.67" y="1035.33" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="player">
+  <object id="46" name="player" x="124.666" y="159.667" width="60" height="120"/>
+ </objectgroup>
+ <objectgroup name="buttons">
+  <object id="282" x="562" y="1140" width="120" height="10">
+   <properties>
+    <property name="LinkedEntityID" value="307"/>
+   </properties>
+   <polygon points="0,0 29.8182,-14.3187 91.0909,-14.5 120,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="exits">
+  <object id="329" name="exit 1" x="60" y="660" width="30" height="180">
+   <properties>
+    <property name="NextLevel" value="6"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="surfaces">
+  <object id="233" x="0" y="0" width="2220" height="60"/>
+  <object id="237" x="0" y="60" width="60" height="1140"/>
+  <object id="242" x="60" y="300" width="300" height="300"/>
+  <object id="254" x="600" y="300" width="60" height="60"/>
+  <object id="258" x="900" y="300" width="60" height="60"/>
+  <object id="259" x="1200" y="300" width="60" height="60"/>
+  <object id="283" x="360" y="480" width="1140" height="60"/>
+  <object id="284" x="1500" y="300" width="60" height="240"/>
+  <object id="285" x="1560" y="360" width="420" height="240"/>
+  <object id="286" x="1740" y="240" width="240" height="120"/>
+  <object id="287" x="1740" y="600" width="300" height="60"/>
+  <object id="289" x="1740" y="60" width="240" height="120"/>
+  <object id="290" x="2160" y="300" width="60" height="660"/>
+  <object id="291" x="2040" y="1020" width="180" height="180"/>
+  <object id="292" x="2100" y="960" width="120" height="60"/>
+  <object id="293" x="1980" y="1080" width="60" height="120"/>
+  <object id="294" x="480" y="1140" width="1500" height="60"/>
+  <object id="296" x="720" y="900" width="420" height="120"/>
+  <object id="299" x="60" y="840" width="240" height="360"/>
+  <object id="300" x="60" y="600" width="240" height="60"/>
+  <object id="308" x="2100" y="360" width="60" height="60"/>
+  <object id="309" x="1140" y="960" width="60" height="60"/>
+  <object id="326" x="420" y="840" width="660" height="60"/>
+  <object id="327" x="720" y="1020.67" width="540" height="120"/>
+  <object id="328" x="1260" y="1080" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="portable-surfaces">
+  <object id="301" x="1560" y="300" width="180" height="60"/>
+  <object id="302" x="2160" y="60" width="60" height="240"/>
+  <object id="304" x="300" y="1140" width="180" height="60"/>
+ </objectgroup>
+ <objectgroup name="gates">
+  <object id="313" x="260" y="660" width="40" height="180">
+   <properties>
+    <property name="ID" value="307"/>
+    <property name="locks" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="acid">
+  <object id="262" x="360" y="360" width="1140" height="120"/>
+ </objectgroup>
+ <objectgroup name="turrets">
+  <object id="323" x="900" y="560" width="60" height="60"/>
+  <object id="324" x="600" y="560" width="60" height="60"/>
+  <object id="325" x="1800" y="720" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup name="turretradius" visible="0">
+  <object id="317" x="340" y="288" width="600" height="600">
+   <ellipse/>
+  </object>
+  <object id="319" x="1518" y="454" width="600" height="600">
+   <ellipse/>
+  </object>
+  <object id="320" x="633" y="290" width="600" height="600">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
