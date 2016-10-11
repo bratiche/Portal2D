@@ -35,19 +35,11 @@ public class PlayScene extends Scene {
         entityViews = new ArrayList<EntityView>();
     }
 
-
     // To draw the cursor
     private final Vector3 tmp = new Vector3();
 
     @Override
     public void render(SpriteBatch batch, float mouseX, float mouseY) {
-
-        // Set camera to follow the player
-        float x = playerView.getPosition().x;
-        float y = playerView.getPosition().y;
-
-        camera.setPosition(x * PPM + VIEWPORT_WIDTH / 8, y * PPM + VIEWPORT_HEIGHT / 4);
-        camera.update();
 
         // Draw tiled map
         tmr.setView(camera);
@@ -62,9 +54,6 @@ public class PlayScene extends Scene {
         for(EntityView entityView : entityViews) {
             entityView.render(batch, deltaTime);
         }
-
-        box2DCamera.setPosition((x * PPM + VIEWPORT_WIDTH / 8) / PPM, (y * PPM + VIEWPORT_HEIGHT / 4) / PPM);
-        box2DCamera.update();
 
         // Draw the cursor
         tmp.set(Gdx.input.getX(), Gdx.input.getY(), 0);

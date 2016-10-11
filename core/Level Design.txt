@@ -12,8 +12,8 @@ Layers:
 
 Gates and Buttons:
  - Each Gate has 2 attributes:
-	- ID : the id of this gate.
-        - locks : the number of locks to open this gate.
+	- ID : the id of the gate.
+        - locks : the number of locks to open the gate.
 
  - Each Button has 1 attribute:
 	- LinkedEntityID : the ID of the entity linked to this button.

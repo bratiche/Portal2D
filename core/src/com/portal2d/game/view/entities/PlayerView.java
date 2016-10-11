@@ -39,16 +39,16 @@ public class PlayerView extends EntityView<Player> {
         walk.setPlayMode(Animation.PlayMode.LOOP);
         animations.put(WALKING, walk);
 
-        Animation jump= new Animation(ANIM_PLAYER_DELAY, sprites[5][2]);
+        Animation jump = new Animation(ANIM_PLAYER_DELAY, sprites[5][2]);
         animations.put(JUMPING, jump);
 
-        Animation dead= new Animation(ANIM_PLAYER_DELAY, sprites[2]);
+        Animation dead = new Animation(ANIM_PLAYER_DELAY, sprites[2]);
         animations.put(DEAD, dead);
 
-        Animation stand= new Animation(ANIM_PLAYER_DELAY, sprites[8]);
+        Animation stand = new Animation(ANIM_PLAYER_DELAY, sprites[8][0]);
         animations.put(STANDING, stand);
 
-        Animation fall= new Animation(ANIM_PLAYER_DELAY, sprites[5][2]);
+        Animation fall = new Animation(ANIM_PLAYER_DELAY, sprites[5][2]);
         animations.put(FALLING, fall);
     }
 
@@ -61,32 +61,39 @@ public class PlayerView extends EntityView<Player> {
 
         stateTime += deltaTime;
 
-        if(model.isWalking()) {
-
-            if(stateTime > animations.get(WALKING).getAnimationDuration()) {
-                stateTime = 0;
-            }
-            keyFrame = animations.get(WALKING).getKeyFrame(stateTime);
-        }
-
-        else if(model.isJumping()) {
-            if(stateTime > animations.get(JUMPING).getAnimationDuration()) {
-                stateTime=0;
-            }
-            keyFrame = animations.get(JUMPING).getKeyFrame(stateTime);
-        }
-
-        else if( model.isFalling()) {
-            if(stateTime > animations.get(FALLING).getAnimationDuration()) {
-                stateTime = 0;
-            }
-            keyFrame = animations.get(FALLING).getKeyFrame(stateTime);
-        }
-
-        else {
+        if(stateTime > animations.get(model.getState()).getAnimationDuration()) {
             stateTime = 0;
-            keyFrame = animations.get(STANDING).getKeyFrame(stateTime);
         }
+
+        keyFrame = animations.get(model.getState()).getKeyFrame(stateTime);
+//
+//
+//        if(model.isWalking()) {
+//
+//            if(stateTime > animations.get(WALKING).getAnimationDuration()) {
+//                stateTime = 0;
+//            }
+//            keyFrame = animations.get(WALKING).getKeyFrame(stateTime);
+//        }
+//
+//        else if(model.isJumping()) {
+//            if(stateTime > animations.get(JUMPING).getAnimationDuration()) {
+//                stateTime=0;
+//            }
+//            keyFrame = animations.get(JUMPING).getKeyFrame(stateTime);
+//        }
+//
+//        else if( model.isFalling()) {
+//            if(stateTime > animations.get(FALLING).getAnimationDuration()) {
+//                stateTime = 0;
+//            }
+//            keyFrame = animations.get(FALLING).getKeyFrame(stateTime);
+//        }
+//
+//        else {
+//            stateTime = 0;
+//            keyFrame = animations.get(STANDING).getKeyFrame(stateTime);
+//        }
 
         batch.begin();
         if(!model.isFacingRight()) {

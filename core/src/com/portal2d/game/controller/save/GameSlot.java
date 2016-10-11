@@ -42,7 +42,6 @@ public enum GameSlot {
 
         if(!file.exists()) {
             create();
-            return;
         }
 
         BufferedReader reader = file.reader(1024);

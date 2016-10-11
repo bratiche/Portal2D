@@ -65,10 +65,10 @@ public class SelectLevelScene extends Scene {
         batch.draw(background, 0, 0);
         batch.end();
 
-        backButton.render(batch, mouseX, mouseY);
         for(TextButton button : levelButtons.keySet()) {
             button.render(batch, mouseX, mouseY);
         }
+        backButton.render(batch, mouseX, mouseY);
         title.render(batch, mouseX, mouseY);
     }
 

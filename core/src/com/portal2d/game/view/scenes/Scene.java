@@ -11,6 +11,8 @@ public abstract class Scene {
 
     protected BoundedCamera camera;
 
+    //public abstract void create();
+
     public abstract void render(SpriteBatch batch, float mouseX, float mouseY);
 
     public BoundedCamera getCamera() {

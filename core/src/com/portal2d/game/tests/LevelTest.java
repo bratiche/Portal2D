@@ -105,9 +105,6 @@ public class LevelTest {
 
         level.getWorld().getBodies(bodies);
         assertTrue(level.containedEntitiesAmount() == bodies.size);
-
-        System.out.println(level.containedEntitiesAmount());
-
     }
 
 }

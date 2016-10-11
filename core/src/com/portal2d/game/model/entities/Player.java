@@ -97,4 +97,16 @@ public class Player extends DynamicEntity {
         this.state = state;
     }
 
+    public void setPortalGun(PortalGun portalGun) {
+        this.portalGun = portalGun;
+    }
+
+    public boolean hasWeapon() {
+        return portalGun != null;
+    }
+
+    public PlayerState getState() {
+        return state;
+    }
+
 }

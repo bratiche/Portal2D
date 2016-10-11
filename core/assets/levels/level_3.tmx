@@ -28,9 +28,9 @@
  </objectgroup>
  <objectgroup name="surfaces">
   <object id="81" x="0" y="660" width="420" height="60"/>
-  <object id="82" x="0" y="-140" width="120" height="800"/>
-  <object id="85" x="0" y="-260" width="1200" height="120"/>
-  <object id="86" x="1080" y="-140" width="120" height="800"/>
+  <object id="82" x="0" y="-420" width="120" height="1080"/>
+  <object id="85" x="0" y="-540" width="1200" height="120"/>
+  <object id="86" x="1080" y="-420" width="120" height="1080"/>
   <object id="220" x="780" y="660" width="420" height="60"/>
   <object id="230" x="900" y="240" width="180" height="60"/>
  </objectgroup>

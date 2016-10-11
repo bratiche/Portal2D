@@ -29,6 +29,10 @@ import com.portal2d.game.view.weapons.PortalGunView;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.portal2d.game.view.ViewConstants.PPM;
+import static com.portal2d.game.view.ViewConstants.VIEWPORT_HEIGHT;
+import static com.portal2d.game.view.ViewConstants.VIEWPORT_WIDTH;
+
 /**
  * Main state of the game.
  */
@@ -96,8 +100,15 @@ public class PlayState extends GameState implements LevelObserver {
         // Update player input events
         playerController.handleInput();
 
+        //Toggle options
         if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             debug = !debug;
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.V)) {
+            render = !render;
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+            //followPlayer = !followPlayer;
         }
 
     }
@@ -117,9 +128,30 @@ public class PlayState extends GameState implements LevelObserver {
 
     }
 
+    private boolean render = true;
+    private boolean followPlayer = true;
+
     @Override
     public void render(SpriteBatch batch) {
-        scene.render(batch, mouse.x, mouse.y);
+
+        // Set camera to follow the player
+        float x = mouse.x - VIEWPORT_WIDTH / 2;
+        float y = mouse.y - VIEWPORT_HEIGHT / 2;
+
+        if(followPlayer) {
+            x = level.getPlayer().getPosition().x * PPM;
+            y = level.getPlayer().getPosition().y * PPM;
+        }
+
+        scene.getCamera().setPosition(x + VIEWPORT_WIDTH / 8, y + VIEWPORT_HEIGHT / 4);
+        scene.getCamera().update();
+
+        if(render) {
+            scene.render(batch, mouse.x, mouse.y);
+        }
+
+        scene.getBox2DCamera().setPosition((x + VIEWPORT_WIDTH / 8) / PPM, (y + VIEWPORT_HEIGHT / 4) / PPM);
+        scene.getBox2DCamera().update();
 
         //draw box2d world (debug)
         if (debug) {
